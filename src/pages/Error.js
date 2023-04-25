@@ -1,16 +1,22 @@
 import { useRouteError } from 'react-router-dom';
 
-export default function ErrorPage() {
+import Typography from '@mui/material/Typography';
+
+const ErrorPage = () => {
   const error = useRouteError();
   console.error(error);
 
   return (
     <div id='error-page'>
-      <h1>Oops!</h1>
-      <p>Sorry, an unexpected error has occurred.</p>
-      <p>
+      <Typography variant='h1'>Oops!</Typography>
+      <Typography variant='body1'>
+        Sorry, an unexpected error has occurred.
+      </Typography>
+      <Typography variant='body2'>
         <i>{error.statusText || error.message}</i>
-      </p>
+      </Typography>
     </div>
   );
-}
+};
+
+export default ErrorPage;
