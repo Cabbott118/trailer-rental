@@ -8,7 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import ErrorPage from './pages/Error';
 import LoginPage from './pages/Login';
 import SignupPage from './pages/Signup';
-import Home from './pages/Home';
+import HomePage from './pages/Home';
 
 // Components
 import Navbar from '../src/components/Navbar';
@@ -23,10 +23,24 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
+// Firebase
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
+const auth = getAuth();
+let uid;
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    uid = user.uid;
+    console.log(user);
+  } else {
+    console.log('User is not logged in');
+  }
+});
+
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
+    element: <HomePage />,
     errorElement: <ErrorPage />,
   },
   {

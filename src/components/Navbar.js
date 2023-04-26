@@ -1,11 +1,15 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
+
+// MUI
+import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
+import Link from '@mui/material/Link';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
@@ -13,7 +17,6 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
 
 const drawerWidth = 240;
 const navItems = [
@@ -29,6 +32,8 @@ const navItems = [
 ];
 
 function Navbar(props) {
+  const theme = useTheme();
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
 
@@ -38,19 +43,30 @@ function Navbar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
-      <Typography variant='h6' sx={{ my: 2 }}>
+      <Typography
+        variant='h6'
+        sx={{ my: 2, color: theme.palette.primary.main }}
+      >
         Trailer Rental
       </Typography>
       <Divider />
       <List>
-        {navItems.map((page) => (
+        {navItems?.map((page) => (
           <ListItem key={page.name} disablePadding>
             <ListItemButton sx={{ textAlign: 'center' }}>
-              <ListItemText primary={page.name} />
+              <Link
+                href={page.route}
+                sx={{
+                  textDecoration: 'none',
+                  color: theme.palette.text.primary,
+                }}
+              >
+                <ListItemText primary={page.name} />
+              </Link>
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
+      </List>{' '}
     </Box>
   );
 
@@ -60,7 +76,12 @@ function Navbar(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar component='nav'>
+      <AppBar
+        component='nav'
+        color='transparent'
+        position='static'
+        sx={{ boxShadow: 'none' }}
+      >
         <Toolbar>
           <IconButton
             color='inherit'
@@ -74,13 +95,24 @@ function Navbar(props) {
           <Typography
             variant='h6'
             component='div'
-            sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', sm: 'block' },
+              color: theme.palette.primary.main,
+            }}
           >
             Trailer Rental
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((page) => (
-              <Button key={page.name} href={page.route} sx={{ color: '#fff' }}>
+              <Button
+                key={page.name}
+                href={page.route}
+                sx={{
+                  color: theme.palette.text.primary,
+                  textTransform: 'none',
+                }}
+              >
                 {page.name}
               </Button>
             ))}
