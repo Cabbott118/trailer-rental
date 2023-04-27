@@ -1,5 +1,9 @@
 import * as React from 'react';
 
+// Firebase
+import { auth } from '../utility/base';
+import { onAuthStateChanged } from 'firebase/auth';
+
 // MUI
 import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
@@ -19,7 +23,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 const drawerWidth = 240;
-const navItems = [
+const unauthNavItems = [
   {
     name: 'Home',
     route: '/',
@@ -31,11 +35,32 @@ const navItems = [
   { name: 'Sign Up', route: '/signup' },
 ];
 
+const authNavItems = [
+  {
+    name: 'Home',
+    route: '/',
+  },
+  {
+    name: 'Profile',
+    route: '/profile',
+  },
+];
+
 function Navbar(props) {
   const theme = useTheme();
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [user, setUser] = React.useState(null);
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setUser(user);
+    } else {
+      console.log('User is not logged in');
+    }
+  });
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -51,21 +76,37 @@ function Navbar(props) {
       </Typography>
       <Divider />
       <List>
-        {navItems?.map((page) => (
-          <ListItem key={page.name} disablePadding>
-            <ListItemButton sx={{ textAlign: 'center' }}>
-              <Link
-                href={page.route}
-                sx={{
-                  textDecoration: 'none',
-                  color: theme.palette.text.primary,
-                }}
-              >
-                <ListItemText primary={page.name} />
-              </Link>
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {user
+          ? authNavItems?.map((page) => (
+              <ListItem key={page.name} disablePadding>
+                <ListItemButton sx={{ textAlign: 'center' }}>
+                  <Link
+                    href={page.route}
+                    sx={{
+                      textDecoration: 'none',
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    <ListItemText primary={page.name} />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            ))
+          : unauthNavItems?.map((page) => (
+              <ListItem key={page.name} disablePadding>
+                <ListItemButton sx={{ textAlign: 'center' }}>
+                  <Link
+                    href={page.route}
+                    sx={{
+                      textDecoration: 'none',
+                      color: theme.palette.text.primary,
+                    }}
+                  >
+                    <ListItemText primary={page.name} />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            ))}
       </List>{' '}
     </Box>
   );
@@ -104,18 +145,31 @@ function Navbar(props) {
             Trailer Rental
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((page) => (
-              <Button
-                key={page.name}
-                href={page.route}
-                sx={{
-                  color: theme.palette.text.primary,
-                  textTransform: 'none',
-                }}
-              >
-                {page.name}
-              </Button>
-            ))}
+            {user
+              ? authNavItems.map((page) => (
+                  <Button
+                    key={page.name}
+                    href={page.route}
+                    sx={{
+                      color: theme.palette.text.primary,
+                      textTransform: 'none',
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                ))
+              : unauthNavItems.map((page) => (
+                  <Button
+                    key={page.name}
+                    href={page.route}
+                    sx={{
+                      color: theme.palette.text.primary,
+                      textTransform: 'none',
+                    }}
+                  >
+                    {page.name}
+                  </Button>
+                ))}
           </Box>
         </Toolbar>
       </AppBar>

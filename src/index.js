@@ -23,20 +23,6 @@ import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
 
-// Firebase
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
-const auth = getAuth();
-let uid;
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    uid = user.uid;
-    console.log(user);
-  } else {
-    console.log('User is not logged in');
-  }
-});
-
 const router = createBrowserRouter([
   {
     path: '/',
@@ -56,6 +42,7 @@ const router = createBrowserRouter([
 ]);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
