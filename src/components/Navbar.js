@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Firebase
-import { auth } from '../utility/firebase';
+import { auth, getUserDetails } from '../utility/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 // MUI
@@ -9,6 +9,7 @@ import { useTheme } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -34,6 +35,7 @@ function Navbar(props) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [user, loading, error] = useAuthState(auth);
   const [navItems, setNavItems] = useState([]);
+
   const authNavItems = [
     {
       name: 'Home',
@@ -104,49 +106,51 @@ function Navbar(props) {
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppBar
-        component='nav'
-        color='transparent'
-        position='static'
-        sx={{ boxShadow: 'none' }}
-      >
-        <Toolbar>
-          <IconButton
-            color='inherit'
-            aria-label='open drawer'
-            edge='start'
-            onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: 'none' } }}
-          >
-            <MenuIcon />
-          </IconButton>
-          <Typography
-            variant='h6'
-            component='div'
-            sx={{
-              flexGrow: 1,
-              display: { xs: 'none', sm: 'block' },
-              color: theme.palette.primary.main,
-            }}
-          >
-            {websiteTitle}
-          </Typography>
-          <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {navItems.map((page) => (
-              <Button
-                key={page.name}
-                href={page.route}
-                sx={{
-                  color: theme.palette.text.primary,
-                  textTransform: 'none',
-                }}
-              >
-                {page.name}
-              </Button>
-            ))}
-          </Box>
-        </Toolbar>
-      </AppBar>
+      <Container maxWidth='lg'>
+        <AppBar
+          component='nav'
+          color='transparent'
+          position='static'
+          sx={{ boxShadow: 'none' }}
+        >
+          <Toolbar>
+            <IconButton
+              color='inherit'
+              aria-label='open drawer'
+              edge='start'
+              onClick={handleDrawerToggle}
+              sx={{ mr: 2, display: { sm: 'none' } }}
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography
+              variant='h6'
+              component='div'
+              sx={{
+                flexGrow: 1,
+                display: { xs: 'none', sm: 'block' },
+                color: theme.palette.primary.main,
+              }}
+            >
+              {websiteTitle}
+            </Typography>
+            <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
+              {navItems.map((page) => (
+                <Button
+                  key={page.name}
+                  href={page.route}
+                  sx={{
+                    color: theme.palette.text.primary,
+                    textTransform: 'none',
+                  }}
+                >
+                  {page.name}
+                </Button>
+              ))}
+            </Box>
+          </Toolbar>
+        </AppBar>
+      </Container>
       <Box component='nav'>
         <Drawer
           container={container}

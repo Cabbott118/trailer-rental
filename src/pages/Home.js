@@ -8,10 +8,11 @@ import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 // Content
-import { websiteTitle } from '../content/content';
+import { websiteTitle, websiteTagline } from '../content/content';
 
 const HomePage = () => {
   const theme = useTheme();
@@ -37,12 +38,25 @@ const HomePage = () => {
           // },
         }}
       >
-        <Typography
-          variant='h1'
-          sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
-        >
-          {websiteTitle}
-        </Typography>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Typography
+              variant='h1'
+              sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
+            >
+              {websiteTitle}
+            </Typography>
+          </Grid>
+          <Grid item xs={12} md={6}>
+            {' '}
+            <Typography
+              variant='body1'
+              sx={{ color: theme.palette.text.secondary, marginBottom: '2rem' }}
+            >
+              {websiteTagline}
+            </Typography>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );
