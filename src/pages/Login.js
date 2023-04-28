@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+// React-Router
+import { useNavigate } from 'react-router-dom';
 
 // Firebase
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../utility/base';
+import {
+  auth,
+  loginWithEmailAndPassword,
+  signInWithGoogle,
+} from '../utility/firebase';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+// Components
+import Copyright from '../components/Copyright';
 
 // MUI
 import { useTheme } from '@mui/material';
@@ -18,24 +29,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import GoogleIcon from '@mui/icons-material/Google';
 
 const LoginPage = () => {
   const theme = useTheme();
@@ -45,8 +39,18 @@ const LoginPage = () => {
     password: '',
   });
 
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) {
+      console.log('Loading...');
+      return;
+    }
+    if (user) {
+      navigate('/');
+    }
+  }, [user, loading]);
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -60,21 +64,7 @@ const LoginPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    signInWithEmailAndPassword(auth, formState.email, formState.password)
-      .then((userData) => {
-        // Signed in
-        setUser(userData);
-        setIsLoading(false);
-        console.log(userData);
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-      });
+    loginWithEmailAndPassword(formState.email, formState.password);
   };
 
   return (
@@ -144,6 +134,15 @@ const LoginPage = () => {
           </Grid>
         </Box>
       </Box>
+      <Button
+        onClick={signInWithGoogle}
+        fullWidth
+        variant='outlined'
+        sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+      >
+        <GoogleIcon sx={{ marginRight: '.5rem' }} />
+        Continue with Google
+      </Button>
       <Copyright sx={{ mt: 8, mb: 4 }} />
     </Container>
   );

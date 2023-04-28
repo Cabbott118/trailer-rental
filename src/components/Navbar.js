@@ -1,8 +1,8 @@
-import * as React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // Firebase
-import { auth } from '../utility/base';
-import { onAuthStateChanged } from 'firebase/auth';
+import { auth } from '../utility/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 // MUI
 import { useTheme } from '@mui/material';
@@ -23,44 +23,44 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
 const drawerWidth = 240;
-const unauthNavItems = [
-  {
-    name: 'Home',
-    route: '/',
-  },
-  {
-    name: 'Login',
-    route: '/login',
-  },
-  { name: 'Sign Up', route: '/signup' },
-];
-
-const authNavItems = [
-  {
-    name: 'Home',
-    route: '/',
-  },
-  {
-    name: 'Profile',
-    route: '/profile',
-  },
-];
 
 function Navbar(props) {
   const theme = useTheme();
 
   const { window } = props;
-  const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [isLoading, setIsLoading] = React.useState(false);
-  const [user, setUser] = React.useState(null);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
+  const [navItems, setNavItems] = useState([]);
+  const authNavItems = [
+    {
+      name: 'Home',
+      route: '/',
+    },
+    {
+      name: 'Profile',
+      route: '/profile',
+    },
+  ];
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setUser(user);
-    } else {
-      console.log('User is not logged in');
-    }
-  });
+  const unAuthItems = [
+    {
+      name: 'Home',
+      route: '/',
+    },
+    {
+      name: 'Login',
+      route: '/login',
+    },
+    { name: 'Sign Up', route: '/signup' },
+  ];
+
+  useEffect(() => {
+    loading
+      ? setNavItems([])
+      : user
+      ? setNavItems(authNavItems)
+      : setNavItems(unAuthItems);
+  }, [user, loading]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -76,37 +76,21 @@ function Navbar(props) {
       </Typography>
       <Divider />
       <List>
-        {user
-          ? authNavItems?.map((page) => (
-              <ListItem key={page.name} disablePadding>
-                <ListItemButton sx={{ textAlign: 'center' }}>
-                  <Link
-                    href={page.route}
-                    sx={{
-                      textDecoration: 'none',
-                      color: theme.palette.text.primary,
-                    }}
-                  >
-                    <ListItemText primary={page.name} />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
-            ))
-          : unauthNavItems?.map((page) => (
-              <ListItem key={page.name} disablePadding>
-                <ListItemButton sx={{ textAlign: 'center' }}>
-                  <Link
-                    href={page.route}
-                    sx={{
-                      textDecoration: 'none',
-                      color: theme.palette.text.primary,
-                    }}
-                  >
-                    <ListItemText primary={page.name} />
-                  </Link>
-                </ListItemButton>
-              </ListItem>
-            ))}
+        {navItems?.map((page) => (
+          <ListItem key={page.name} disablePadding>
+            <ListItemButton sx={{ textAlign: 'center' }}>
+              <Link
+                href={page.route}
+                sx={{
+                  textDecoration: 'none',
+                  color: theme.palette.text.primary,
+                }}
+              >
+                <ListItemText primary={page.name} />
+              </Link>
+            </ListItemButton>
+          </ListItem>
+        ))}
       </List>{' '}
     </Box>
   );
@@ -145,31 +129,18 @@ function Navbar(props) {
             Trailer Rental
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-            {user
-              ? authNavItems.map((page) => (
-                  <Button
-                    key={page.name}
-                    href={page.route}
-                    sx={{
-                      color: theme.palette.text.primary,
-                      textTransform: 'none',
-                    }}
-                  >
-                    {page.name}
-                  </Button>
-                ))
-              : unauthNavItems.map((page) => (
-                  <Button
-                    key={page.name}
-                    href={page.route}
-                    sx={{
-                      color: theme.palette.text.primary,
-                      textTransform: 'none',
-                    }}
-                  >
-                    {page.name}
-                  </Button>
-                ))}
+            {navItems.map((page) => (
+              <Button
+                key={page.name}
+                href={page.route}
+                sx={{
+                  color: theme.palette.text.primary,
+                  textTransform: 'none',
+                }}
+              >
+                {page.name}
+              </Button>
+            ))}
           </Box>
         </Toolbar>
       </AppBar>
@@ -180,7 +151,7 @@ function Navbar(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
           sx={{
             display: { xs: 'block', sm: 'none' },

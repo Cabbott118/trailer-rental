@@ -8,7 +8,7 @@ import { useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
 
-const HomePage = () => {
+const ProfilePage = () => {
   const theme = useTheme();
 
   const handleLogout = () => {
@@ -31,4 +31,4 @@ const HomePage = () => {
     </Container>
   );
 };
-export default HomePage;
+export default ProfilePage;

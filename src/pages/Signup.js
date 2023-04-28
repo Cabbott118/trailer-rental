@@ -1,8 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+
+// React-Router
+import { useNavigate } from 'react-router-dom';
 
 // Firebase
-import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../utility/base';
+import {
+  auth,
+  registerWithEmailAndPassword,
+  signInWithGoogle,
+} from '../utility/firebase';
+
+import { useAuthState } from 'react-firebase-hooks/auth';
+
+// Components
+import Copyright from '../components/Copyright';
 
 // MUI
 import { useTheme } from '@mui/material';
@@ -18,24 +29,7 @@ import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-
-function Copyright(props) {
-  return (
-    <Typography
-      variant='body2'
-      color='text.secondary'
-      align='center'
-      {...props}
-    >
-      {'Copyright © '}
-      <Link color='inherit' href='https://mui.com/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import GoogleIcon from '@mui/icons-material/Google';
 
 const SignupPage = () => {
   const theme = useTheme();
@@ -47,8 +41,18 @@ const SignupPage = () => {
     password: '',
   });
 
-  const [user, setUser] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [user, loading, error] = useAuthState(auth);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loading) {
+      console.log('Loading...');
+      return;
+    }
+    if (user) {
+      navigate('/');
+    }
+  });
 
   const handleInputChange = (event) => {
     const target = event.target;
@@ -62,20 +66,12 @@ const SignupPage = () => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
-    createUserWithEmailAndPassword(auth, formState.email, formState.password)
-      .then((userData) => {
-        // Signed in
-        setUser(userData);
-        setIsLoading(false);
-        window.location.href = '/';
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
-        console.log(errorMessage);
-      });
+    registerWithEmailAndPassword(
+      formState.firstName,
+      formState.lastName,
+      formState.email,
+      formState.password
+    );
   };
 
   return (
@@ -146,7 +142,7 @@ const SignupPage = () => {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value='allowExtraEmails' color='primary' />}
-                label='I want to receive inspiration, marketing promotions and updates via email.'
+                label='I want to receive marketing promotions and updates via email.'
               />
             </Grid>
           </Grid>
@@ -168,6 +164,15 @@ const SignupPage = () => {
           </Grid>
         </Box>
       </Box>
+      <Button
+        onClick={signInWithGoogle}
+        fullWidth
+        variant='outlined'
+        sx={{ mt: 3, mb: 2, textTransform: 'none' }}
+      >
+        <GoogleIcon sx={{ marginRight: '.5rem' }} />
+        Continue with Google
+      </Button>
       <Copyright sx={{ mt: 5 }} />
     </Container>
   );
