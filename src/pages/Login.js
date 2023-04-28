@@ -13,6 +13,7 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 // Components
+import Alert from '../components/Alert';
 import Copyright from '../components/Copyright';
 
 // MUI
@@ -33,22 +34,23 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 const LoginPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
     email: '',
     password: '',
   });
 
+  const [alertType, setAlertType] = useState(null);
+
   const [user, loading, error] = useAuthState(auth);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) {
       console.log('Loading...');
-      return;
     }
     if (user) {
-      navigate('/');
+      navigate('/profile');
     }
   }, [user, loading]);
 
@@ -65,6 +67,9 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     loginWithEmailAndPassword(formState.email, formState.password);
+    if (formState.email.length || formState.password.length === 0) {
+      setAlertType('error');
+    }
   };
 
   return (
@@ -120,15 +125,21 @@ const LoginPage = () => {
           >
             Login
           </Button>
+          {alertType ? (
+            <Alert
+              alertType={alertType}
+              alertContent='Please enter all required fields'
+            />
+          ) : null}
           <Grid container>
             <Grid item xs>
-              <Link href='#' variant='body2'>
+              <Link href='/forgotPassword' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>
             <Grid item>
               <Link href='/signup' variant='body2'>
-                {"Don't have an account? Sign Up"}
+                Don't have an account? Sign Up
               </Link>
             </Grid>
           </Grid>

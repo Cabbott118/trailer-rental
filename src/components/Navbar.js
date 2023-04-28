@@ -22,6 +22,9 @@ import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 
+// Content
+import { websiteTitle } from '../content/content';
+
 const drawerWidth = 240;
 
 function Navbar(props) {
@@ -72,7 +75,7 @@ function Navbar(props) {
         variant='h6'
         sx={{ my: 2, color: theme.palette.primary.main }}
       >
-        Trailer Rental
+        {websiteTitle}
       </Typography>
       <Divider />
       <List>
@@ -126,7 +129,7 @@ function Navbar(props) {
               color: theme.palette.primary.main,
             }}
           >
-            Trailer Rental
+            {websiteTitle}
           </Typography>
           <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
             {navItems.map((page) => (

@@ -17,6 +17,7 @@ const ProfilePage = () => {
 
   return (
     <Container
+      maxWidth='sm'
       sx={{
         minHeight: '100vh',
         // backgroundColor: {

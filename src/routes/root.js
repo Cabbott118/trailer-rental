@@ -6,6 +6,8 @@ import LoginPage from '../pages/Login';
 import SignupPage from '../pages/Signup';
 import HomePage from '../pages/Home';
 import ProfilePage from '../pages/Profile';
+import ForgotPasswordPage from '../pages/ForgotPassword';
+import ForgotPasswordConfirmationPage from '../pages/ForgotPasswordConfirmation';
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +23,16 @@ export const router = createBrowserRouter([
   {
     path: '/signup',
     element: <SignupPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/forgotPassword',
+    element: <ForgotPasswordPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/forgotPasswordConfirmation',
+    element: <ForgotPasswordConfirmationPage />,
     errorElement: <ErrorPage />,
   },
   {

@@ -1,34 +1,50 @@
 import React from 'react';
 
-// Firebase
-import { logout } from '../utility/firebase';
+// React-Router
+import { useNavigate } from 'react-router-dom';
 
 // MUI
 import { useTheme } from '@mui/material';
+import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Typography from '@mui/material/Typography';
+
+// Content
+import { websiteTitle } from '../content/content';
 
 const HomePage = () => {
   const theme = useTheme();
-
-  const handleLogout = () => {
-    logout();
-  };
-
+  const navigate = useNavigate();
   return (
-    <Container
+    <Box
       sx={{
-        minHeight: '100vh',
-        // backgroundColor: {
-        //   xs: theme.palette.primary.main,
-        //   sm: 'purple',
-        //   md: 'green',
-        //   lg: 'blue',
-        // },
+        marginTop: 8,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
       }}
     >
-      <Button onClick={handleLogout}>Logout</Button>
-    </Container>
+      <Container
+        maxWidth='sm'
+        sx={{
+          minHeight: '100vh',
+          // backgroundColor: {
+          //   xs: theme.palette.primary.main,
+          //   sm: 'purple',
+          //   md: 'green',
+          //   lg: 'blue',
+          // },
+        }}
+      >
+        <Typography
+          variant='h1'
+          sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
+        >
+          {websiteTitle}
+        </Typography>
+      </Container>
+    </Box>
   );
 };
 export default HomePage;

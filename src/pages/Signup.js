@@ -13,6 +13,7 @@ import {
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 // Components
+import Alert from '../components/Alert';
 import Copyright from '../components/Copyright';
 
 // MUI
@@ -33,6 +34,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 const SignupPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
 
   const [formState, setFormState] = useState({
     firstName: '',
@@ -41,8 +43,9 @@ const SignupPage = () => {
     password: '',
   });
 
+  const [alertType, setAlertType] = useState(null);
+
   const [user, loading, error] = useAuthState(auth);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (loading) {
@@ -50,7 +53,7 @@ const SignupPage = () => {
       return;
     }
     if (user) {
-      navigate('/');
+      navigate('/profile');
     }
   });
 
@@ -72,6 +75,14 @@ const SignupPage = () => {
       formState.email,
       formState.password
     );
+    if (
+      formState.firstName.length ||
+      formState.lastName.length ||
+      formState.email.length ||
+      formState.password.length === 0
+    ) {
+      setAlertType('error');
+    }
   };
 
   return (
@@ -155,6 +166,12 @@ const SignupPage = () => {
           >
             Sign Up
           </Button>
+          {alertType ? (
+            <Alert
+              alertType={alertType}
+              alertContent='Please enter all required fields'
+            />
+          ) : null}
           <Grid container justifyContent='flex-end'>
             <Grid item>
               <Link href='/login' variant='body2'>
