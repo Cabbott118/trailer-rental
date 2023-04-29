@@ -26,19 +26,29 @@ exports.getAllItems = functions.https.onRequest((req, res) => {
 
 // GET one item
 exports.getOneItem = functions.https.onRequest((req, res) => {
-  db.doc(`/items`)
+  db.collection('items')
+    .doc(req.params.itemId)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json(req);
+        return res.send('Item not found!');
       }
-
       let itemData = doc.data();
       itemData.itemId = doc.id;
-      return res.json(req);
-    })
-    .catch((err) => {
-      console.error(err);
-      return res.status(500).json({ error: error.code });
+      return res.json(itemData);
+    });
+});
+
+exports.getOneItemAgain = functions.https.onRequest((req, res) => {
+  db.collection('items')
+    .doc('17HU06h2RoYIizz9a9Cf')
+    .get()
+    .then((doc) => {
+      if (!doc.exists) {
+        return res.send('Item not found!');
+      }
+      let itemData = doc.data();
+      itemData.itemId = doc.id;
+      return res.json(itemData);
     });
 });
