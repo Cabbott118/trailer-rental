@@ -1,0 +1,1020 @@
+[debug] [2023-04-29T00:07:18.819Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:07:18.821Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2023-04-29T00:07:18.822Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:07:18.822Z] Platform:      darwin
+[debug] [2023-04-29T00:07:18.822Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:07:18.824Z] Time:          Fri Apr 28 2023 20:07:18 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:07:18.824Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:07:18.903Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:07:18.904Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:07:18.904Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-29T00:07:18.907Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:07:18.907Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:07:18.907Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:07:19.237Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:07:19.238Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:07:19.238Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:07:19.238Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:07:19.490Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:07:19.491Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-29T00:07:19.495Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:07:19.957Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:07:19.958Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:07:19.959Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:07:19.959Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:07:19.961Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:07:19.961Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:07:19.962Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:07:19.962Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:07:19.963Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:07:19.963Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:07:20.573Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:07:20.573Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:07:20.574Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:07:20.574Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:07:20.575Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:07:20.575Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:07:20.576Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:07:20.576Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:07:20.576Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:07:20.980Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:07:20.981Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:07:20.981Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:07:21.457Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:07:21.457Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:07:21.459Z] Validating nodejs source
+[debug] [2023-04-29T00:07:22.333Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:07:22.333Z] Building nodejs source
+[debug] [2023-04-29T00:07:22.334Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:07:22.359Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:07:22.520Z] Serving at port 8534
+
+[debug] [2023-04-29T00:07:22.770Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:07:22.974Z] FetchError: request to http://localhost:8534/__/quitquitquit failed, reason: connect EAGAIN ::1:8534 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:08:19.611Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:08:19.613Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions:getOneItem
+[debug] [2023-04-29T00:08:19.614Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:08:19.614Z] Platform:      darwin
+[debug] [2023-04-29T00:08:19.615Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:08:19.616Z] Time:          Fri Apr 28 2023 20:08:19 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:08:19.616Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:08:19.691Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:08:19.691Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:08:19.692Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-29T00:08:19.694Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:08:19.694Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:08:19.695Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:08:19.960Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:08:19.960Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:08:19.961Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:08:19.961Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:08:20.165Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:08:20.165Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-29T00:08:20.168Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:08:20.568Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:08:20.568Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:08:20.570Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:08:20.570Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:08:20.571Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:08:20.571Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:08:20.572Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:08:20.572Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:08:20.573Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:08:20.573Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:08:20.990Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:08:20.990Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:08:20.991Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:08:20.992Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:08:20.993Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:08:20.993Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:08:21.010Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:08:21.010Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:08:21.010Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:08:21.495Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:08:21.496Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:08:21.496Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:08:21.704Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:08:21.705Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:08:21.706Z] Validating nodejs source
+[debug] [2023-04-29T00:08:22.429Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:08:22.429Z] Building nodejs source
+[debug] [2023-04-29T00:08:22.430Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:08:22.468Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:08:22.637Z] Serving at port 8747
+
+[debug] [2023-04-29T00:08:22.876Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:08:23.018Z] FetchError: request to http://localhost:8747/__/quitquitquit failed, reason: connect EAGAIN ::1:8747 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:09:13.125Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:09:13.127Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2023-04-29T00:09:13.127Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:09:13.128Z] Platform:      darwin
+[debug] [2023-04-29T00:09:13.128Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:09:13.129Z] Time:          Fri Apr 28 2023 20:09:13 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:09:13.129Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:09:13.207Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:09:13.208Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:09:13.208Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-29T00:09:13.210Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:09:13.211Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:13.211Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:09:13.492Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:09:13.492Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:09:13.493Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:09:13.493Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:09:13.700Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:09:13.700Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-29T00:09:13.704Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:09:14.131Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:09:14.131Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:09:14.133Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:09:14.133Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:14.134Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:09:14.134Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:14.135Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:09:14.135Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:14.137Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:09:14.137Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:14.552Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:09:14.552Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:09:14.553Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:09:14.553Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:14.571Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:09:14.571Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:14.589Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:09:14.589Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:14.590Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:09:14.970Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:09:14.970Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:09:14.970Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:09:15.572Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:09:15.572Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:09:15.574Z] Validating nodejs source
+[debug] [2023-04-29T00:09:16.395Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:09:16.395Z] Building nodejs source
+[debug] [2023-04-29T00:09:16.396Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:09:16.417Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:09:16.581Z] Serving at port 8129
+
+[debug] [2023-04-29T00:09:16.825Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:09:16.980Z] FetchError: request to http://localhost:8129/__/quitquitquit failed, reason: connect EAGAIN ::1:8129 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:09:21.787Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:09:21.789Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2023-04-29T00:09:21.790Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:09:21.790Z] Platform:      darwin
+[debug] [2023-04-29T00:09:21.790Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:09:21.791Z] Time:          Fri Apr 28 2023 20:09:21 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:09:21.792Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:09:21.862Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:09:21.862Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:09:21.862Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-29T00:09:21.864Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:09:21.865Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:21.865Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:09:22.146Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:09:22.146Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:09:22.147Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:09:22.147Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:09:22.387Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:09:22.387Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-29T00:09:22.390Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:09:22.774Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:09:22.774Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:09:22.776Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:09:22.776Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:22.777Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:09:22.777Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:22.778Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:09:22.778Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:22.779Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:09:22.779Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:23.224Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:09:23.224Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:23.231Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:09:23.231Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:09:23.263Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:09:23.264Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:23.533Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:09:23.533Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:23.533Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:09:23.973Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:09:23.973Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:09:23.973Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:09:24.287Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:09:24.287Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:09:24.288Z] Validating nodejs source
+[debug] [2023-04-29T00:09:25.566Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:09:25.566Z] Building nodejs source
+[debug] [2023-04-29T00:09:25.566Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:09:25.612Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:09:25.776Z] Serving at port 8714
+
+[debug] [2023-04-29T00:09:26.139Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:09:26.420Z] FetchError: request to http://localhost:8714/__/quitquitquit failed, reason: connect EAGAIN ::1:8714 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:09:37.905Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:09:37.907Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-04-29T00:09:37.908Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:09:37.908Z] Platform:      darwin
+[debug] [2023-04-29T00:09:37.909Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:09:37.910Z] Time:          Fri Apr 28 2023 20:09:37 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:09:37.910Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:09:37.991Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:09:37.991Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:09:37.991Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-04-29T00:09:37.994Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:09:37.994Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:37.994Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:09:38.257Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:09:38.258Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:09:38.258Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:09:38.259Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:09:38.411Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:09:38.411Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:09:38.412Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:09:38.815Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:09:38.815Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying firestore, functions, hosting 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2023-04-29T00:09:38.820Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [none]
+[debug] [2023-04-29T00:09:38.820Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [omitted]
+[debug] [2023-04-29T00:09:39.099Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test 200
+[debug] [2023-04-29T00:09:39.100Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2023-04-29T00:09:39.101Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:09:39.526Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:09:39.526Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:09:39.527Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:09:39.527Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:39.528Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:09:39.529Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:39.529Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:09:39.530Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:39.530Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:09:39.531Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:09:39.939Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:09:39.939Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:39.940Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:09:39.940Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:09:39.941Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:09:39.941Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:39.942Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:09:39.942Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:09:39.943Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:09:40.299Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:09:40.299Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:09:40.300Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:09:40.514Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:09:40.514Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:09:40.515Z] Validating nodejs source
+[debug] [2023-04-29T00:09:41.235Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:09:41.236Z] Building nodejs source
+[debug] [2023-04-29T00:09:41.236Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:09:41.253Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:09:41.411Z] Serving at port 8870
+
+[debug] [2023-04-29T00:09:41.777Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:09:41.879Z] FetchError: request to http://localhost:8870/__/quitquitquit failed, reason: connect EAGAIN ::1:8870 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:10:01.591Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:10:01.593Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-04-29T00:10:01.594Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:10:01.594Z] Platform:      darwin
+[debug] [2023-04-29T00:10:01.594Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:10:01.596Z] Time:          Fri Apr 28 2023 20:10:01 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:10:01.596Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:10:01.665Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:10:01.666Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:10:01.666Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-04-29T00:10:01.668Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:10:01.668Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:01.668Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:10:01.934Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:10:01.934Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:10:01.934Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:10:01.935Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:10:02.145Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:10:02.145Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:10:02.147Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:10:02.434Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:10:02.434Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying firestore, functions, hosting 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2023-04-29T00:10:02.437Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [none]
+[debug] [2023-04-29T00:10:02.437Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [omitted]
+[debug] [2023-04-29T00:10:02.741Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test 200
+[debug] [2023-04-29T00:10:02.741Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2023-04-29T00:10:02.742Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:10:03.052Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:10:03.052Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:10:03.054Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:10:03.054Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:03.055Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:10:03.056Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:03.056Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:10:03.057Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:03.057Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:10:03.058Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:03.513Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:10:03.513Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:10:03.513Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:10:03.513Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:10:03.514Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:10:03.514Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:10:03.515Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:10:03.515Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:10:03.516Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:10:03.897Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:10:03.897Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:10:03.897Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:10:04.529Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:10:04.529Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:10:04.531Z] Validating nodejs source
+[debug] [2023-04-29T00:10:05.337Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:10:05.337Z] Building nodejs source
+[debug] [2023-04-29T00:10:05.338Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:10:05.360Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:10:05.520Z] Serving at port 8260
+
+[debug] [2023-04-29T00:10:05.763Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:10:05.890Z] FetchError: request to http://localhost:8260/__/quitquitquit failed, reason: connect EAGAIN ::1:8260 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:10:21.071Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:10:21.073Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2023-04-29T00:10:21.074Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:10:21.074Z] Platform:      darwin
+[debug] [2023-04-29T00:10:21.075Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:10:21.076Z] Time:          Fri Apr 28 2023 20:10:21 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:10:21.076Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:10:21.156Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:10:21.157Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:10:21.157Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-29T00:10:21.159Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:10:21.160Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:21.160Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:10:21.465Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:10:21.465Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:10:21.466Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:10:21.466Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:10:21.760Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:10:21.760Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-29T00:10:21.764Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:10:22.233Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:10:22.234Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:10:22.236Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:10:22.236Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:22.237Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:10:22.237Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:22.238Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:10:22.238Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:22.239Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:10:22.240Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:10:22.656Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:10:22.656Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:10:22.657Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:10:22.657Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:10:22.658Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:10:22.658Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:10:22.701Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:10:22.701Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:10:22.701Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:10:22.980Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:10:22.980Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:10:22.981Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:10:23.292Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:10:23.292Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:10:23.293Z] Validating nodejs source
+[debug] [2023-04-29T00:10:24.084Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:10:24.084Z] Building nodejs source
+[debug] [2023-04-29T00:10:24.085Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:10:24.112Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:10:24.280Z] Serving at port 8179
+
+[debug] [2023-04-29T00:10:24.647Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:10:24.790Z] FetchError: request to http://localhost:8179/__/quitquitquit failed, reason: connect EAGAIN ::1:8179 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:11:02.183Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:11:02.184Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-04-29T00:11:02.185Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:11:02.185Z] Platform:      darwin
+[debug] [2023-04-29T00:11:02.185Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:11:02.186Z] Time:          Fri Apr 28 2023 20:11:02 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:11:02.187Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:11:02.261Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:11:02.261Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:11:02.261Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-04-29T00:11:02.264Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:11:02.264Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:02.264Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:11:02.518Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:11:02.518Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:11:02.519Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:11:02.519Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:11:02.691Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:11:02.691Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:11:02.693Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:11:03.009Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:11:03.009Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying firestore, functions, hosting 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2023-04-29T00:11:03.012Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [none]
+[debug] [2023-04-29T00:11:03.012Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [omitted]
+[debug] [2023-04-29T00:11:03.259Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test 200
+[debug] [2023-04-29T00:11:03.259Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2023-04-29T00:11:03.260Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:11:03.699Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:11:03.699Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:11:03.700Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:11:03.700Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:03.702Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:11:03.702Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:03.703Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:11:03.703Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:03.704Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:11:03.704Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:04.076Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:11:04.076Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:11:04.107Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:11:04.107Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:04.133Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:11:04.134Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:04.139Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:11:04.139Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:04.139Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:11:04.489Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:11:04.489Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:11:04.490Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:11:04.712Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:11:04.712Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:11:04.714Z] Validating nodejs source
+[debug] [2023-04-29T00:11:05.559Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:11:05.559Z] Building nodejs source
+[debug] [2023-04-29T00:11:05.560Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:11:05.570Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:11:05.732Z] Serving at port 8975
+
+[debug] [2023-04-29T00:11:05.974Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:11:06.152Z] FetchError: request to http://localhost:8975/__/quitquitquit failed, reason: connect EAGAIN ::1:8975 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:11:15.241Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:11:15.243Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy
+[debug] [2023-04-29T00:11:15.244Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:11:15.244Z] Platform:      darwin
+[debug] [2023-04-29T00:11:15.245Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:11:15.246Z] Time:          Fri Apr 28 2023 20:11:15 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:11:15.246Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:11:15.318Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:11:15.319Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:11:15.319Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2023-04-29T00:11:15.321Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:11:15.321Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:15.321Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:11:15.581Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:11:15.581Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2023-04-29T00:11:15.582Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:11:15.582Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:11:15.829Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:11:15.829Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:11:15.830Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:11:16.155Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:11:16.156Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying firestore, functions, hosting 
+[info] i  firestore: reading indexes from firestore.indexes.json... 
+[info] i  cloud.firestore: checking firestore.rules for compilation errors... 
+[debug] [2023-04-29T00:11:16.159Z] >>> [apiv2][query] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [none]
+[debug] [2023-04-29T00:11:16.159Z] >>> [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test [omitted]
+[debug] [2023-04-29T00:11:16.399Z] <<< [apiv2][status] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test 200
+[debug] [2023-04-29T00:11:16.399Z] <<< [apiv2][body] POST https://firebaserules.googleapis.com/v1/projects/trailer-rental-facce:test {}
+[info] ✔  cloud.firestore: rules file firestore.rules compiled successfully 
+[debug] [2023-04-29T00:11:16.401Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:11:16.659Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:11:16.660Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:11:16.661Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:11:16.661Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:16.662Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:11:16.663Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:16.663Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:11:16.664Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:16.664Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:11:16.664Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:16.986Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:11:16.986Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:11:17.059Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:11:17.059Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:17.061Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:11:17.061Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:17.066Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:11:17.066Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:17.067Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:11:17.379Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:11:17.379Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:11:17.379Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:11:17.947Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:11:17.947Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:11:17.948Z] Validating nodejs source
+[debug] [2023-04-29T00:11:19.101Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:11:19.101Z] Building nodejs source
+[debug] [2023-04-29T00:11:19.102Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:11:19.114Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:11:19.276Z] Serving at port 8995
+
+[debug] [2023-04-29T00:11:19.638Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:11:19.749Z] FetchError: request to http://localhost:8995/__/quitquitquit failed, reason: connect EAGAIN ::1:8995 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2023-04-29T00:11:27.399Z] ----------------------------------------------------------------------
+[debug] [2023-04-29T00:11:27.401Z] Command:       /usr/local/bin/node /usr/local/bin/firebase deploy --only functions
+[debug] [2023-04-29T00:11:27.402Z] CLI Version:   11.29.1
+[debug] [2023-04-29T00:11:27.402Z] Platform:      darwin
+[debug] [2023-04-29T00:11:27.402Z] Node Version:  v18.16.0
+[debug] [2023-04-29T00:11:27.404Z] Time:          Fri Apr 28 2023 20:11:27 GMT-0400 (Eastern Daylight Time)
+[debug] [2023-04-29T00:11:27.404Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2023-04-29T00:11:27.481Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2023-04-29T00:11:27.482Z] > authorizing via signed-in user (calebhaabbott94@gmail.com)
+[debug] [2023-04-29T00:11:27.482Z] [iam] checking project trailer-rental-facce for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2023-04-29T00:11:27.484Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions [none]
+[debug] [2023-04-29T00:11:27.485Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:27.485Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:11:27.824Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions 200
+[debug] [2023-04-29T00:11:27.825Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/trailer-rental-facce:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2023-04-29T00:11:27.825Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2023-04-29T00:11:27.825Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2023-04-29T00:11:28.013Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2023-04-29T00:11:28.013Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/trailer-rental-facce/serviceAccounts/trailer-rental-facce@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'trailer-rental-facce'...
+[info] 
+[info] i  deploying functions 
+[debug] [2023-04-29T00:11:28.016Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce [none]
+[debug] [2023-04-29T00:11:28.309Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce 200
+[debug] [2023-04-29T00:11:28.309Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce {"projectId":"trailer-rental-facce","projectNumber":"1002679932971","displayName":"trailer-rental","name":"projects/trailer-rental-facce","resources":{"hostingSite":"trailer-rental-facce","realtimeDatabaseInstance":"trailer-rental-facce-default-rtdb","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"},"state":"ACTIVE","etag":"1_ab38cd4d-6f86-45ba-adb6-246e93b76e06"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2023-04-29T00:11:28.311Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [none]
+[debug] [2023-04-29T00:11:28.311Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:28.312Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [none]
+[debug] [2023-04-29T00:11:28.312Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:28.313Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [none]
+[debug] [2023-04-29T00:11:28.313Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:28.314Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [none]
+[debug] [2023-04-29T00:11:28.314Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com x-goog-quota-user=projects/trailer-rental-facce
+[debug] [2023-04-29T00:11:28.775Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com 200
+[debug] [2023-04-29T00:11:28.775Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/runtimeconfig.googleapis.com [omitted]
+[debug] [2023-04-29T00:11:28.776Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com 200
+[debug] [2023-04-29T00:11:28.776Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudbuild.googleapis.com [omitted]
+[info] ✔  functions: required API cloudbuild.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:28.777Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com 200
+[debug] [2023-04-29T00:11:28.777Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/artifactregistry.googleapis.com [omitted]
+[info] ✔  artifactregistry: required API artifactregistry.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:28.778Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com 200
+[debug] [2023-04-29T00:11:28.778Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/trailer-rental-facce/services/cloudfunctions.googleapis.com [omitted]
+[info] ✔  functions: required API cloudfunctions.googleapis.com is enabled 
+[debug] [2023-04-29T00:11:28.778Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig [none]
+[debug] [2023-04-29T00:11:29.120Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig 200
+[debug] [2023-04-29T00:11:29.120Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/trailer-rental-facce/adminSdkConfig {"projectId":"trailer-rental-facce","databaseURL":"https://trailer-rental-facce-default-rtdb.firebaseio.com","storageBucket":"trailer-rental-facce.appspot.com","locationId":"us-central"}
+[debug] [2023-04-29T00:11:29.120Z] >>> [apiv2][query] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs [none]
+[debug] [2023-04-29T00:11:29.502Z] <<< [apiv2][status] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs 200
+[debug] [2023-04-29T00:11:29.502Z] <<< [apiv2][body] GET https://runtimeconfig.googleapis.com/v1beta1/projects/trailer-rental-facce/configs {}
+[debug] [2023-04-29T00:11:29.504Z] Validating nodejs source
+[debug] [2023-04-29T00:11:30.263Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
+  "dependencies": {
+    "firebase-admin": "^11.5.0",
+    "firebase-functions": "^4.2.0"
+  },
+  "devDependencies": {
+    "firebase-functions-test": "^3.0.0"
+  },
+  "private": true
+}
+[debug] [2023-04-29T00:11:30.263Z] Building nodejs source
+[debug] [2023-04-29T00:11:30.264Z] Could not find functions.yaml. Must use http discovery
+[debug] [2023-04-29T00:11:30.288Z] Found firebase-functions binary at '/Users/CABB/trailer-rental/functions/node_modules/.bin/firebase-functions'
+[debug] [2023-04-29T00:11:30.452Z] Serving at port 8054
+
+[debug] [2023-04-29T00:11:30.686Z] Got response from /__/functions.yaml {"endpoints":{"getAllItems":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getAllItems"},"getOneItem":{"platform":"gcfv1","availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"serviceAccountEmail":null,"vpc":null,"httpsTrigger":{},"entryPoint":"getOneItem"}},"specVersion":"v1alpha1","requiredAPIs":[]}
+[debug] [2023-04-29T00:11:30.843Z] FetchError: request to http://localhost:8054/__/quitquitquit failed, reason: connect EAGAIN ::1:8054 - Local (:::0)
+    at ClientRequest.<anonymous> (/usr/local/lib/node_modules/firebase-tools/node_modules/node-fetch/lib/index.js:1491:11)
+    at ClientRequest.emit (node:events:513:28)
+    at ClientRequest.emit (node:domain:489:12)
+    at Socket.socketErrorListener (node:_http_client:502:9)
+    at Socket.emit (node:events:513:28)
+    at Socket.emit (node:domain:489:12)
+    at emitErrorNT (node:internal/streams/destroy:151:8)
+    at emitErrorCloseNT (node:internal/streams/destroy:116:3)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+[error] 
+[error] Error: An unexpected error has occurred.

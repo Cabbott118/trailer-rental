@@ -114,7 +114,7 @@ const getUserDetails = async () => {
     where('uid', '==', user.uid)
   );
   querySnapshot.forEach((doc) => {
-    return doc.data();
+    console.log(doc.data());
   });
 };
 
