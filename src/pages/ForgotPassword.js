@@ -42,7 +42,7 @@ const ForgotPasswordPage = () => {
       setAlertType('error');
     } else {
       sendPasswordReset(formState.email).then(() => {
-        navigate('/forgotPasswordConfirmation');
+        navigate('/forgot-password/confirmation');
       });
     }
   };

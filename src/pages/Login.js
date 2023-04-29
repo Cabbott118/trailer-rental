@@ -133,7 +133,7 @@ const LoginPage = () => {
           ) : null}
           <Grid container>
             <Grid item xs>
-              <Link href='/forgotPassword' variant='body2'>
+              <Link href='/forgot-password' variant='body2'>
                 Forgot password?
               </Link>
             </Grid>

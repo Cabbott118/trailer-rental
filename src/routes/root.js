@@ -26,12 +26,12 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/forgotPassword',
+    path: '/forgot-password',
     element: <ForgotPasswordPage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/forgotPasswordConfirmation',
+    path: '/forgot-password/confirmation',
     element: <ForgotPasswordConfirmationPage />,
     errorElement: <ErrorPage />,
   },

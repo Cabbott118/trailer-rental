@@ -1,5 +1,8 @@
 import React from 'react';
 
+// React-Router
+import { useNavigate } from 'react-router-dom';
+
 // MUI
 import { useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -9,6 +12,11 @@ import Typography from '@mui/material/Typography';
 
 const ForgotPasswordConfirmationPage = () => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleOnClick = () => {
+    navigate('/login');
+  };
 
   return (
     <Box
@@ -33,6 +41,7 @@ const ForgotPasswordConfirmationPage = () => {
           We've sent an email containing a link to reset your password.
         </Typography>
         <Button
+          onClick={handleOnClick}
           type='submit'
           fullWidth
           variant='contained'
