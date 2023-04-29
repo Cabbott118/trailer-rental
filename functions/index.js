@@ -26,18 +26,16 @@ exports.getAllItems = functions.https.onRequest((req, res) => {
 
 // GET one item
 exports.getOneItem = functions.https.onRequest((req, res) => {
-  db.doc(`/items/${req.params.itemId}`)
+  db.doc(`/items`)
     .get()
     .then((doc) => {
       if (!doc.exists) {
-        return res.status(404).json({
-          error: 'Could not find item!',
-        });
+        return res.status(404).json(req);
       }
 
       let itemData = doc.data();
       itemData.itemId = doc.id;
-      return res.json(itemData);
+      return res.json(req);
     })
     .catch((err) => {
       console.error(err);
