@@ -4,7 +4,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Firebase
-import { logout, getUserDetails } from '../utility/firebase';
+import { logout, getUserDetails, getOneItem } from '../utility/firebase';
 
 // MUI
 import { useTheme } from '@mui/material';
@@ -21,6 +21,13 @@ const ProfilePage = () => {
   const handleQuery = () => {
     getUserDetails();
   };
+
+  const handleQueryItem = () => {
+    getOneItem().then((data) => {
+      console.log(data);
+    });
+  };
+
   const handleLogout = () => {
     logout();
   };
@@ -54,6 +61,9 @@ const ProfilePage = () => {
         </Typography>
         <Button variant='contained' onClick={handleQuery}>
           Query
+        </Button>
+        <Button variant='contained' onClick={handleQueryItem}>
+          Item
         </Button>
         <Button variant='contained' color='error' onClick={handleLogout}>
           Logout

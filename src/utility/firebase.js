@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from 'firebase/app';
 import {
   GoogleAuthProvider,
@@ -97,18 +96,7 @@ const logout = () => {
 };
 
 const getUserDetails = async () => {
-  // try {
   const user = auth.currentUser;
-  //   const docs = await query(
-  //     collection(db, 'users'),
-  //     where('uid', '==', user.uid)
-  //   );
-  //   const res = await getDocs(docs);
-  //   console.log(res.docs);
-  // } catch (err) {
-  //   console.error(err);
-  // }
-
   const querySnapshot = await getDocs(
     collection(db, 'users'),
     where('uid', '==', user.uid)
@@ -127,4 +115,5 @@ export {
   sendPasswordReset,
   logout,
   getUserDetails,
+  getOneItem,
 };

@@ -25,30 +25,18 @@ exports.getAllItems = functions.https.onRequest((req, res) => {
 });
 
 // GET one item
-exports.getOneItem = functions.https.onRequest((req, res) => {
-  db.collection('items')
-    .doc(req.params.itemId)
-    .get()
-    .then((doc) => {
-      if (!doc.exists) {
-        return res.send('Item not found!');
-      }
-      let itemData = doc.data();
-      itemData.itemId = doc.id;
-      return res.json(itemData);
-    });
-});
-
-exports.getOneItemAgain = functions.https.onRequest((req, res) => {
-  db.collection('items')
-    .doc('17HU06h2RoYIizz9a9Cf')
-    .get()
-    .then((doc) => {
-      if (!doc.exists) {
-        return res.send('Item not found!');
-      }
-      let itemData = doc.data();
-      itemData.itemId = doc.id;
-      return res.json(itemData);
-    });
+exports.getItemById = functions.https.onRequest(async (req, res) => {
+  const itemId = req.path.substring(1); // assuming path parameter is passed as /{id}
+  const itemRef = db.collection('items').doc(itemId);
+  try {
+    const itemDoc = await itemRef.get();
+    if (itemDoc.exists) {
+      res.json(itemDoc.data());
+    } else {
+      res.status(404).json({ error: 'Item not found!' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Something went wrong!' });
+  }
 });
