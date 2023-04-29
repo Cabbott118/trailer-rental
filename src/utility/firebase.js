@@ -115,5 +115,4 @@ export {
   sendPasswordReset,
   logout,
   getUserDetails,
-  getOneItem,
 };
