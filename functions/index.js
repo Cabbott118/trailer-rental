@@ -26,17 +26,41 @@ exports.getAllItems = functions.https.onRequest((req, res) => {
 
 // GET one item
 exports.getItemById = functions.https.onRequest(async (req, res) => {
-  const itemId = req.path.substring(1); // assuming path parameter is passed as /{id}
-  const itemRef = db.collection('items').doc(itemId);
+  const itemId = req.params[0];
+  console.log(itemId);
   try {
-    const itemDoc = await itemRef.get();
-    if (itemDoc.exists) {
-      res.json(itemDoc.data());
-    } else {
-      res.status(404).json({ error: 'Item not found!' });
+    const snapshot = await admin
+      .firestore()
+      .collection('items')
+      .doc(itemId)
+      .get();
+    const data = snapshot.data();
+
+    if (!data) {
+      return res.status(404).send('Item not found');
     }
+
+    return res.status(200).send(data);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     res.status(500).json({ error: 'Something went wrong!' });
   }
+});
+
+exports.addItem = functions.https.onRequest(async (req, res) => {
+  const newItem = {
+    title: req.body.title,
+  };
+
+  db.collection('items')
+    .add(newItem)
+    .then((data) => {
+      const resNewItem = newItem;
+      resNewItem.itemId = data.id;
+      res.json(resNewItem);
+    })
+    .catch((error) => {
+      console.error(error);
+      res.status(500).json({ error: 'Something went wrong!' });
+    });
 });
