@@ -1,30 +1,48 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 // React-Router
 import { useNavigate } from 'react-router-dom';
 
-// Firebase
-import { logout, getUserDetails } from '../utility/firebase';
+// Functions
+import { getUserDetails } from '../functions/users/getUserDetails';
+import { getUsersItems } from '../functions/items/getUsersItems';
+import { logout } from '../functions/auth/logout';
 
 // MUI
-import { useTheme } from '@mui/material';
+// import { useTheme } from '@mui/material';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 const ProfilePage = () => {
-  const theme = useTheme();
+  // const theme = useTheme();
   const navigate = useNavigate();
 
-  const handleQuery = () => {
-    getUserDetails();
+  const [user, setUser] = useState({});
+  const [items, setItems] = useState([]);
+  const [loading, setLoading] = useState(false);
+
+  const handleLogout = async () => {
+    await logout();
+    navigate('/login');
   };
 
-  const handleLogout = () => {
-    logout();
-  };
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      const userData = await getUserDetails();
+      const usersItems = await getUsersItems();
+      setUser(userData);
+      setItems(usersItems);
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <Box
@@ -51,11 +69,17 @@ const ProfilePage = () => {
           variant='h1'
           sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
         >
-          Profile
+          {user.firstName} {user.lastName}
         </Typography>
-        <Button variant='contained' onClick={handleQuery}>
-          Query
-        </Button>
+        {items.map((item, key) => (
+          <Typography
+            key={key}
+            variant='h1'
+            sx={{ fontSize: '1rem', marginBottom: '1rem' }}
+          >
+            {item.title}
+          </Typography>
+        ))}
         <Button variant='contained' color='error' onClick={handleLogout}>
           Logout
         </Button>

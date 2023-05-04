@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // Firebase
-import { auth, getUserDetails } from '../utility/firebase';
+import { auth } from '../utility/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 // MUI
@@ -33,7 +33,7 @@ function Navbar(props) {
 
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [user, loading, error] = useAuthState(auth);
+  const [authUser, loading, error] = useAuthState(auth);
   const [navItems, setNavItems] = useState([]);
 
   const authNavItems = [
@@ -60,12 +60,13 @@ function Navbar(props) {
   ];
 
   useEffect(() => {
-    loading
-      ? setNavItems([])
-      : user
-      ? setNavItems(authNavItems)
-      : setNavItems(unAuthItems);
-  }, [user, loading]);
+    if (loading) setNavItems([]);
+    if (!loading && authUser) {
+      setNavItems(authNavItems);
+    } else {
+      setNavItems(unAuthItems);
+    }
+  }, [authUser, loading]);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);

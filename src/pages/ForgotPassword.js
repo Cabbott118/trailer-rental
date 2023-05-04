@@ -16,7 +16,7 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 
 // Firebase
-import { sendPasswordReset } from '../utility/firebase';
+import { sendPasswordReset } from '../functions/auth/sendPasswordReset';
 
 const ForgotPasswordPage = () => {
   const theme = useTheme();

@@ -4,11 +4,9 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 // Firebase
-import {
-  auth,
-  loginWithEmailAndPassword,
-  signInWithGoogle,
-} from '../utility/firebase';
+import { auth } from '../utility/firebase';
+import { loginWithEmailAndPassword } from '../functions/auth/loginWithEmailAndPassword';
+import { signInWithGoogle } from '../functions/auth/signInWithGoogle';
 
 import { useAuthState } from 'react-firebase-hooks/auth';
 
@@ -46,12 +44,7 @@ const LoginPage = () => {
   const [user, loading, error] = useAuthState(auth);
 
   useEffect(() => {
-    if (loading) {
-      console.log('Loading...');
-    }
-    if (user) {
-      navigate('/profile');
-    }
+    if (user) navigate('/profile');
   }, [user, loading]);
 
   const handleInputChange = (event) => {
@@ -67,7 +60,7 @@ const LoginPage = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     loginWithEmailAndPassword(formState.email, formState.password);
-    if (formState.email.length || formState.password.length === 0) {
+    if (formState.email.length && formState.password.length === 0) {
       setAlertType('error');
     }
   };
