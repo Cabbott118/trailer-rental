@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
 
+// React Query
+// import { useQuery } from 'react-query'
+
+// Components
+import Spinner from '../components/Spinner';
+
 // React-Router
 import { useNavigate } from 'react-router-dom';
 
@@ -8,20 +14,26 @@ import { getUserDetails } from '../functions/users/getUserDetails';
 import { getUsersItems } from '../functions/items/getUsersItems';
 import { logout } from '../functions/auth/logout';
 
+// Firebase
+import { auth } from '../utility/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
+
 // MUI
-// import { useTheme } from '@mui/material';
-import Box from '@mui/material/Box';
+import { useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
 import Container from '@mui/material/Container';
+import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 const ProfilePage = () => {
-  // const theme = useTheme();
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const [user, setUser] = useState({});
   const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [authUser, loading, error] = useAuthState(auth);
+  // const { data: user, isLoading, isError } = useQuery('userDetails', getUserDetails)
 
   const handleLogout = async () => {
     await logout();
@@ -29,41 +41,36 @@ const ProfilePage = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      const userData = await getUserDetails();
-      const usersItems = await getUsersItems();
-      setUser(userData);
-      setItems(usersItems);
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+    setIsLoading(true);
+    if (authUser) {
+      const { uid } = authUser.auth.currentUser;
+      const fetchData = async () => {
+        const userData = await getUserDetails(uid);
+        const usersItems = await getUsersItems(uid);
+        setUser(userData);
+        setItems(usersItems);
+        setIsLoading(false);
+      };
+      fetchData();
+    }
+  }, [authUser]);
 
-  if (loading) {
-    return <div>Loading...</div>;
+  if (isLoading) {
+    return <Spinner loading={isLoading} color={theme.palette.primary.main} />;
   }
 
   return (
-    <Box
+    <Container
+      maxWidth='sm'
       sx={{
-        marginTop: 8,
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
+        minHeight: '100vh',
       }}
     >
-      <Container
-        maxWidth='sm'
-        sx={{
-          minHeight: '100vh',
-          // backgroundColor: {
-          //   xs: theme.palette.primary.main,
-          //   sm: 'purple',
-          //   md: 'green',
-          //   lg: 'blue',
-          // },
-        }}
+      <Grid
+        container
+        direction='column'
+        justifyContent='center'
+        alignItems='center'
       >
         <Typography
           variant='h1'
@@ -83,8 +90,8 @@ const ProfilePage = () => {
         <Button variant='contained' color='error' onClick={handleLogout}>
           Logout
         </Button>
-      </Container>
-    </Box>
+      </Grid>
+    </Container>
   );
 };
 export default ProfilePage;
