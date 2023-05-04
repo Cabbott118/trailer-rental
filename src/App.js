@@ -1,4 +1,5 @@
 import React from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 // Components
 import Navbar from './components/Navbar';
@@ -19,12 +20,16 @@ import '@fontsource/roboto/700.css';
 // React-Router
 import { RouterProvider } from 'react-router-dom';
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <Navbar />
-      <RouterProvider router={router} />
+      <QueryClientProvider client={queryClient}>
+        <CssBaseline />
+        <Navbar />
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </ThemeProvider>
   );
 };

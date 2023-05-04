@@ -8,6 +8,8 @@ import HomePage from '../pages/Home';
 import ProfilePage from '../pages/Profile';
 import ForgotPasswordPage from '../pages/ForgotPassword';
 import ForgotPasswordConfirmationPage from '../pages/ForgotPasswordConfirmation';
+import AddItemFormPage from '../pages/AddItemForm';
+import ItemListPage from '../pages/Items';
 
 export const router = createBrowserRouter([
   {
@@ -38,6 +40,16 @@ export const router = createBrowserRouter([
   {
     path: '/profile',
     element: <ProfilePage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/add-item',
+    element: <AddItemFormPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/item-list',
+    element: <ItemListPage />,
     errorElement: <ErrorPage />,
   },
 ]);

@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 // React Query
-// import { useQuery } from 'react-query'
+import { useQuery } from 'react-query';
 
 // Components
 import Spinner from '../components/Spinner';
@@ -14,10 +14,6 @@ import { getUserDetails } from '../functions/users/getUserDetails';
 import { getUsersItems } from '../functions/items/getUsersItems';
 import { logout } from '../functions/auth/logout';
 
-// Firebase
-import { auth } from '../utility/firebase';
-import { useAuthState } from 'react-firebase-hooks/auth';
-
 // MUI
 import { useTheme } from '@mui/material';
 import Button from '@mui/material/Button';
@@ -29,34 +25,41 @@ const ProfilePage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
-  const [user, setUser] = useState({});
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [authUser, loading, error] = useAuthState(auth);
-  // const { data: user, isLoading, isError } = useQuery('userDetails', getUserDetails)
+  const {
+    data: user,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useQuery('userDetails', getUserDetails);
+
+  const {
+    data: items,
+    isLoading: isItemsLoading,
+    isError: isItemsError,
+  } = useQuery('usersItems', async () => {
+    const usersItems = await getUsersItems();
+    return usersItems;
+  });
 
   const handleLogout = async () => {
     await logout();
     navigate('/login');
   };
 
-  useEffect(() => {
-    setIsLoading(true);
-    if (authUser) {
-      const { uid } = authUser.auth.currentUser;
-      const fetchData = async () => {
-        const userData = await getUserDetails(uid);
-        const usersItems = await getUsersItems(uid);
-        setUser(userData);
-        setItems(usersItems);
-        setIsLoading(false);
-      };
-      fetchData();
-    }
-  }, [authUser]);
+  const loadingSpinner = (
+    <Spinner
+      loading={isUserLoading || isItemsLoading}
+      color={theme.palette.primary.main}
+      size={30}
+      type='clip'
+    />
+  );
 
-  if (isLoading) {
-    return <Spinner loading={isLoading} color={theme.palette.primary.main} />;
+  if (isUserError) {
+    return <div>Failed to load user details</div>;
+  }
+
+  if (isItemsError) {
+    return <div>Failed to load user's items</div>;
   }
 
   return (
@@ -64,6 +67,7 @@ const ProfilePage = () => {
       maxWidth='sm'
       sx={{
         minHeight: '100vh',
+        marginTop: 8,
       }}
     >
       <Grid
@@ -72,13 +76,14 @@ const ProfilePage = () => {
         justifyContent='center'
         alignItems='center'
       >
+        {loadingSpinner}
         <Typography
           variant='h1'
           sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
         >
-          {user.firstName} {user.lastName}
+          {user?.firstName} {user?.lastName}
         </Typography>
-        {items.map((item, key) => (
+        {items?.map((item, key) => (
           <Typography
             key={key}
             variant='h1'
@@ -94,4 +99,5 @@ const ProfilePage = () => {
     </Container>
   );
 };
+
 export default ProfilePage;
