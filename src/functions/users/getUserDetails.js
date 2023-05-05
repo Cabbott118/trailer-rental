@@ -9,7 +9,11 @@ export const getUserDetails = async () => {
   const querySnapshot = await getDocs(q);
   const userData = [];
   querySnapshot.forEach((doc) => {
-    userData.push(doc.data());
+    const data = doc.data();
+    userData.push({
+      id: doc.id,
+      ...data,
+    });
   });
   return userData[0]; // assuming there's only one user with the specified UID
 };

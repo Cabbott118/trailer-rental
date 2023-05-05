@@ -40,10 +40,7 @@ const HomePage = () => {
       >
         <Grid container spacing={2}>
           <Grid item xs={12} md={6}>
-            <Typography
-              variant='h1'
-              sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
-            >
+            <Typography variant='h1' sx={{ fontSize: '1.5rem', mb: '2rem' }}>
               {websiteTitle}
             </Typography>
           </Grid>
@@ -51,7 +48,7 @@ const HomePage = () => {
             {' '}
             <Typography
               variant='body1'
-              sx={{ color: theme.palette.text.secondary, marginBottom: '2rem' }}
+              sx={{ color: theme.palette.text.secondary, mb: '2rem' }}
             >
               {websiteTagline}
             </Typography>

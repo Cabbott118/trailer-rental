@@ -5,6 +5,8 @@ import { useQuery } from 'react-query';
 
 // Components
 import Spinner from '../components/Spinner';
+import ItemContainer from '../components/ItemContainer';
+import RegisterAsHostBox from '../components/RegisterAsHostBox';
 
 // React-Router
 import { useNavigate } from 'react-router-dom';
@@ -45,15 +47,6 @@ const ProfilePage = () => {
     navigate('/login');
   };
 
-  const loadingSpinner = (
-    <Spinner
-      loading={isUserLoading || isItemsLoading}
-      color={theme.palette.primary.main}
-      size={30}
-      type='clip'
-    />
-  );
-
   if (isUserError) {
     return <div>Failed to load user details</div>;
   }
@@ -62,42 +55,57 @@ const ProfilePage = () => {
     return <div>Failed to load user's items</div>;
   }
 
-  return (
+  const loadingSpinner = (
+    <Grid
+      container
+      direction='column'
+      justifyContent='center'
+      alignItems='center'
+      sx={{
+        minHeight: '75vh',
+      }}
+    >
+      <Spinner
+        loading={isItemsLoading}
+        color={theme.palette.primary.main}
+        size={30}
+        type='grid'
+      />
+    </Grid>
+  );
+
+  const profileLayout = (
     <Container
       maxWidth='sm'
       sx={{
         minHeight: '100vh',
-        marginTop: 8,
+        mt: 8,
       }}
     >
-      <Grid
-        container
-        direction='column'
-        justifyContent='center'
-        alignItems='center'
+      <Typography variant='h1' sx={{ fontSize: '1.5rem', mb: '2rem' }}>
+        <b>Welcome, </b>
+        {user?.firstName} {user?.lastName}
+      </Typography>
+      {items?.length !== 0 ? (
+        <ItemContainer items={items} />
+      ) : (
+        <RegisterAsHostBox />
+      )}
+      <Button
+        variant='contained'
+        color='error'
+        fullWidth
+        onClick={handleLogout}
+        sx={{
+          my: '1rem',
+          textTransform: 'none',
+        }}
       >
-        {loadingSpinner}
-        <Typography
-          variant='h1'
-          sx={{ fontSize: '1.5rem', marginBottom: '2rem' }}
-        >
-          {user?.firstName} {user?.lastName}
-        </Typography>
-        {items?.map((item, key) => (
-          <Typography
-            key={key}
-            variant='h1'
-            sx={{ fontSize: '1rem', marginBottom: '1rem' }}
-          >
-            {item.title}
-          </Typography>
-        ))}
-        <Button variant='contained' color='error' onClick={handleLogout}>
-          Logout
-        </Button>
-      </Grid>
+        Logout
+      </Button>
     </Container>
   );
+  return isItemsLoading ? loadingSpinner : profileLayout;
 };
 
 export default ProfilePage;

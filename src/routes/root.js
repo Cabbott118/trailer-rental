@@ -10,6 +10,7 @@ import ForgotPasswordPage from '../pages/ForgotPassword';
 import ForgotPasswordConfirmationPage from '../pages/ForgotPasswordConfirmation';
 import AddItemFormPage from '../pages/AddItemForm';
 import ItemListPage from '../pages/Items';
+import HostRegistrationPage from '../pages/HostRegistration';
 
 export const router = createBrowserRouter([
   {
@@ -43,13 +44,18 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
   },
   {
-    path: '/add-item',
-    element: <AddItemFormPage />,
+    path: '/item-list',
+    element: <ItemListPage />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/item-list',
-    element: <ItemListPage />,
+    path: '/begin-host-registration',
+    element: <HostRegistrationPage />,
+    errorElement: <ErrorPage />,
+  },
+  {
+    path: '/add-item',
+    element: <AddItemFormPage />,
     errorElement: <ErrorPage />,
   },
 ]);

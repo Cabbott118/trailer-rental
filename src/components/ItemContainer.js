@@ -13,7 +13,7 @@ import Paper from '@mui/material/Paper';
 const ItemContainer = ({ items }) => {
   const theme = useTheme();
 
-  return (
+  const itemContainer = (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 200 }} aria-label='simple table'>
         <TableHead>
@@ -38,6 +38,7 @@ const ItemContainer = ({ items }) => {
       </Table>
     </TableContainer>
   );
+  return items.length == 0 ? null : itemContainer;
 };
 
 export default ItemContainer;

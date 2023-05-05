@@ -5,6 +5,8 @@ import {
   ClipLoader,
   MoonLoader,
   PulseLoader,
+  GridLoader,
+  PropagateLoader,
 } from 'react-spinners';
 
 const Spinner = ({ loading, color, size, type }) => {
@@ -26,6 +28,11 @@ const Spinner = ({ loading, color, size, type }) => {
     case 'moon':
       SpinnerComponent = MoonLoader;
       break;
+    case 'grid':
+      SpinnerComponent = GridLoader;
+      break;
+    case 'propogate':
+      SpinnerComponent = PropagateLoader;
     case 'pulse':
     default:
       SpinnerComponent = PulseLoader;

@@ -22,7 +22,6 @@ const Navbar = () => {
 
   const [navItems, setNavItems] = useState([]);
   const [authUser, loading, error] = useAuthState(auth);
-
   const authNavItems = [
     {
       name: 'Home',
@@ -68,7 +67,7 @@ const Navbar = () => {
       loading={loading}
       color={theme.palette.primary.main}
       size={10}
-      type='beat'
+      type='propogate'
     />
   );
 
@@ -82,7 +81,7 @@ const Navbar = () => {
           position='static'
           sx={{ boxShadow: 'none' }}
         >
-          <Toolbar sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Toolbar sx={{ display: 'flex', justifyContent: 'right' }}>
             <Box
               sx={{
                 display: {

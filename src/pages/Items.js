@@ -49,7 +49,7 @@ const ItemListPage = () => {
     </Grid>
   );
 
-  const itemsContainer = (
+  const itemsLayout = (
     <Container maxWidth='sm'>
       <Grid
         container
@@ -62,7 +62,7 @@ const ItemListPage = () => {
     </Container>
   );
 
-  return isItemsLoading ? loadingSpinner : itemsContainer;
+  return isItemsLoading ? loadingSpinner : itemsLayout;
 };
 
 export default ItemListPage;
