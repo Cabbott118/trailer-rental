@@ -1,13 +1,27 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
+import 'index.css';
+import App from 'App';
 import reportWebVitals from './reportWebVitals';
+
+// Importing reactfire providers
+import { AuthProvider, FirebaseAppProvider } from 'reactfire';
+import { auth, firebaseApp } from 'providers/firebase';
+
+// Redux
+import { Provider } from 'react-redux';
+import store from 'store/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <FirebaseAppProvider firebaseApp={firebaseApp}>
+      <AuthProvider sdk={auth}>
+        <Provider store={store}>
+          <App />
+        </Provider>
+      </AuthProvider>
+    </FirebaseAppProvider>
   </React.StrictMode>
 );
 
