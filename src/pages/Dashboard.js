@@ -23,14 +23,14 @@ export default function Dashboard() {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const { uid } = useParams();
 
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.user);
-  console.log(uid);
 
   useEffect(() => {
-    dispatch(fetchUser(uid));
+    if (data && data.uid) {
+      dispatch(fetchUser(data.uid));
+    }
   }, []);
 
   function handleSignOut(event) {

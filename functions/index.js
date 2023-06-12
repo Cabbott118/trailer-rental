@@ -16,7 +16,7 @@ app.post('/createUser', async (req, res) => {
     const newUser = {
       email,
       legalName,
-      userId: uid,
+      uid,
       authProvider: 'local',
       userType: 'normal',
     };
