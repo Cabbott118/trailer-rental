@@ -4,7 +4,14 @@ import { useEffect, useState } from 'react';
 import routes from 'constants/routes';
 
 // MUI
-import { AppBar, Box, Button, Container, Toolbar } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  Toolbar,
+  useTheme,
+} from '@mui/material';
 
 // React Router
 import { Link, Outlet } from 'react-router-dom';
@@ -13,18 +20,12 @@ import { Link, Outlet } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 export default function Navbar() {
+  const theme = useTheme();
+  const { data, isAuthenticated } = useSelector((state) => state.user);
   const [navLinks, setNavLinks] = useState([]);
-  const { data } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (data) {
-      setNavLinks([
-        {
-          name: 'Dashboard',
-          route: `${routes.USER}/${data.uid}/dashboard`,
-        },
-      ]);
-    } else {
+    if (!isAuthenticated) {
       setNavLinks([
         {
           name: 'Login',
@@ -35,8 +36,16 @@ export default function Navbar() {
           route: routes.SIGNUP,
         },
       ]);
+    } else {
+      setNavLinks([
+        {
+          name: 'Dashboard',
+          route: `${routes.USER}/${data.uid}/dashboard`,
+        },
+      ]);
     }
-  }, [data]);
+  }, [isAuthenticated]);
+
   return (
     <>
       <Box sx={{ flexGrow: 1 }}>
@@ -48,12 +57,26 @@ export default function Navbar() {
           >
             <Toolbar>
               <Link to={routes.HOME} style={{ flexGrow: 1 }}>
-                <Button sx={{ textTransform: 'none' }}>Home</Button>
+                <Button
+                  sx={{
+                    textTransform: 'none',
+                    color: theme.palette.secondary.dark,
+                  }}
+                >
+                  Home
+                </Button>
               </Link>
 
-              {navLinks.map((navLink, index) => (
-                <Link key={index} to={navLink.route}>
-                  <Button sx={{ textTransform: 'none' }}>{navLink.name}</Button>
+              {navLinks.map((navLink) => (
+                <Link key={navLink.name} to={navLink.route}>
+                  <Button
+                    sx={{
+                      textTransform: 'none',
+                      color: theme.palette.secondary.dark,
+                    }}
+                  >
+                    {navLink.name}
+                  </Button>
                 </Link>
               ))}
             </Toolbar>

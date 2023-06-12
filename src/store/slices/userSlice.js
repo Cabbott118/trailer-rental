@@ -138,6 +138,7 @@ const userSlice = createSlice({
         return {
           loading: false,
           error: action.payload,
+          isAuthenticated: false,
         };
       })
       // Sign up user
@@ -180,7 +181,7 @@ const userSlice = createSlice({
           error: action.payload,
         };
       })
-
+      // Create user record
       .addCase(createUser.pending, (state) => {
         return {
           loading: true,
@@ -199,7 +200,7 @@ const userSlice = createSlice({
           error: action.error.message,
         };
       })
-      // fetchUser
+      // Get user record details
       .addCase(fetchUser.pending, (state) => {
         return {
           loading: true,
@@ -210,15 +211,17 @@ const userSlice = createSlice({
         return {
           loading: false,
           data: action.payload,
+          isAuthenticated: true,
         };
       })
       .addCase(fetchUser.rejected, (state, action) => {
         return {
           loading: false,
           error: action.error.message,
+          isAuthenticated: false,
         };
       })
-      // updateUser
+      // Update user record details
       .addCase(updateUser.pending, (state) => {
         return {
           loading: true,

@@ -1,17 +1,21 @@
 import { Navigate, useLocation } from 'react-router-dom';
-import { useSigninCheck } from 'reactfire';
+
+// Firebase
+// import { useSigninCheck } from 'reactfire';
+
+// Redux
+import { useSelector } from 'react-redux';
+
+// Routes
+import routes from 'constants/routes';
 
 export default function RequireAuth({ children }) {
-  const { data: signInCheckResult, status: signInCheckStatus } =
-    useSigninCheck();
+  const { isAuthenticated } = useSelector((state) => state.user);
+
   const location = useLocation();
 
-  if (signInCheckStatus !== 'success') {
-    return <p>{signInCheckStatus}</p>;
-  }
-
-  if (!signInCheckResult.user) {
-    return <Navigate to='/login' state={{ from: location }} replace />;
+  if (isAuthenticated === false) {
+    return <Navigate to={routes.LOGIN} state={{ from: location }} replace />;
   }
 
   return children;
