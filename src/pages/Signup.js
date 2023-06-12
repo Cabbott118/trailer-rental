@@ -6,7 +6,14 @@ import AuthenticationHeader from 'components/common/AuthenticationHeader';
 import AuthenticationFooter from 'components/common/AuthenticationFooter';
 
 // MUI
-import { Box, Button, Container, Grid, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  InputAdornment,
+  TextField,
+} from '@mui/material';
 
 // React Router
 import { Navigate } from 'react-router-dom';
@@ -124,6 +131,18 @@ export default function Signup() {
               fullWidth
               value={password}
               onChange={handlePasswordChange}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    variant='text'
+                    color='secondary'
+                    onClick={handleClickShowPassword}
+                    sx={{ textTransform: 'none' }}
+                  >
+                    {!showPassword ? 'Show' : 'Hide'}
+                  </Button>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={12}>
@@ -136,22 +155,11 @@ export default function Signup() {
               onChange={handleConfirmPasswordChange}
             />
           </Grid>
-          {isAlertShowing ? (
+          {isAlertShowing && (
             <Grid item xs={12}>
               <Alert text='Please fill out required fields' severity='error' />
             </Grid>
-          ) : null}
-          <Grid item xs={12}>
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={handleClickShowPassword}
-              fullWidth
-              sx={{ textTransform: 'none' }}
-            >
-              {!showPassword ? 'Show' : 'Hide'}
-            </Button>
-          </Grid>
+          )}
           <Grid item xs={12}>
             <Button
               variant='contained'

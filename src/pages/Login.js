@@ -77,24 +77,25 @@ export default function Login() {
               fullWidth
               value={password}
               onChange={handlePasswordChange}
+              InputProps={{
+                endAdornment: (
+                  <Button
+                    variant='text'
+                    color='secondary'
+                    onClick={handleClickShowPassword}
+                    sx={{ textTransform: 'none' }}
+                  >
+                    {!showPassword ? 'Show' : 'Hide'}
+                  </Button>
+                ),
+              }}
             />
           </Grid>
-          {isAlertShowing ? (
+          {isAlertShowing && (
             <Grid item xs={12}>
               <Alert text='Invalid email or password' severity='error' />
             </Grid>
-          ) : null}
-          <Grid item xs={12}>
-            <Button
-              variant='contained'
-              color='secondary'
-              onClick={handleClickShowPassword}
-              fullWidth
-              sx={{ textTransform: 'none' }}
-            >
-              {!showPassword ? 'Show' : 'Hide'}
-            </Button>
-          </Grid>
+          )}
           <Grid item xs={12}>
             <Button
               variant='contained'
