@@ -13,7 +13,7 @@ import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from 'store/slices/userSlice';
+import { loginUser, fetchUser } from 'store/slices/userSlice';
 
 export default function Login() {
   const pageName = 'Login';
@@ -51,7 +51,6 @@ export default function Login() {
   };
 
   if (isAuthenticated) {
-    console.log(data);
     const { uid } = data;
     return <Navigate to={`/user/${uid}/dashboard`} replace />;
   }
