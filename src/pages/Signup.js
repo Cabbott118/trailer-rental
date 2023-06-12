@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
@@ -13,10 +13,10 @@ import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser } from 'store/slices/userSlice';
+import { signUpUser, createUser } from 'store/slices/userSlice';
 
-export default function Login() {
-  const pageName = 'Login';
+export default function Signup() {
+  const pageName = 'Sign up';
   document.title = pageName;
 
   const dispatch = useDispatch();
@@ -24,10 +24,21 @@ export default function Login() {
     (state) => state.user
   );
 
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isAlertShowing, setIsAlertShowing] = useState(false);
+
+  const handleFirstNameChange = (event) => {
+    setFirstName(event.target.value);
+  };
+
+  const handleLasttNameChange = (event) => {
+    setLastName(event.target.value);
+  };
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -37,11 +48,15 @@ export default function Login() {
     setPassword(event.target.value);
   };
 
+  const handleConfirmPasswordChange = (event) => {
+    setConfirmPassword(event.target.value);
+  };
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    dispatch(loginUser({ email, password }));
+    dispatch(signUpUser({ email, password }));
     if (error) {
       setIsAlertShowing(true);
       setTimeout(() => {
@@ -49,6 +64,16 @@ export default function Login() {
       }, 5000);
     }
   };
+
+  useEffect(() => {
+    if (data?.uid) {
+      const legalName = {
+        firstName,
+        lastName,
+      };
+      dispatch(createUser({ email, uid: data.uid, legalName }));
+    }
+  }, [data]);
 
   if (isAuthenticated) {
     console.log(data);
@@ -61,6 +86,27 @@ export default function Login() {
       <Container maxWidth='xs'>
         <AuthenticationHeader title={pageName} />
         <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <TextField
+              id='firstName'
+              label='First Name'
+              name='firstName'
+              type='text'
+              value={firstName}
+              onChange={handleFirstNameChange}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <TextField
+              id='lastName'
+              label='Last Name'
+              name='lastName'
+              type='text'
+              value={lastName}
+              onChange={handleLasttNameChange}
+            />
+          </Grid>
+
           <Grid item xs={12}>
             <TextField
               label='Email'
@@ -80,9 +126,19 @@ export default function Login() {
               onChange={handlePasswordChange}
             />
           </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label='Confirm Password'
+              variant='outlined'
+              type='password'
+              fullWidth
+              value={confirmPassword}
+              onChange={handleConfirmPasswordChange}
+            />
+          </Grid>
           {isAlertShowing ? (
             <Grid item xs={12}>
-              <Alert text='Invalid email or password' severity='error' />
+              <Alert text='Please fill out required fields' severity='error' />
             </Grid>
           ) : null}
           <Grid item xs={12}>
@@ -104,7 +160,7 @@ export default function Login() {
               disabled={loading}
               sx={{ textTransform: 'none' }}
             >
-              Login
+              Sign up
             </Button>
           </Grid>
         </Grid>

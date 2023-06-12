@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '',
+  baseURL: process.env.REACT_APP_FIREBASE_BASE_URL,
 });
 
 export const get = async (path, params = {}) => {

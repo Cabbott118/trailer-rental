@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { userReducer } from './slices/userReducer';
+import { userReducer } from './slices/userSlice';
 
 const persistedState = localStorage.getItem('reduxState');
 const initialState = persistedState ? JSON.parse(persistedState) : {};

@@ -9,7 +9,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 
 // Redux
 import { useDispatch } from 'react-redux';
-import { clearData } from 'store/slices/userReducer';
+import { clearData } from 'store/slices/userSlice';
 
 export default function Dashboard() {
   document.title = 'Dashboard';

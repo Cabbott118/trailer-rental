@@ -14,14 +14,14 @@ import { useSelector } from 'react-redux';
 
 export default function Navbar() {
   const [navLinks, setNavLinks] = useState([]);
-  const { data, loading } = useSelector((state) => state.user);
+  const { data } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (data) {
       setNavLinks([
         {
           name: 'Dashboard',
-          route: `${routes.USER}/${data.userId}/dashboard`,
+          route: `${routes.USER}/${data.uid}/dashboard`,
         },
       ]);
     } else {
