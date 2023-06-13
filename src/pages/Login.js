@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
@@ -13,7 +13,7 @@ import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, fetchUser } from 'store/slices/userSlice';
+import { loginUser, clearData } from 'store/slices/userSlice';
 
 export default function Login() {
   const pageName = 'Login';
@@ -41,14 +41,18 @@ export default function Login() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    dispatch(clearData());
     dispatch(loginUser({ email, password }));
+  };
+
+  useEffect(() => {
     if (error) {
       setIsAlertShowing(true);
       setTimeout(() => {
         setIsAlertShowing(false);
       }, 5000);
     }
-  };
+  }, [error]);
 
   if (isAuthenticated) {
     const { uid } = data;

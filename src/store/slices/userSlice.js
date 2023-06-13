@@ -9,13 +9,14 @@ import { login, signup, logout } from 'services/userServices';
 
 // Async thunk to log in a user
 const loginUser = createAsyncThunk(
-  'auth/loginUser',
+  'user/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
       // Call the signInWithEmailAndPassword function from your authentication service
       const user = await login(email, password);
       return user;
     } catch (error) {
+      console.log(error);
       return rejectWithValue(error.message);
     }
   }
@@ -23,7 +24,7 @@ const loginUser = createAsyncThunk(
 
 // Async thunk to sign up a user
 const signUpUser = createAsyncThunk(
-  'auth/signUpUser',
+  'user/signUpUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
       // Call the createUserWithEmailAndPassword function from your authentication service
@@ -37,7 +38,7 @@ const signUpUser = createAsyncThunk(
 
 // Async thunk to log out a user
 const logoutUser = createAsyncThunk(
-  'auth/logoutUser',
+  'user/logoutUser',
   async (_, { rejectWithValue }) => {
     try {
       // Call the signOut function from your authentication service
@@ -106,7 +107,7 @@ const userSlice = createSlice({
     data: null,
     isAuthenticated: false,
     loading: false,
-    error: false,
+    error: null,
   },
   reducers: {
     clearData: (state) => {
@@ -114,7 +115,7 @@ const userSlice = createSlice({
         data: null,
         isAuthenticated: false,
         loading: false,
-        error: false,
+        error: null,
       };
     },
   },
@@ -129,16 +130,17 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         return {
-          loading: false,
           data: action.payload,
           isAuthenticated: true,
+          loading: false,
+          error: null,
         };
       })
       .addCase(loginUser.rejected, (state, action) => {
         return {
+          isAuthenticated: false,
           loading: false,
           error: action.payload,
-          isAuthenticated: false,
         };
       })
       // Sign up user
@@ -150,9 +152,10 @@ const userSlice = createSlice({
       })
       .addCase(signUpUser.fulfilled, (state, action) => {
         return {
-          loading: false,
           data: action.payload,
           isAuthenticated: true,
+          loading: false,
+          error: null,
         };
       })
       .addCase(signUpUser.rejected, (state, action) => {
@@ -170,9 +173,10 @@ const userSlice = createSlice({
       })
       .addCase(logoutUser.fulfilled, (state) => {
         return {
-          loading: false,
           data: null,
           isAuthenticated: false,
+          loading: false,
+          error: null,
         };
       })
       .addCase(logoutUser.rejected, (state, action) => {
@@ -190,8 +194,10 @@ const userSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         return {
-          loading: false,
           data: action.payload,
+          isAuthenticated: true,
+          loading: false,
+          error: null,
         };
       })
       .addCase(createUser.rejected, (state, action) => {
@@ -209,16 +215,17 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         return {
-          loading: false,
           data: action.payload,
           isAuthenticated: true,
+          loading: false,
+          error: null,
         };
       })
       .addCase(fetchUser.rejected, (state, action) => {
         return {
+          isAuthenticated: false,
           loading: false,
           error: action.error.message,
-          isAuthenticated: false,
         };
       })
       // Update user record details
@@ -230,8 +237,8 @@ const userSlice = createSlice({
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         return {
-          loading: false,
           data: action.payload,
+          loading: false,
         };
       })
       .addCase(updateUser.rejected, (state, action) => {

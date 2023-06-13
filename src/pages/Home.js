@@ -1,6 +1,3 @@
-// Assets
-import backgroundImage from 'assets/images/pexels-quintin-gellar-313782.jpg';
-
 // MUI
 import { Box, Container, Typography, useTheme } from '@mui/material';
 

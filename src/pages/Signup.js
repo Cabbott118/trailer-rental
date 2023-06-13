@@ -6,21 +6,14 @@ import AuthenticationHeader from 'components/common/AuthenticationHeader';
 import AuthenticationFooter from 'components/common/AuthenticationFooter';
 
 // MUI
-import {
-  Box,
-  Button,
-  Container,
-  Grid,
-  InputAdornment,
-  TextField,
-} from '@mui/material';
+import { Box, Button, Container, Grid, TextField } from '@mui/material';
 
 // React Router
 import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser, createUser } from 'store/slices/userSlice';
+import { signUpUser, createUser, clearData } from 'store/slices/userSlice';
 
 export default function Signup() {
   const pageName = 'Sign up';
@@ -63,14 +56,18 @@ export default function Signup() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    dispatch(clearData());
     dispatch(signUpUser({ email, password }));
+  };
+
+  useEffect(() => {
     if (error) {
       setIsAlertShowing(true);
       setTimeout(() => {
         setIsAlertShowing(false);
       }, 5000);
     }
-  };
+  }, [error]);
 
   useEffect(() => {
     if (data?.uid) {
