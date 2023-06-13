@@ -10,6 +10,8 @@ import Login from 'pages/Login';
 import Signup from 'pages/Signup';
 import Dashboard from 'pages/Dashboard';
 import Home from 'pages/Home';
+import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
+import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
 import RequireAuth from 'routes/requireAuth';
 
 // React Router
@@ -49,6 +51,11 @@ function App() {
           </Route>
           <Route path='/login' element={<Login />} />
           <Route path='/signup' element={<Signup />} />
+          <Route path='/forgot-password' element={<ForgotPassword />} />
+          <Route
+            path='/forgot-password-confirmation'
+            element={<ForgotPasswordConfirmation />}
+          />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>

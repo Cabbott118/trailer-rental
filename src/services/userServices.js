@@ -17,6 +17,7 @@ export const login = async (email, password) => {
     // You can customize the user object to include any additional data you need
     return { uid: user.uid, email: user.email };
   } catch (error) {
+    console.log(error.message);
     throw new Error(error.message);
   }
 };

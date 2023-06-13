@@ -8,6 +8,9 @@ import AuthenticationFooter from 'components/common/AuthenticationFooter';
 // MUI
 import { Box, Button, Container, Grid, TextField } from '@mui/material';
 
+// React Hook Form
+import { useForm } from 'react-hook-form';
+
 // React Router
 import { Navigate } from 'react-router-dom';
 
@@ -19,43 +22,26 @@ export default function Signup() {
   const pageName = 'Sign up';
   document.title = pageName;
 
+  const [showPassword, setShowPassword] = useState(false);
+  const [isAlertShowing, setIsAlertShowing] = useState(false);
+
   const dispatch = useDispatch();
   const { data, loading, isAuthenticated, error } = useSelector(
     (state) => state.user
   );
 
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [isAlertShowing, setIsAlertShowing] = useState(false);
-
-  const handleFirstNameChange = (event) => {
-    setFirstName(event.target.value);
-  };
-
-  const handleLasttNameChange = (event) => {
-    setLastName(event.target.value);
-  };
-
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
-  };
-
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const {
+    register,
+    formState: { errors },
+    getValues,
+    handleSubmit,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log(data);
+    const { email, password } = data;
     dispatch(clearData());
     dispatch(signUpUser({ email, password }));
   };
@@ -64,6 +50,7 @@ export default function Signup() {
     if (error) {
       setIsAlertShowing(true);
       setTimeout(() => {
+        dispatch(clearData());
         setIsAlertShowing(false);
       }, 5000);
     }
@@ -71,63 +58,64 @@ export default function Signup() {
 
   useEffect(() => {
     if (data?.uid) {
-      const legalName = {
-        firstName,
-        lastName,
-      };
+      const { email, legalName } = getValues();
       dispatch(createUser({ email, uid: data.uid, legalName }));
     }
   }, [data]);
 
   if (isAuthenticated) {
-    console.log(data);
     const { uid } = data;
     return <Navigate to={`/user/${uid}/dashboard`} replace />;
   }
 
   return (
-    <Box component='form' onSubmit={handleSubmit}>
+    <Box component='form' onSubmit={handleSubmit(onSubmit)}>
       <Container maxWidth='xs'>
         <AuthenticationHeader title={pageName} />
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <TextField
-              id='firstName'
               label='First Name'
-              name='firstName'
-              type='text'
-              value={firstName}
-              onChange={handleFirstNameChange}
+              {...register('legalName.firstName', { required: true })}
+              error={errors.legalName?.firstName?.type === 'required'}
+              helperText={
+                errors.legalName?.firstName?.type === 'required' &&
+                'First name is required'
+              }
             />
           </Grid>
           <Grid item xs={6}>
             <TextField
-              id='lastName'
               label='Last Name'
-              name='lastName'
-              type='text'
-              value={lastName}
-              onChange={handleLasttNameChange}
+              {...register('legalName.lastName', { required: true })}
+              error={errors.legalName?.lastName?.type === 'required'}
+              helperText={
+                errors.legalName?.lastName?.type === 'required' &&
+                'Last name is required'
+              }
             />
           </Grid>
-
           <Grid item xs={12}>
             <TextField
               label='Email'
-              variant='outlined'
               fullWidth
-              value={email}
-              onChange={handleEmailChange}
+              {...register('email', { required: true })}
+              error={errors.email?.type === 'required'}
+              helperText={
+                errors.email?.type === 'required' && 'Email is required'
+              }
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
               label='Password'
-              variant='outlined'
               type={showPassword ? 'text' : 'password'}
               fullWidth
-              value={password}
-              onChange={handlePasswordChange}
+              {...register('password', { required: true })}
+              error={errors.password?.type === 'required'}
+              helperText={
+                errors.password?.type === 'required' && 'Password is required'
+              }
               InputProps={{
                 endAdornment: (
                   <Button
@@ -145,11 +133,14 @@ export default function Signup() {
           <Grid item xs={12}>
             <TextField
               label='Confirm Password'
-              variant='outlined'
               type='password'
               fullWidth
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
+              {...register('confirmPassword', { required: true })}
+              error={errors.confirmPassword?.type === 'required'}
+              helperText={
+                errors.confirmPassword?.type === 'required' &&
+                'Confirm password is required'
+              }
             />
           </Grid>
           {isAlertShowing && (
