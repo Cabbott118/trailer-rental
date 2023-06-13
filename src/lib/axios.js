@@ -41,9 +41,9 @@ export const patch = async (path, data = {}) => {
   }
 };
 
-export const del = async (path) => {
+export const del = async (path, params = {}) => {
   try {
-    const response = await api.delete(path);
+    const response = await api.delete(path, { params });
     return response.data;
   } catch (error) {
     throw new Error(error.message);

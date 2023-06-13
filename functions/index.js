@@ -77,4 +77,21 @@ app.patch('/updateUser', async (req, res) => {
   }
 });
 
+app.delete('/deleteUserRecord', async (req, res) => {
+  try {
+    const { uid } = req.query;
+    const userRef = admin.firestore().collection('users').doc(uid);
+
+    // Delete the user record from Firestore
+    await userRef.delete();
+
+    return res
+      .status(200)
+      .json({ message: 'User record deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting user record', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 exports.api = functions.https.onRequest(app);

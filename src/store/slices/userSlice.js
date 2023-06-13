@@ -1,18 +1,23 @@
 // Lib
-import { get, post, patch } from 'lib/axios';
+import { get, post, patch, del } from 'lib/axios';
 
 // Redux
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 // Services
-import { login, signup, logout } from 'services/userServices';
+import {
+  login,
+  signup,
+  logout,
+  deleteCredentials,
+} from 'services/userServices';
 
 // Async thunk to log in a user
 const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      // Call the signInWithEmailAndPassword function from your authentication service
+      // Call the signInWithEmailAndPassword function from the authentication service
       const user = await login(email, password);
       return user;
     } catch (error) {
@@ -27,7 +32,7 @@ const signUpUser = createAsyncThunk(
   'user/signUpUser',
   async ({ email, password }, { rejectWithValue }) => {
     try {
-      // Call the createUserWithEmailAndPassword function from your authentication service
+      // Call the createUserWithEmailAndPassword function from the authentication service
       const user = await signup(email, password);
       return user;
     } catch (error) {
@@ -41,8 +46,21 @@ const logoutUser = createAsyncThunk(
   'user/logoutUser',
   async (_, { rejectWithValue }) => {
     try {
-      // Call the signOut function from your authentication service
+      // Call the signOut function from the authentication service
       await logout();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk to log out a user
+const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async (_, { rejectWithValue }) => {
+    try {
+      // Call the deleteCredentials function from the authentication service
+      await deleteCredentials();
     } catch (error) {
       return rejectWithValue(error.message);
     }
@@ -95,6 +113,18 @@ const updateUser = createAsyncThunk(
       return response.user;
     } catch (error) {
       throw new Error('Failed to update user data.');
+    }
+  }
+);
+
+const deleteUserRecord = createAsyncThunk(
+  'user/deleteUserRecord',
+  async (uid) => {
+    try {
+      const response = await del('/deleteUserRecord', { uid });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to delete user data.');
     }
   }
 );
@@ -185,6 +215,27 @@ const userSlice = createSlice({
           error: action.payload,
         };
       })
+      // Delete user
+      .addCase(deleteUser.pending, (state) => {
+        return {
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(deleteUser.fulfilled, (state) => {
+        return {
+          data: null,
+          isAuthenticated: false,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(deleteUser.rejected, (state, action) => {
+        return {
+          loading: false,
+          error: action.payload,
+        };
+      })
       // Create user record
       .addCase(createUser.pending, (state) => {
         return {
@@ -246,6 +297,27 @@ const userSlice = createSlice({
           loading: false,
           error: action.error.message,
         };
+      })
+      // Delete user
+      .addCase(deleteUserRecord.pending, (state) => {
+        return {
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(deleteUserRecord.fulfilled, (state) => {
+        return {
+          data: null,
+          isAuthenticated: false,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(deleteUserRecord.rejected, (state, action) => {
+        return {
+          loading: false,
+          error: action.error.message,
+        };
       });
   },
 });
@@ -256,8 +328,10 @@ export {
   loginUser,
   signUpUser,
   logoutUser,
+  deleteUser,
   createUser,
   fetchUser,
   updateUser,
+  deleteUserRecord,
   clearData,
 };

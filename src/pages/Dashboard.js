@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 // Components
 import Logout from 'components/common/Logout';
@@ -9,7 +9,13 @@ import getUserInitials from 'services/helpers/getUserInitials';
 // MUI
 import {
   Avatar,
+  Button,
   Container,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   Grid,
   Paper,
   Skeleton,
@@ -19,7 +25,11 @@ import {
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from 'store/slices/userSlice';
+import {
+  fetchUser,
+  deleteUser,
+  deleteUserRecord,
+} from 'store/slices/userSlice';
 
 export default function Dashboard() {
   const theme = useTheme();
@@ -29,11 +39,31 @@ export default function Dashboard() {
 
   document.title = `${data?.legalName?.firstName}'s Dashboard`;
 
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   useEffect(() => {
     if (data && data.uid) {
       dispatch(fetchUser(data.uid));
     }
   }, []);
+
+  const handleClickOpenDialog = () => {
+    setDialogOpen(true);
+  };
+
+  const handleCloseDialog = () => {
+    setDialogOpen(false);
+  };
+
+  const handleDeleteAccount = () => {
+    dispatch(deleteUser())
+      .then(() => {
+        dispatch(deleteUserRecord(data.uid));
+      })
+      .catch((error) => {
+        console.log('Error deleting user:', error);
+      });
+  };
 
   return (
     <Container maxWidth='sm'>
@@ -100,6 +130,46 @@ export default function Dashboard() {
           </Grid>
           <Grid item sx={{ m: '3rem 0 1rem' }}>
             <Logout />
+          </Grid>
+          <Grid item sx={{ m: '3rem 0 1rem' }}>
+            <Button
+              fullWidth
+              color='error'
+              onClick={handleClickOpenDialog}
+              sx={{ textTransform: 'none' }}
+            >
+              Delete Account
+            </Button>
+            <Dialog
+              open={dialogOpen}
+              onClose={handleCloseDialog}
+              aria-labelledby='alert-dialog-title'
+              aria-describedby='alert-dialog-description'
+            >
+              <DialogTitle id='alert-dialog-title'>
+                {'Are you sure?'}
+              </DialogTitle>
+              <DialogContent>
+                <DialogContentText id='alert-dialog-description'>
+                  If you delete your account, you will lose all your stuff, bro.
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button
+                  onClick={handleCloseDialog}
+                  sx={{ textTransform: 'none' }}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  onClick={handleDeleteAccount}
+                  sx={{ textTransform: 'none' }}
+                  autoFocus
+                >
+                  Delete Account
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Grid>
       </Paper>

@@ -1,6 +1,7 @@
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
+  deleteUser,
 } from 'firebase/auth';
 
 import { auth } from 'providers/firebase';
@@ -42,6 +43,20 @@ export const signup = async (email, password) => {
 export const logout = async () => {
   try {
     await auth.signOut();
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
+
+// Function to delete the current user
+export const deleteCredentials = async () => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      await deleteUser(user);
+    } else {
+      throw new Error('No user is currently signed in.');
+    }
   } catch (error) {
     throw new Error(error.message);
   }
