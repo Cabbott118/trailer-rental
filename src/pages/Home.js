@@ -1,15 +1,25 @@
+import { useEffect } from 'react';
+
 // MUI
 import { Box, Container, Typography, useTheme } from '@mui/material';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from 'store/slices/userSlice';
 
 export default function Home() {
   document.title = 'Home';
 
   const theme = useTheme();
 
+  const dispatch = useDispatch();
   const { data } = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (data && data.uid) {
+      dispatch(fetchUser(data.uid));
+    }
+  }, []);
 
   const headingStyle = {
     textTransform: 'uppercase',
@@ -34,7 +44,6 @@ export default function Home() {
       sx={{
         minHeight: '15rem',
         py: '3rem',
-        // backgroundImage: `url(${backgroundImage})`,
         backgroundImage: `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
       }}
     >

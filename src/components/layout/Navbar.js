@@ -3,6 +3,9 @@ import { useEffect, useState } from 'react';
 // Constants
 import routes from 'constants/routes';
 
+// Firebase
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 // MUI
 import {
   AppBar,
@@ -21,30 +24,33 @@ import { useSelector } from 'react-redux';
 
 export default function Navbar() {
   const theme = useTheme();
-  const { data, isAuthenticated } = useSelector((state) => state.user);
+  const { data } = useSelector((state) => state.user);
   const [navLinks, setNavLinks] = useState([]);
+  const auth = getAuth();
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      setNavLinks([
-        {
-          name: 'Login',
-          route: routes.LOGIN,
-        },
-        {
-          name: 'Signup',
-          route: routes.SIGNUP,
-        },
-      ]);
-    } else {
-      setNavLinks([
-        {
-          name: 'Dashboard',
-          route: `${routes.USER}/${data.uid}/dashboard`,
-        },
-      ]);
-    }
-  }, [isAuthenticated]);
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setNavLinks([
+          {
+            name: 'Dashboard',
+            route: `${routes.USER}/${user?.uid}/dashboard`,
+          },
+        ]);
+      } else {
+        setNavLinks([
+          {
+            name: 'Login',
+            route: routes.LOGIN,
+          },
+          {
+            name: 'Signup',
+            route: routes.SIGNUP,
+          },
+        ]);
+      }
+    });
+  }, [onAuthStateChanged]);
 
   return (
     <>

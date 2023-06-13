@@ -5,6 +5,9 @@ import Alert from 'components/common/Alert';
 import AuthenticationHeader from 'components/common/AuthenticationHeader';
 import AuthenticationFooter from 'components/common/AuthenticationFooter';
 
+// Constants
+import routes from 'constants/routes';
+
 // MUI
 import { Box, Button, Container, Grid, TextField } from '@mui/material';
 
@@ -56,7 +59,7 @@ export default function Login() {
 
   if (isAuthenticated) {
     const { uid } = data;
-    return <Navigate to={`/user/${uid}/dashboard`} replace />;
+    return <Navigate to={routes.HOME} replace />;
   }
 
   return (
