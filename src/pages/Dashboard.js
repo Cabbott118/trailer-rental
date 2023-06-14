@@ -28,8 +28,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchUser,
   deleteUser,
-  deleteUserRecord,
-  clearData,
+  // deleteUserRecord,
 } from 'store/slices/userSlice';
 
 export default function Dashboard() {
@@ -57,13 +56,13 @@ export default function Dashboard() {
   };
 
   const handleDeleteAccount = () => {
-    dispatch(deleteUser())
-      .then(() => {
-        dispatch(deleteUserRecord(data.uid));
-      })
-      .catch((error) => {
-        console.log('Error deleting user:', error);
-      });
+    dispatch(deleteUser(data.uid));
+    // .then(() => {
+    //   dispatch(deleteUserRecord(data.uid));
+    // })
+    // .catch((error) => {
+    //   console.log('Error deleting user:', error);
+    // });
   };
 
   return (

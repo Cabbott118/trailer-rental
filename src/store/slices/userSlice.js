@@ -54,18 +54,16 @@ const logoutUser = createAsyncThunk(
   }
 );
 
-// Async thunk to delete a user's credentials
-const deleteUser = createAsyncThunk(
-  'user/deleteUser',
-  async (_, { rejectWithValue }) => {
-    try {
-      // Call the deleteCredentials function from the authentication service
-      await deleteCredentials();
-    } catch (error) {
-      return rejectWithValue(error.message);
-    }
+// Async thunk to delete a user's credentials & records in Firestore
+const deleteUser = createAsyncThunk('user/deleteUser', async (uid) => {
+  try {
+    await deleteCredentials();
+    const response = await del('/deleteUserRecord', { uid });
+    return response;
+  } catch (error) {
+    throw new Error('Failed to delete user data.');
   }
-);
+});
 
 // API Requests to Firestore Database
 
@@ -115,21 +113,6 @@ const updateUser = createAsyncThunk(
       return response.user;
     } catch (error) {
       throw new Error('Failed to update user data.');
-    }
-  }
-);
-
-// Async thunk to delete user data
-// const uid = '123'
-// dispatch(deleteUserRecord(uid));
-const deleteUserRecord = createAsyncThunk(
-  'user/deleteUserRecord',
-  async (uid) => {
-    try {
-      const response = await del('/deleteUserRecord', { uid });
-      return response;
-    } catch (error) {
-      throw new Error('Failed to delete user data.');
     }
   }
 );
@@ -303,27 +286,6 @@ const userSlice = createSlice({
           loading: false,
           error: action.error.message,
         };
-      })
-      // Delete user
-      .addCase(deleteUserRecord.pending, (state) => {
-        return {
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(deleteUserRecord.fulfilled, (state) => {
-        return {
-          data: null,
-          isAuthenticated: false,
-          loading: false,
-          error: null,
-        };
-      })
-      .addCase(deleteUserRecord.rejected, (state, action) => {
-        return {
-          loading: false,
-          error: action.error.message,
-        };
       });
   },
 });
@@ -338,6 +300,5 @@ export {
   createUser,
   fetchUser,
   updateUser,
-  deleteUserRecord,
   clearData,
 };
