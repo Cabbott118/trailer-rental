@@ -4,7 +4,7 @@ import { get, post, patch, del } from 'lib/axios';
 // Redux
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
-// Services
+// Services (Firebase Services)
 import {
   login,
   signup,
@@ -54,7 +54,7 @@ const logoutUser = createAsyncThunk(
   }
 );
 
-// Async thunk to log out a user
+// Async thunk to delete a user's credentials
 const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (_, { rejectWithValue }) => {
@@ -66,6 +66,8 @@ const deleteUser = createAsyncThunk(
     }
   }
 );
+
+// API Requests to Firestore Database
 
 // Async thunk to create user data
 // const email: 'caleb@caleb.com'
@@ -117,6 +119,9 @@ const updateUser = createAsyncThunk(
   }
 );
 
+// Async thunk to delete user data
+// const uid = '123'
+// dispatch(deleteUserRecord(uid));
 const deleteUserRecord = createAsyncThunk(
   'user/deleteUserRecord',
   async (uid) => {
@@ -129,6 +134,7 @@ const deleteUserRecord = createAsyncThunk(
   }
 );
 
+// Action to clear user data, typically after logout
 const clearData = createAction('user/clearData');
 
 const userSlice = createSlice({

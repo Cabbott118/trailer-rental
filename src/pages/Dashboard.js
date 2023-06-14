@@ -29,6 +29,7 @@ import {
   fetchUser,
   deleteUser,
   deleteUserRecord,
+  clearData,
 } from 'store/slices/userSlice';
 
 export default function Dashboard() {
