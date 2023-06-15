@@ -56,8 +56,8 @@ export default function Login() {
       setErrorMessage(errorTransformer(error));
       setIsAlertShowing(true);
       setTimeout(() => {
-        // dispatch(clearData());
-        // setIsAlertShowing(false);
+        dispatch(clearData());
+        setIsAlertShowing(false);
       }, 5000);
     }
   }, [error]);
