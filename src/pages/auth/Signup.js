@@ -2,11 +2,15 @@ import { useEffect, useState } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
-import AuthenticationHeader from 'components/common/AuthenticationHeader';
-import AuthenticationFooter from 'components/common/AuthenticationFooter';
+import AuthenticationHeader from 'pages/auth/components/AuthenticationHeader';
+import AuthenticationFooter from 'pages/auth/components/AuthenticationFooter';
 
 // Constants
 import routes from 'constants/routes';
+
+// Helpers
+import passwordMatch from 'services/helpers/passwordMatch';
+import errorTransformer from 'constants/errorTransformer';
 
 // MUI
 import { Box, Button, Container, Grid, TextField } from '@mui/material';
@@ -26,6 +30,8 @@ export default function Signup() {
   document.title = pageName;
 
   const [showPassword, setShowPassword] = useState(false);
+  const [passwordMissmatch, setPasswordMissmatch] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
   const dispatch = useDispatch();
@@ -43,14 +49,18 @@ export default function Signup() {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
-    const { email, password } = data;
-    dispatch(clearData());
-    dispatch(signUpUser({ email, password }));
+    const { email, password, confirmPassword } = data;
+    if (passwordMatch(password, confirmPassword)) {
+      dispatch(clearData());
+      dispatch(signUpUser({ email, password }));
+    } else {
+      setPasswordMissmatch(true);
+    }
   };
 
   useEffect(() => {
     if (error) {
+      setErrorMessage(errorTransformer(error));
       setIsAlertShowing(true);
       setTimeout(() => {
         dispatch(clearData());
@@ -67,7 +77,6 @@ export default function Signup() {
   }, [data]);
 
   if (isAuthenticated) {
-    const { uid } = data;
     return <Navigate to={routes.HOME} replace />;
   }
 
@@ -78,6 +87,7 @@ export default function Signup() {
         <Grid container spacing={3}>
           <Grid item xs={6}>
             <TextField
+              autoFocus
               label='First Name'
               {...register('legalName.firstName', { required: true })}
               error={errors.legalName?.firstName?.type === 'required'}
@@ -115,7 +125,7 @@ export default function Signup() {
               type={showPassword ? 'text' : 'password'}
               fullWidth
               {...register('password', { required: true })}
-              error={errors.password?.type === 'required'}
+              error={errors.password?.type === 'required' || passwordMissmatch}
               helperText={
                 errors.password?.type === 'required' && 'Password is required'
               }
@@ -139,16 +149,19 @@ export default function Signup() {
               type='password'
               fullWidth
               {...register('confirmPassword', { required: true })}
-              error={errors.confirmPassword?.type === 'required'}
+              error={
+                errors.confirmPassword?.type === 'required' || passwordMissmatch
+              }
               helperText={
-                errors.confirmPassword?.type === 'required' &&
-                'Confirm password is required'
+                (errors.confirmPassword?.type === 'required' &&
+                  'Confirm password is required') ||
+                (passwordMissmatch === true && 'Passwords do not match')
               }
             />
           </Grid>
           {isAlertShowing && (
             <Grid item xs={12}>
-              <Alert text='Please fill out required fields' severity='error' />
+              <Alert text={errorMessage} severity='error' />
             </Grid>
           )}
           <Grid item xs={12}>

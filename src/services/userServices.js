@@ -35,6 +35,7 @@ export const signup = async (email, password) => {
     // You can customize the user object to include any additional data you need
     return { uid: user.uid, email: user.email };
   } catch (error) {
+    console.log(error.message);
     throw new Error(error.message);
   }
 };
@@ -58,6 +59,7 @@ export const deleteCredentials = async () => {
       throw new Error('No user is currently signed in.');
     }
   } catch (error) {
+    console.log(error.message);
     throw new Error(error.message);
   }
 };

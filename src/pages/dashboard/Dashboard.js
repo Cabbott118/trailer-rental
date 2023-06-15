@@ -65,6 +65,35 @@ export default function Dashboard() {
       });
   };
 
+  const deleteDialog = (
+    <Dialog
+      open={dialogOpen}
+      onClose={handleCloseDialog}
+      aria-labelledby='alert-dialog-title'
+      aria-describedby='alert-dialog-description'
+    >
+      <DialogTitle id='alert-dialog-title'>{'Are you sure?'}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id='alert-dialog-description'>
+          If you delete your account, you will lose all your stuff, bro.
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button onClick={handleCloseDialog} sx={{ textTransform: 'none' }}>
+          Cancel
+        </Button>
+        <Button
+          color='error'
+          onClick={handleDeleteAccount}
+          sx={{ textTransform: 'none' }}
+          autoFocus
+        >
+          Delete Account
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
+
   return (
     <Container maxWidth='sm'>
       <Paper>
@@ -140,36 +169,7 @@ export default function Dashboard() {
             >
               Delete Account
             </Button>
-            <Dialog
-              open={dialogOpen}
-              onClose={handleCloseDialog}
-              aria-labelledby='alert-dialog-title'
-              aria-describedby='alert-dialog-description'
-            >
-              <DialogTitle id='alert-dialog-title'>
-                {'Are you sure?'}
-              </DialogTitle>
-              <DialogContent>
-                <DialogContentText id='alert-dialog-description'>
-                  If you delete your account, you will lose all your stuff, bro.
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button
-                  onClick={handleCloseDialog}
-                  sx={{ textTransform: 'none' }}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  onClick={handleDeleteAccount}
-                  sx={{ textTransform: 'none' }}
-                  autoFocus
-                >
-                  Delete Account
-                </Button>
-              </DialogActions>
-            </Dialog>
+            {deleteDialog}
           </Grid>
         </Grid>
       </Paper>

@@ -6,10 +6,10 @@ import { ThemeProvider } from '@mui/material';
 import theme from './styles/theme';
 
 // Pages
-import Login from 'pages/Login';
-import Signup from 'pages/Signup';
-import Dashboard from 'pages/Dashboard';
-import Home from 'pages/Home';
+import Login from 'pages/auth/Login';
+import Signup from 'pages/auth/Signup';
+import Dashboard from 'pages/dashboard/Dashboard';
+import Home from 'pages/home/Home';
 import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
 import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
 import RequireAuth from 'routes/requireAuth';

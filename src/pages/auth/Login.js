@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
-import AuthenticationHeader from 'components/common/AuthenticationHeader';
-import AuthenticationFooter from 'components/common/AuthenticationFooter';
+import AuthenticationHeader from 'pages/auth/components/AuthenticationHeader';
+import AuthenticationFooter from 'pages/auth/components/AuthenticationFooter';
 
 // Constants
 import routes from 'constants/routes';
+
+// Helpers
+import errorTransformer from 'constants/errorTransformer';
 
 // MUI
 import { Box, Button, Container, Grid, TextField } from '@mui/material';
@@ -26,6 +29,7 @@ export default function Login() {
   document.title = pageName;
 
   const [showPassword, setShowPassword] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
   const dispatch = useDispatch();
@@ -49,16 +53,16 @@ export default function Login() {
 
   useEffect(() => {
     if (error) {
+      setErrorMessage(errorTransformer(error));
       setIsAlertShowing(true);
       setTimeout(() => {
-        dispatch(clearData());
-        setIsAlertShowing(false);
+        // dispatch(clearData());
+        // setIsAlertShowing(false);
       }, 5000);
     }
   }, [error]);
 
   if (isAuthenticated) {
-    const { uid } = data;
     return <Navigate to={routes.HOME} replace />;
   }
 
@@ -104,7 +108,7 @@ export default function Login() {
           </Grid>
           {isAlertShowing && (
             <Grid item xs={12}>
-              <Alert text='Invalid email or password' severity='error' />
+              <Alert text={errorMessage} severity='error' />
             </Grid>
           )}
           <Grid item xs={12}>

@@ -30,6 +30,7 @@ export default function Navbar() {
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
+      console.log(user);
       if (user) {
         setNavLinks([
           {
