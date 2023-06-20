@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 
 // Components
-import DeleteDialog from './components/DeleteDialog';
+import DeleteDialog from 'pages/dashboard/components/DeleteDialog';
+import UpdateDialog from 'pages/dashboard/components/UpdateDialog';
 import Logout from 'components/common/Logout';
 
 // Helpers
@@ -102,6 +103,9 @@ export default function Dashboard() {
           </Grid>
           <Grid item sx={{ m: '3rem 0 1rem' }}>
             <Logout />
+          </Grid>
+          <Grid item sx={{ m: '3rem 0 1rem' }}>
+            <UpdateDialog userId={data?.uid} />
           </Grid>
           <Grid item sx={{ m: '3rem 0 1rem' }}>
             <DeleteDialog userId={data?.uid} />
