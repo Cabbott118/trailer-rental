@@ -30,7 +30,9 @@ export default function Dashboard() {
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.user);
 
-  document.title = `${data?.legalName?.firstName}'s Dashboard`;
+  document.title = data?.legalName?.firstName
+    ? `${data.legalName.firstName}'s Dashboard`
+    : 'Dashboard';
 
   useEffect(() => {
     if (data && data.uid) {

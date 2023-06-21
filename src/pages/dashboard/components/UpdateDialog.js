@@ -84,10 +84,10 @@ const DeleteDialog = ({ userId: uid }) => {
       </Button>
       <Dialog open={dialogOpen} onClose={handleCloseDialog}>
         <Box component='form' onSubmit={handleSubmit(onSubmit)}>
-          <Container maxWidth='sm'>
+          <Container maxWidth='xs'>
             <DialogTitle>{'Update your information'}</DialogTitle>
             <DialogContent>
-              <Grid container spacing={3} sx={{ p: 3 }}>
+              <Grid container spacing={3} sx={{ mt: 1 }}>
                 <Grid item xs={6}>
                   <TextField
                     autoFocus
