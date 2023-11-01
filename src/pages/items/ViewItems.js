@@ -50,7 +50,7 @@ const ViewItems = () => {
         >
           View items
         </Typography>
-        <Container maxWidth='md'>
+        <Container maxWidth='md' sx={{ mb: 3 }}>
           <Grid container spacing={3}>
             {data.map((item) => (
               <Grid item key={item?.itemId} xs={12} md={6}>

@@ -18,6 +18,7 @@ import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
 import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
 import Dashboard from 'pages/dashboard/Dashboard';
 import AddItem from 'pages/items/AddItem';
+import AddItemSuccess from 'pages/items/AddItemSuccess';
 import ViewItems from 'pages/items/ViewItems';
 import RequireAuth from 'routes/requireAuth';
 
@@ -51,6 +52,11 @@ function App() {
               }
             >
               <Route index path={routes.ADD_ITEM} element={<AddItem />} />
+              <Route
+                index
+                path={routes.ADD_ITEM_SUCCESS}
+                element={<AddItemSuccess />}
+              />
               <Route index path={routes.VIEW_ITEMS} element={<ViewItems />} />
             </Route>
             <Route path='/about-us' element={<AboutUs />} />

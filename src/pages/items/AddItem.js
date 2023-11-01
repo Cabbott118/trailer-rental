@@ -15,8 +15,12 @@ import {
   Button,
   Container,
   Grid,
-  Input,
   LinearProgress,
+  Paper,
+  Step,
+  Stepper,
+  StepContent,
+  StepLabel,
   TextField,
   Typography,
   useTheme,
@@ -36,6 +40,7 @@ const AddItem = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
+  const [activeStep, setActiveStep] = useState(0);
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
   const [percent, setPercent] = useState(0);
@@ -115,92 +120,156 @@ const AddItem = () => {
     }
   };
 
+  const steps = [
+    {
+      label: 'Upload images of your item',
+      description: (
+        <Grid item container xs={12}>
+          <Grid item xs={12}>
+            <Button
+              variant='contained'
+              component='label'
+              onChange={handleChange}
+              fullWidth
+              sx={{ textTransform: 'none', mb: 3 }}
+            >
+              Select image
+              <input type='file' hidden />
+            </Button>
+          </Grid>
+          <Grid item xs={12}>
+            <Box
+              sx={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                width: '100%',
+                height: 350,
+                borderRadius: 1,
+                bgcolor: theme.additionalPalette.secondary,
+              }}
+            >
+              <img
+                src={filePreview}
+                style={{ maxHeight: '100%', maxWidth: '100%' }}
+              />
+            </Box>
+            <LinearProgress variant='determinate' value={percent} />
+            <Typography variant='body1'>{file?.name}</Typography>
+          </Grid>
+        </Grid>
+      ),
+    },
+    {
+      label: 'Provide details about your item',
+      description: (
+        <TextField
+          label='Title'
+          fullWidth
+          {...register('title', { required: true })}
+          error={errors.title?.type === 'required'}
+          helperText={errors.title?.type === 'required' && 'Title is required'}
+          sx={{ my: 1 }}
+        />
+      ),
+    },
+  ];
+
+  const handleNext = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep + 1);
+  };
+
+  const handleBack = () => {
+    setActiveStep((prevActiveStep) => prevActiveStep - 1);
+  };
+
+  const handleReset = () => {
+    setActiveStep(0);
+  };
+
   return (
-    <Box component='form' onSubmit={handleSubmit(onSubmit)}>
+    <Container
+      maxWidth='md'
+      component='form'
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{ mt: 3 }}
+    >
       <Typography
         variant='h4'
         component='h1'
         align='center'
-        sx={{ py: 3, fontSize: 32 }}
+        sx={{ mb: 3, fontSize: 32 }}
       >
         Add item
       </Typography>
-      <Container maxWidth='xs'>
-        <Grid container spacing={3}>
-          <Grid item xs={12}>
-            <TextField
-              label='Title'
-              fullWidth
-              {...register('title', { required: true })}
-              error={errors.title?.type === 'required'}
-              helperText={
-                errors.title?.type === 'required' && 'Title is required'
-              }
-            />
-          </Grid>
-          <Grid item container xs={12}>
-            <Grid item xs={12}>
-              <Button
-                variant='contained'
-                component='label'
-                onChange={handleChange}
-                fullWidth
-                sx={{ textTransform: 'none', mb: 3 }}
-              >
-                Select image
-                <input type='file' hidden />
-              </Button>
-            </Grid>
-            <Grid item xs={12}>
-              <Box
-                sx={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  width: '100%',
-                  height: 350,
-                  borderRadius: 1,
-                  bgcolor: theme.additionalPalette.secondary,
-                }}
-              >
-                <img
-                  src={filePreview}
-                  style={{ maxHeight: '100%', maxWidth: '100%' }}
-                />
+      <Stepper activeStep={activeStep} orientation='vertical'>
+        {steps.map((step, index) => (
+          <Step key={step.label}>
+            <StepLabel>{step.label}</StepLabel>
+            <StepContent>
+              {step.description}
+              <Box sx={{ mb: 2 }}>
+                <div>
+                  <Button
+                    disabled={!file}
+                    onClick={
+                      index === steps.length - 1
+                        ? handleNext
+                        : !imageURL
+                        ? handleFileUpload
+                        : handleNext
+                    }
+                    fullWidth
+                    variant='contained'
+                    sx={{ mt: 1, mr: 1, textTransform: 'none' }}
+                  >
+                    {index === steps.length - 1
+                      ? 'Continue'
+                      : !imageURL
+                      ? 'Upload image'
+                      : 'Continue'}
+                  </Button>
+                  <Button
+                    disabled={index === 0}
+                    onClick={handleBack}
+                    fullWidth
+                    variant='outlined'
+                    sx={{ mt: 1, mr: 1, textTransform: 'none' }}
+                  >
+                    Back
+                  </Button>
+                </div>
               </Box>
-              <LinearProgress variant='determinate' value={percent} />
-              <Typography variant='body1'>{file?.name}</Typography>
-            </Grid>
-
-            <Button
-              onClick={handleFileUpload}
-              disabled={!file}
-              variant='outlined'
-              fullWidth
-              sx={{ textTransform: 'none', mt: 3 }}
-            >
-              Upload image
-            </Button>
-          </Grid>
-          {isAlertShowing && (
-            <Grid item xs={12}>
-              <Alert text={errorMessage} severity='error' />
-            </Grid>
-          )}
-          <Grid item xs={12}>
-            <Button
-              variant='contained'
-              type='submit'
-              fullWidth
-              disabled={loading || !imageURL}
-              sx={{ textTransform: 'none' }}
-            >
-              Add item
-            </Button>
-          </Grid>
-        </Grid>
-      </Container>
-    </Box>
+            </StepContent>
+          </Step>
+        ))}
+      </Stepper>
+      {activeStep === steps.length && (
+        <>
+          <Paper elevation={3} sx={{ my: 3, p: 3 }}>
+            <Typography>Review (work in progress)</Typography>
+          </Paper>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            disabled={loading}
+            sx={{ mt: 1, mr: 1, textTransform: 'none' }}
+          >
+            Add item
+          </Button>
+          <Button
+            onClick={handleBack}
+            fullWidth
+            variant='outlined'
+            disabled={loading}
+            sx={{ mt: 1, mr: 1, textTransform: 'none' }}
+          >
+            Back
+          </Button>
+        </>
+      )}
+    </Container>
   );
 };
 
