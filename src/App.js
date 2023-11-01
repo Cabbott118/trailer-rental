@@ -1,3 +1,6 @@
+// Constants
+import routes from 'constants/routes';
+
 // Components
 import Navbar from 'components/layout/Navbar';
 
@@ -8,12 +11,14 @@ import theme from './styles/theme';
 // Pages
 import Login from 'pages/auth/Login';
 import Signup from 'pages/auth/Signup';
-import Dashboard from 'pages/dashboard/Dashboard';
 import Home from 'pages/home/Home';
 import AboutUs from 'pages/aboutUs/AboutUs';
 import ContactUs from 'pages/contactUs/ContactUs';
 import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
 import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
+import Dashboard from 'pages/dashboard/Dashboard';
+import AddItem from 'pages/items/AddItem';
+import ViewItems from 'pages/items/ViewItems';
 import RequireAuth from 'routes/requireAuth';
 
 // React Router
@@ -25,10 +30,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Navbar />}>
+          <Route path={routes.HOME} element={<Navbar />}>
             <Route index element={<Home />} />
             <Route
-              path='/dashboard'
+              path={routes.DASHBOARD}
               element={
                 <RequireAuth>
                   <Outlet />
@@ -36,6 +41,17 @@ function App() {
               }
             >
               <Route index path='' element={<Dashboard />} />
+            </Route>
+            <Route
+              path={routes.ITEMS}
+              element={
+                <RequireAuth>
+                  <Outlet />
+                </RequireAuth>
+              }
+            >
+              <Route index path={routes.ADD_ITEM} element={<AddItem />} />
+              <Route index path={routes.VIEW_ITEMS} element={<ViewItems />} />
             </Route>
             <Route path='/about-us' element={<AboutUs />} />
             <Route path='/contact-us' element={<ContactUs />} />

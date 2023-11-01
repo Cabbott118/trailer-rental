@@ -32,6 +32,7 @@ const ContactUs = () => {
 
   const onSubmit = (data) => {
     const { subject, email, message } = data;
+    console.log(subject, email, message);
   };
   return (
     <Box component='form' onSubmit={handleSubmit(onSubmit)}>

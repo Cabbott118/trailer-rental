@@ -12,6 +12,12 @@ const routes = {
 
   // User
   DASHBOARD: '/dashboard',
+
+  // Item
+  ITEMS: '/items',
+  ADD_ITEM: '/items/add-item',
+  VIEW_ITEMS: '/items/view-items',
+  ADD_ITEM_SUCCESS: '/items/add-item-success',
 };
 
 export default routes;

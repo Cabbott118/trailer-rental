@@ -24,6 +24,8 @@ import {
 
 import MenuIcon from '@mui/icons-material/Menu';
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
+import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
+import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 // import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined';
 // import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
@@ -106,6 +108,18 @@ const Drawer = () => {
               icon={<HomeOutlinedIcon />}
               primaryText='Home'
               to={routes.HOME}
+              onClick={toggleDrawer}
+            />
+            <MenuItem
+              icon={<AddBoxOutlinedIcon />}
+              primaryText='Add item'
+              to={routes.ADD_ITEM}
+              onClick={toggleDrawer}
+            />
+            <MenuItem
+              icon={<GridViewOutlinedIcon />}
+              primaryText='View items'
+              to={routes.VIEW_ITEMS}
               onClick={toggleDrawer}
             />
           </List>
