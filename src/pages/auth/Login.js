@@ -8,6 +8,9 @@ import AuthenticationFooter from 'pages/auth/components/AuthenticationFooter';
 // Constants
 import routes from 'constants/routes';
 
+// Firebase
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
+
 // Helpers
 import errorTransformer from 'constants/errorTransformer';
 
@@ -22,20 +25,20 @@ import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { loginUser, clearData } from 'store/slices/userSlice';
+import { loginUser, clearUserData, fetchUser } from 'store/slices/userSlice';
 
 export default function Login() {
   const pageName = 'Login';
   document.title = pageName;
+
+  const auth = getAuth();
 
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
   const dispatch = useDispatch();
-  const { data, loading, isAuthenticated, error } = useSelector(
-    (state) => state.user
-  );
+  const { data, loading, error } = useSelector((state) => state.user);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -47,22 +50,29 @@ export default function Login() {
 
   const onSubmit = (data) => {
     const { email, password } = data;
-    dispatch(clearData());
-    dispatch(loginUser({ email, password }));
+    dispatch(clearUserData());
+    dispatch(loginUser({ email, password })).then((action) => {
+      if (!action.payload.uid) {
+        setErrorMessage(errorTransformer(action.payload));
+        setIsAlertShowing(true);
+        setTimeout(() => {
+          dispatch(clearUserData());
+          setIsAlertShowing(false);
+        }, 5000);
+      }
+    });
   };
 
   useEffect(() => {
-    if (error) {
-      setErrorMessage(errorTransformer(error));
-      setIsAlertShowing(true);
-      setTimeout(() => {
-        dispatch(clearData());
-        setIsAlertShowing(false);
-      }, 5000);
-    }
-  }, [error]);
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        await dispatch(fetchUser(user.uid));
+      }
+    });
+    return () => unsubscribe();
+  }, [auth, dispatch]);
 
-  if (isAuthenticated) {
+  if (data) {
     return <Navigate to={routes.HOME} replace />;
   }
 

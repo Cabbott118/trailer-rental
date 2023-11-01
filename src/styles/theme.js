@@ -2,14 +2,28 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
+    // primary: {
+    //   main: '#0B7064',
+    //   contrastText: '#DDE6ED',
+    // },
+    // secondary: {
+    //   main: '#705900',
+    //   contrastText: '#DDE6ED',
+    // },
     primary: {
-      main: '#0B7064',
+      main: '#00C7E6',
       contrastText: '#DDE6ED',
     },
     secondary: {
-      main: '#705900',
-      contrastText: '#DDE6ED',
+      main: '#F79B19',
     },
+    background: {
+      default: '#ffffff',
+    },
+  },
+  additionalPalette: {
+    primary: '#F0F0F0',
+    secondary: '#CCCCCC',
   },
   breakpoints: {
     values: {

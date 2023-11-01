@@ -13,11 +13,11 @@ export default function Home() {
   const theme = useTheme();
 
   const dispatch = useDispatch();
-  const { data } = useSelector((state) => state.user);
+  const { data, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (data && data.uid) {
-      dispatch(fetchUser(data.uid));
+    if (data && data.userId) {
+      dispatch(fetchUser(data.userId));
     }
   }, []);
 
@@ -39,6 +39,8 @@ export default function Home() {
     },
   };
 
+  if (loading) return <p>Loading...</p>;
+
   return (
     <Box
       sx={{
@@ -48,14 +50,14 @@ export default function Home() {
       }}
     >
       <Container maxWidth='md'>
-        {data?.legalName?.firstName ? (
+        {data?.fullName?.firstName ? (
           <Typography
             variant='h6'
             component='h1'
             align='center'
             sx={{ color: theme.palette.primary.contrastText }}
           >
-            Welcome, <i>{data?.legalName?.firstName}</i>
+            Welcome, <i>{data?.fullName?.firstName}</i>
           </Typography>
         ) : null}
         <Typography

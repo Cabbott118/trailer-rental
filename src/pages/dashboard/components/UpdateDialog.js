@@ -28,47 +28,52 @@ import { useForm } from 'react-hook-form';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, clearData } from 'store/slices/userSlice';
+import { updateUser, clearErrors } from 'store/slices/userSlice';
 
-const DeleteDialog = ({ userId: uid }) => {
+const DeleteDialog = ({ userId }) => {
   const [isAlertShowing, setIsAlertShowing] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const dispatch = useDispatch();
-  const { data, loading, isAuthenticated, error } = useSelector(
-    (state) => state.user
-  );
+  const { data, loading, error } = useSelector((state) => state.user);
 
   const handleClickOpenDialog = () => {
+    // dispatch(clearErrors());
     setDialogOpen(true);
   };
 
   const handleCloseDialog = () => {
+    setIsAlertShowing(false);
+    dispatch(clearErrors());
     setDialogOpen(false);
   };
 
   const { register, handleSubmit } = useForm({
     defaultValues: {
-      legalName: {
-        firstName: data?.legalName?.firstName,
-        lastName: data?.legalName?.lastName,
+      fullName: {
+        firstName: data?.fullName?.firstName,
+        lastName: data?.fullName?.lastName,
       },
       email: data?.email,
     },
   });
 
   const onSubmit = (data) => {
-    console.log(data);
     const updateData = {
-      legalName: {
-        firstName: data.legalName.firstName,
-        lastName: data.legalName.lastName,
+      fullName: {
+        firstName: data.fullName.firstName,
+        lastName: data.fullName.lastName,
       },
       email: data.email,
     };
 
-    dispatch(updateUser({ uid, updateData }));
-    setDialogOpen(false);
+    dispatch(updateUser({ userId, updateData })).then((action) => {
+      if (action.error) {
+        setIsAlertShowing(true);
+      } else {
+        setDialogOpen(false);
+      }
+    });
   };
 
   return (
@@ -92,21 +97,26 @@ const DeleteDialog = ({ userId: uid }) => {
                   <TextField
                     autoFocus
                     label='First Name'
-                    {...register('legalName.firstName')}
+                    {...register('fullName.firstName')}
                   />
                 </Grid>
                 <Grid item xs={6}>
                   <TextField
                     label='Last Name'
-                    {...register('legalName.lastName')}
+                    {...register('fullName.lastName')}
                   />
                 </Grid>
                 <Grid item xs={12}>
                   <TextField label='Email' fullWidth {...register('email')} />
                 </Grid>
+                {isAlertShowing && (
+                  <Grid item xs={12}>
+                    <Alert text={error} severity='error' />
+                  </Grid>
+                )}
               </Grid>
             </DialogContent>
-            <DialogActions>
+            <DialogActions sx={{ pb: 3 }}>
               <Button
                 onClick={handleCloseDialog}
                 sx={{ textTransform: 'none' }}
@@ -115,6 +125,7 @@ const DeleteDialog = ({ userId: uid }) => {
               </Button>
               <Button
                 type='submit'
+                variant='contained'
                 disabled={loading}
                 sx={{ textTransform: 'none' }}
               >

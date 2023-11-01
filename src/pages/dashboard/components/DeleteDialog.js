@@ -1,5 +1,8 @@
 import { useState } from 'react';
 
+// Constants
+import routes from 'constants/routes';
+
 // MUI
 import {
   Button,
@@ -9,6 +12,9 @@ import {
   DialogContentText,
   DialogTitle,
 } from '@mui/material';
+
+// React Router
+import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch } from 'react-redux';
@@ -28,8 +34,12 @@ const DeleteDialog = ({ userId }) => {
   };
 
   const handleDeleteAccount = () => {
-    dispatch(deleteUser(userId));
+    dispatch(deleteUser(userId)).then(() => {
+      setDialogOpen(false);
+      <Navigate to={routes.HOME} replace />;
+    });
   };
+
   return (
     <>
       <Button
@@ -48,14 +58,18 @@ const DeleteDialog = ({ userId }) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleCloseDialog} sx={{ textTransform: 'none' }}>
+          <Button
+            onClick={handleCloseDialog}
+            sx={{ textTransform: 'none' }}
+            autoFocus
+          >
             Cancel
           </Button>
           <Button
             color='error'
+            variant='contained'
             onClick={handleDeleteAccount}
             sx={{ textTransform: 'none' }}
-            autoFocus
           >
             Delete Account
           </Button>

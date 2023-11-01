@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Components
+import Drawer from 'components/layout/Drawer';
 import Logout from 'components/common/Logout';
 
 // Constants
@@ -8,17 +9,36 @@ import routes from 'constants/routes';
 
 // Firebase
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import {
+  getFirestore,
+  collection,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+} from 'firebase/firestore';
+
+// Helpers
+import getUserInitials from 'services/helpers/getUserInitials';
 
 // MUI
 import {
   AppBar,
+  Avatar,
+  Badge,
   Box,
   Button,
   Container,
   Divider,
+  Grid,
+  IconButton,
+  ListItemIcon,
   Menu,
   MenuItem,
   Toolbar,
+  Tooltip,
+  Typography,
+  useMediaQuery,
   useTheme,
 } from '@mui/material';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -27,17 +47,53 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link, Outlet } from 'react-router-dom';
 
 // Redux
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+// import { fetchNotifications } from 'store/slices/notificationsSlice';
 
 export default function Navbar() {
   const theme = useTheme();
-  const { data } = useSelector((state) => state.user);
-
-  const [navLinks, setNavLinks] = useState([]);
-  const [anchorEl, setAnchorEl] = useState(null);
   const auth = getAuth();
+  // const db = getFirestore();
+  const dispatch = useDispatch();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const handleMenu = (event) => {
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [unreadNotifications, setUnreadNotifications] = useState(null);
+
+  const { data: userData } = useSelector((state) => state.user);
+
+  // const { data: notificationsData } = useSelector(
+  //   (state) => state.notifications
+  // );
+
+  // useEffect(() => {
+  //   const filteredNotifications = notificationsData?.filter(
+  //     (notification) => !notification?.hasBeenRead
+  //   );
+  //   setUnreadNotifications(filteredNotifications?.length);
+  // }, [notificationsData]);
+
+  // useEffect for gathering new notis
+  // useEffect(() => {
+
+  //     const q = query(
+  //       collection(db, 'notifications'),
+  //       where('notificationOwner', '==', userData.uid),
+  //       orderBy('createdAt', 'desc')
+  //     );
+
+  //     const unsubscribe = onSnapshot(q, (snapshot) => {
+  //       const notificationData = snapshot.docs.map((doc) => doc.data());
+  //       dispatch(fetchNotifications(userData.uid));
+  //     });
+
+  //     return () => unsubscribe();
+  //   }
+  // }, [db]);
+
+  const open = Boolean(anchorEl);
+
+  const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -45,95 +101,164 @@ export default function Navbar() {
     setAnchorEl(null);
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setNavLinks([
-          {
-            name: `${data?.legalName?.firstName ?? 'Profile'}`,
-            onClick: handleMenu,
-            icon: ArrowDropDownIcon,
-          },
-        ]);
-      } else {
-        setNavLinks([
-          {
-            name: 'Login',
-            route: routes.LOGIN,
-          },
-          {
-            name: 'Signup',
-            route: routes.SIGNUP,
-          },
-        ]);
-      }
-    });
-  }, [onAuthStateChanged, data]);
+  const menuItems = [
+    { route: routes.DASHBOARD, label: 'Your dashboard' },
+    { route: routes.ACCOUNT, label: 'Account settings' },
+    { route: routes.NOTIFICATIONS, label: 'Notifications' },
+  ];
+
+  const renderMenu = (anchorEl, handleClose, items) => {
+    const showLogoutCondition = items.length > 1;
+
+    return (
+      <Menu
+        anchorEl={anchorEl}
+        open={Boolean(anchorEl)}
+        onClose={handleClose}
+        onClick={handleClose}
+        sx={{
+          mt: 1.5,
+        }}
+        transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        {items.map((item) => (
+          <MenuItem
+            key={item.label}
+            component={Link}
+            to={item.route}
+            sx={{ fontSize: 18 }}
+          >
+            {item.label}
+          </MenuItem>
+        ))}
+        {showLogoutCondition && <Logout />}
+      </Menu>
+    );
+  };
 
   return (
     <>
-      <Box sx={{ flexGrow: 1 }}>
+      <AppBar position='sticky' color='transparent' sx={{ boxShadow: 'none' }}>
         <Container maxWidth='md'>
-          <AppBar
-            position='static'
-            color='transparent'
-            sx={{ boxShadow: 'none' }}
-          >
-            <Toolbar>
-              <Link to={routes.HOME} style={{ flexGrow: 1 }}>
-                <Button
+          <Toolbar>
+            <Grid
+              container
+              direction='row'
+              alignItems='center'
+              justifyContent='space-between'
+            >
+              <Grid item>
+                <MenuItem
+                  component={Link}
+                  to={routes.HOME}
                   sx={{
-                    textTransform: 'none',
-                    color: theme.palette.secondary.dark,
+                    color: theme.palette.text.primary,
+                    fontWeight: 500,
                   }}
                 >
                   Home
-                </Button>
-              </Link>
-
-              {navLinks.map((navLink) => (
-                <Link key={navLink.name} to={navLink.route}>
-                  <Button
-                    onClick={navLink.onClick}
-                    sx={{
-                      textTransform: 'none',
-                      color: theme.palette.secondary.dark,
-                    }}
-                  >
-                    {navLink.name} {navLink.icon && <navLink.icon />}
-                  </Button>
-                </Link>
-              ))}
-              <Menu
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'bottom',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
-              >
-                <MenuItem
-                  component={Link}
-                  to={`${routes.USER}/${data?.uid}/dashboard`}
-                  onClick={handleClose}
-                >
-                  Dashboard
                 </MenuItem>
-                <Divider />
-                <MenuItem>
-                  <Logout />
-                </MenuItem>
-              </Menu>
-            </Toolbar>
-          </AppBar>
+              </Grid>
+              <Grid item>
+                {userData ? (
+                  isMobile ? (
+                    <>
+                      <Drawer sx={{ position: 'relative' }} />
+                      <Badge
+                        badgeContent={unreadNotifications}
+                        color='error'
+                        sx={{
+                          position: 'absolute',
+                          top: 20,
+                          right: 25,
+                        }}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <Tooltip title='Account menu'>
+                        <IconButton
+                          onClick={handleClick}
+                          size='small'
+                          sx={{
+                            ml: 2,
+                            position: 'relative',
+                          }}
+                          aria-controls={open ? 'account-menu' : undefined}
+                          aria-haspopup='true'
+                          aria-expanded={open ? 'true' : undefined}
+                        >
+                          <Grid
+                            container
+                            direction='row'
+                            justifyContent='center'
+                            alignItems='center'
+                            sx={{
+                              bgcolor: 'lightgrey',
+                              borderRadius: 5,
+                            }}
+                          >
+                            <Grid item>
+                              <Avatar sx={{ bgcolor: '#333' }}>
+                                <Typography sx={{ fontWeight: 500 }}>
+                                  {getUserInitials(userData?.fullName)}
+                                </Typography>
+                              </Avatar>
+                              <Badge
+                                badgeContent={unreadNotifications}
+                                color='error'
+                                sx={{
+                                  position: 'absolute',
+                                  top: 10,
+                                  right: 10,
+                                }}
+                              />
+                            </Grid>
+                            <Grid item>
+                              <ArrowDropDownIcon />
+                            </Grid>
+                          </Grid>
+                        </IconButton>
+                      </Tooltip>
+                    </>
+                  )
+                ) : (
+                  <Grid container>
+                    <Grid item>
+                      <MenuItem
+                        component={Link}
+                        to={routes.SIGNUP}
+                        sx={{
+                          color: theme.palette.primary.main,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Sign up
+                      </MenuItem>
+                    </Grid>
+                    <Grid item>
+                      <MenuItem
+                        component={Link}
+                        to={routes.LOGIN}
+                        sx={{
+                          color: theme.palette.primary.main,
+                          fontWeight: 500,
+                        }}
+                      >
+                        Login
+                      </MenuItem>
+                    </Grid>
+                  </Grid>
+                )}
+              </Grid>
+            </Grid>
+          </Toolbar>
         </Container>
-      </Box>
+      </AppBar>
+
+      {renderMenu(anchorEl, handleClose, menuItems)}
+
       <Outlet />
     </>
   );

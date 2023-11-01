@@ -9,8 +9,9 @@ import {
   login,
   signup,
   logout,
+  changeEmail,
   deleteCredentials,
-} from 'services/userServices';
+} from 'services/firebaseServices';
 
 // Async thunk to log in a user
 const loginUser = createAsyncThunk(
@@ -55,10 +56,10 @@ const logoutUser = createAsyncThunk(
 );
 
 // Async thunk to delete a user's credentials & records in Firestore
-const deleteUser = createAsyncThunk('user/deleteUser', async (uid) => {
+const deleteUser = createAsyncThunk('user/deleteUser', async (userId) => {
   try {
     await deleteCredentials();
-    const response = await del('/deleteUserRecord', { uid });
+    const response = await del('/users/delete-user', { userId });
     return response;
   } catch (error) {
     throw new Error('Failed to delete user data.');
@@ -67,15 +68,16 @@ const deleteUser = createAsyncThunk('user/deleteUser', async (uid) => {
 
 // API Requests to Firestore Database
 
-// Async thunk to create user data
-// const email: 'caleb@caleb.com'
-// const uid: '123'
-// dispatch(createUser({ email, uid }));
 const createUser = createAsyncThunk(
   'user/createUser',
-  async ({ email, uid, legalName }) => {
+  async ({ email, userId, firstName, lastName }) => {
     try {
-      const response = await post('/createUser', { email, uid, legalName });
+      const response = await post('/users/create-user', {
+        email,
+        userId,
+        firstName,
+        lastName,
+      });
       return response.user;
     } catch (error) {
       throw new Error('Failed to create user data.');
@@ -83,33 +85,43 @@ const createUser = createAsyncThunk(
   }
 );
 
-// Async thunk to fetch user data
-// const uid = '123'
-// dispatch(fetchUser(uid));
-const fetchUser = createAsyncThunk('user/fetchUser', async (uid) => {
+const createFirebaseUser = createAsyncThunk(
+  'user/createFirebaseUser',
+  async ({ email, firstName, lastName, userType }) => {
+    try {
+      const response = await post('/users/create-firebase-user', {
+        email,
+        password: process.env.REACT_APP_STANDARD_USER_CREATION,
+        firstName,
+        lastName,
+        userType,
+      });
+      return response.user;
+    } catch (error) {
+      console.log(error);
+      throw new Error('Failed to create firebase user.');
+    }
+  }
+);
+
+const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
   try {
-    const response = await get('/getUserDetails', { uid });
+    const response = await get('/users/get-user-details', { userId });
     return response;
   } catch (error) {
     throw new Error('Failed to fetch user data.');
   }
 });
 
-// Async thunk to create user data
-// const uid = '123'
-// const updateData = {
-//   name: {
-//     firstName: 'Caleb',
-//     lastName: 'Abbott',
-//   },
-// };
-
-// dispatch(updateUser({ uid, updateData }));
 const updateUser = createAsyncThunk(
   'user/updateUser',
-  async ({ uid, updateData }) => {
+  async ({ userId, updateData }) => {
     try {
-      const response = await patch('/updateUser', { uid, updateData });
+      changeEmail(updateData.email);
+      const response = await patch('/users/update-user', {
+        userId,
+        updateData,
+      });
       return response.user;
     } catch (error) {
       throw new Error('Failed to update user data.');
@@ -118,171 +130,210 @@ const updateUser = createAsyncThunk(
 );
 
 // Action to clear user data, typically after logout
-const clearData = createAction('user/clearData');
+const clearUserData = createAction('user/clearUserData');
+const clearErrors = createAction('user/clearErrors');
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
     data: null,
-    isAuthenticated: false,
     loading: false,
     error: null,
   },
   reducers: {
-    clearData: (state) => {
+    clearUserData: (state) => {
       return {
         data: null,
-        isAuthenticated: false,
         loading: false,
+        error: null,
+      };
+    },
+    clearErrors: (state) => {
+      return {
+        ...state,
         error: null,
       };
     },
   },
   extraReducers: (builder) => {
     builder
-      // Login user
       .addCase(loginUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         return {
+          ...state,
           data: action.payload,
-          isAuthenticated: true,
           loading: false,
           error: null,
         };
       })
       .addCase(loginUser.rejected, (state, action) => {
         return {
-          isAuthenticated: false,
+          ...state,
           loading: false,
           error: action.payload,
         };
       })
-      // Sign up user
+
       .addCase(signUpUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(signUpUser.fulfilled, (state, action) => {
         return {
+          ...state,
           data: action.payload,
-          isAuthenticated: true,
           loading: false,
           error: null,
         };
       })
       .addCase(signUpUser.rejected, (state, action) => {
         return {
+          ...state,
           loading: false,
           error: action.payload,
         };
       })
-      // Logout user
+
       .addCase(logoutUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(logoutUser.fulfilled, (state) => {
         return {
+          ...state,
           data: null,
-          isAuthenticated: false,
           loading: false,
           error: null,
         };
       })
       .addCase(logoutUser.rejected, (state, action) => {
         return {
+          ...state,
           loading: false,
           error: action.payload,
         };
       })
-      // Delete user
+
       .addCase(deleteUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(deleteUser.fulfilled, (state) => {
         return {
+          ...state,
           data: null,
-          isAuthenticated: false,
           loading: false,
           error: null,
         };
       })
       .addCase(deleteUser.rejected, (state, action) => {
         return {
+          ...state,
           loading: false,
           error: action.payload,
         };
       })
-      // Create user record
+
       .addCase(createUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(createUser.fulfilled, (state, action) => {
         return {
+          ...state,
           data: action.payload,
-          isAuthenticated: true,
           loading: false,
           error: null,
         };
       })
       .addCase(createUser.rejected, (state, action) => {
         return {
+          ...state,
           loading: false,
           error: action.error.message,
         };
       })
-      // Get user record details
+
+      .addCase(createFirebaseUser.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(createFirebaseUser.fulfilled, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(createFirebaseUser.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
+      })
+
       .addCase(fetchUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         return {
+          ...state,
           data: action.payload,
-          isAuthenticated: true,
           loading: false,
           error: null,
         };
       })
       .addCase(fetchUser.rejected, (state, action) => {
         return {
-          isAuthenticated: false,
+          ...state,
           loading: false,
           error: action.error.message,
         };
       })
-      // Update user record details
+
       .addCase(updateUser.pending, (state) => {
         return {
+          ...state,
           loading: true,
           error: null,
         };
       })
       .addCase(updateUser.fulfilled, (state, action) => {
         return {
+          ...state,
           data: action.payload,
           loading: false,
         };
       })
       .addCase(updateUser.rejected, (state, action) => {
         return {
+          ...state,
           loading: false,
           error: action.error.message,
         };
@@ -298,7 +349,9 @@ export {
   logoutUser,
   deleteUser,
   createUser,
+  createFirebaseUser,
   fetchUser,
   updateUser,
-  clearData,
+  clearUserData,
+  clearErrors,
 };

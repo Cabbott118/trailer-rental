@@ -35,8 +35,8 @@ export default function Dashboard() {
     : 'Dashboard';
 
   useEffect(() => {
-    if (data && data.uid) {
-      dispatch(fetchUser(data.uid));
+    if (data && data.userId) {
+      dispatch(fetchUser(data.userId));
     }
   }, []);
 
@@ -57,15 +57,17 @@ export default function Dashboard() {
             }}
           >
             <Avatar
-              alt={data?.legalName?.firstName}
+              alt={data?.fullName?.firstName}
               sx={{
                 width: 100,
                 height: 100,
                 bgcolor: theme.palette.primary.main,
+                fontWeight: 500,
+                fontSize: 30,
                 mb: '-4rem',
               }}
             >
-              {getUserInitials(data?.legalName)}
+              {getUserInitials(data?.fullName)}
             </Avatar>
           </Grid>
         </Grid>
@@ -83,34 +85,23 @@ export default function Dashboard() {
             }}
           >
             {!loading ? (
-              <Typography
-                variant='h4'
-                component='h1'
-                sx={{ color: theme.palette.secondary.dark }}
-              >
-                {data?.legalName?.firstName} {data?.legalName?.lastName}
+              <Typography variant='h4' component='h1'>
+                {data?.fullName?.firstName} {data?.fullName?.lastName}
               </Typography>
             ) : (
               <Skeleton variant='rounded' width='15rem' height='4rem' />
             )}
           </Grid>
           <Grid item>
-            <Typography
-              variant='p'
-              component='p'
-              sx={{ color: theme.palette.secondary.main }}
-            >
+            <Typography variant='p' component='p'>
               {data?.email}
             </Typography>
           </Grid>
           <Grid item sx={{ m: '3rem 0 1rem' }}>
-            <Logout />
+            <UpdateDialog userId={data?.userId} />
           </Grid>
           <Grid item sx={{ m: '3rem 0 1rem' }}>
-            <UpdateDialog userId={data?.uid} />
-          </Grid>
-          <Grid item sx={{ m: '3rem 0 1rem' }}>
-            <DeleteDialog userId={data?.uid} />
+            <DeleteDialog userId={data?.userId} />
           </Grid>
         </Grid>
       </Paper>

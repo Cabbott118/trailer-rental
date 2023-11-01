@@ -1,17 +1,17 @@
 // MUI
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 
 // React Router
 import { useNavigate, useLocation } from 'react-router-dom';
 
 // Redux
 import { useDispatch } from 'react-redux';
-import { clearData, logoutUser } from 'store/slices/userSlice';
+import { clearUserData, logoutUser } from 'store/slices/userSlice';
 
 // Routes
 import routes from 'constants/routes';
 
-export default function Logout() {
+export default function Logout({ variant }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,18 +19,22 @@ export default function Logout() {
   function handleLogout(event) {
     event.preventDefault();
     dispatch(logoutUser());
-    dispatch(clearData());
+    dispatch(clearUserData());
     navigate(routes.LOGIN, { state: { from: location } });
   }
 
   return (
-    <Button
-      color='error'
-      variant='contained'
-      onClick={handleLogout}
-      sx={{ textTransform: 'none' }}
-    >
-      Logout
-    </Button>
+    <>
+      <Divider light variant='middle' />
+      <Button
+        color='error'
+        variant={variant}
+        fullWidth
+        onClick={handleLogout}
+        sx={{ textTransform: 'none' }}
+      >
+        Logout
+      </Button>
+    </>
   );
 }

@@ -23,7 +23,7 @@ import { Navigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { signUpUser, createUser, clearData } from 'store/slices/userSlice';
+import { signUpUser, createUser, clearUserData } from 'store/slices/userSlice';
 
 export default function Signup() {
   const pageName = 'Sign up';
@@ -35,9 +35,7 @@ export default function Signup() {
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
   const dispatch = useDispatch();
-  const { data, loading, isAuthenticated, error } = useSelector(
-    (state) => state.user
-  );
+  const { data, loading, error } = useSelector((state) => state.user);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -49,34 +47,34 @@ export default function Signup() {
   } = useForm();
 
   const onSubmit = (data) => {
-    const { email, password, confirmPassword } = data;
+    const { email, firstName, lastName, password, confirmPassword } = data;
     if (passwordMatch(password, confirmPassword)) {
-      dispatch(clearData());
-      dispatch(signUpUser({ email, password }));
+      dispatch(clearUserData());
+      dispatch(signUpUser({ email, password })).then((action) => {
+        if (!action.payload.uid) {
+          setErrorMessage(errorTransformer(action.payload));
+          setIsAlertShowing(true);
+          setTimeout(() => {
+            dispatch(clearUserData());
+            setIsAlertShowing(false);
+          }, 5000);
+        } else {
+          dispatch(
+            createUser({
+              email,
+              userId: action.payload.uid,
+              firstName,
+              lastName,
+            })
+          );
+        }
+      });
     } else {
       setPasswordMissmatch(true);
     }
   };
 
-  useEffect(() => {
-    if (error) {
-      setErrorMessage(errorTransformer(error));
-      setIsAlertShowing(true);
-      setTimeout(() => {
-        dispatch(clearData());
-        setIsAlertShowing(false);
-      }, 5000);
-    }
-  }, [error]);
-
-  useEffect(() => {
-    if (data?.uid) {
-      const { email, legalName } = getValues();
-      dispatch(createUser({ email, uid: data.uid, legalName }));
-    }
-  }, [data]);
-
-  if (isAuthenticated) {
+  if (data) {
     return <Navigate to={routes.HOME} replace />;
   }
 
@@ -89,10 +87,10 @@ export default function Signup() {
             <TextField
               autoFocus
               label='First Name'
-              {...register('legalName.firstName', { required: true })}
-              error={errors.legalName?.firstName?.type === 'required'}
+              {...register('firstName', { required: true })}
+              error={errors.firstName?.type === 'required'}
               helperText={
-                errors.legalName?.firstName?.type === 'required' &&
+                errors.firstName?.type === 'required' &&
                 'First name is required'
               }
             />
@@ -100,11 +98,10 @@ export default function Signup() {
           <Grid item xs={6}>
             <TextField
               label='Last Name'
-              {...register('legalName.lastName', { required: true })}
-              error={errors.legalName?.lastName?.type === 'required'}
+              {...register('lastName', { required: true })}
+              error={errors.lastName?.type === 'required'}
               helperText={
-                errors.legalName?.lastName?.type === 'required' &&
-                'Last name is required'
+                errors.lastName?.type === 'required' && 'Last name is required'
               }
             />
           </Grid>

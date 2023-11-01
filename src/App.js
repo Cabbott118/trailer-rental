@@ -2,7 +2,7 @@
 import Navbar from 'components/layout/Navbar';
 
 // MUI
-import { ThemeProvider } from '@mui/material';
+import { Box, Container, Typography, ThemeProvider } from '@mui/material';
 import theme from './styles/theme';
 
 // Pages
@@ -10,6 +10,8 @@ import Login from 'pages/auth/Login';
 import Signup from 'pages/auth/Signup';
 import Dashboard from 'pages/dashboard/Dashboard';
 import Home from 'pages/home/Home';
+import AboutUs from 'pages/aboutUs/AboutUs';
+import ContactUs from 'pages/contactUs/ContactUs';
 import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
 import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
 import RequireAuth from 'routes/requireAuth';
@@ -24,27 +26,39 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Navbar />}>
+            <Route index element={<Home />} />
             <Route
-              index // Equivalent to saying the page content for '/'
-              element={<Home />}
-            />
-            <Route
-              path='user' // place all routes that need user logged in under /user/
+              path='/dashboard'
               element={
                 <RequireAuth>
                   <Outlet />
                 </RequireAuth>
               }
             >
-              {/* Place your 'authenticated routes in here! They can be referenced by /user/<route> */}
-              <Route index path=':uid/dashboard' element={<Dashboard />} />
+              <Route index path='' element={<Dashboard />} />
             </Route>
+            <Route path='/about-us' element={<AboutUs />} />
+            <Route path='/contact-us' element={<ContactUs />} />
             <Route
-              path='*' // Providing a 404 page for '/' and thus the whole site.
+              path='*'
               element={
                 <>
-                  <h1>404 Not Found</h1>
-                  <p>You'll have to journey elsewhere.</p>
+                  <Container sx={{ height: '90vh', pt: '30vh' }}>
+                    <Typography
+                      variant='h1'
+                      align='center'
+                      sx={{ fontSize: 36, fontWeight: 500 }}
+                    >
+                      404 Not Found
+                    </Typography>
+                    <Typography
+                      variant='h6'
+                      align='center'
+                      sx={{ fontWeight: 400 }}
+                    >
+                      You'll have to journey elsewhere.
+                    </Typography>
+                  </Container>
                 </>
               }
             />
