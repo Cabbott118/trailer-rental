@@ -8,13 +8,14 @@ import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 const createItem = createAsyncThunk(
   'item/createItem',
-  async ({ title, userId, firstName, lastName }) => {
+  async ({ title, userId, firstName, lastName, imageURL }) => {
     try {
       const response = await post('/items/create-item', {
         title,
         userId,
         firstName,
         lastName,
+        imageURL,
       });
       return response.item;
     } catch (error) {
@@ -72,14 +73,14 @@ const clearErrors = createAction('item/clearErrors');
 const itemSlice = createSlice({
   name: 'item',
   initialState: {
-    data: null,
+    data: [],
     loading: false,
     error: null,
   },
   reducers: {
     clearItemData: (state) => {
       return {
-        data: null,
+        data: [],
         loading: false,
         error: null,
       };
@@ -103,7 +104,7 @@ const itemSlice = createSlice({
       .addCase(createItem.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          data: [...state.data, action.payload],
           loading: false,
           error: null,
         };
@@ -149,7 +150,7 @@ const itemSlice = createSlice({
       .addCase(fetchItems.fulfilled, (state, action) => {
         return {
           ...state,
-          items: action.payload,
+          data: action.payload,
           loading: false,
           error: null,
         };

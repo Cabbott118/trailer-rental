@@ -7,6 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // Redux
 import { useDispatch } from 'react-redux';
 import { clearUserData, logoutUser } from 'store/slices/userSlice';
+import { clearItemData } from 'store/slices/itemSlice';
 
 // Routes
 import routes from 'constants/routes';
@@ -16,12 +17,15 @@ export default function Logout({ variant }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  function handleLogout(event) {
+  const handleLogout = async (event) => {
     event.preventDefault();
-    dispatch(logoutUser());
-    dispatch(clearUserData());
+    await Promise.all([
+      dispatch(logoutUser()),
+      dispatch(clearUserData()),
+      dispatch(clearItemData()),
+    ]);
     navigate(routes.LOGIN, { state: { from: location } });
-  }
+  };
 
   return (
     <>

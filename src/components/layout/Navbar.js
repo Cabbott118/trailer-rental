@@ -106,7 +106,7 @@ export default function Navbar() {
     { route: routes.ACCOUNT, label: 'Account settings' },
     { route: routes.NOTIFICATIONS, label: 'Notifications' },
     { route: routes.ADD_ITEM, label: 'Add item' },
-    { route: routes.VIEW_ITEMS, label: 'View item' },
+    { route: routes.VIEW_ITEMS, label: 'View items' },
   ];
 
   const renderMenu = (anchorEl, handleClose, items) => {
@@ -141,7 +141,7 @@ export default function Navbar() {
 
   return (
     <>
-      <AppBar position='sticky' color='transparent' sx={{ boxShadow: 'none' }}>
+      <AppBar position='static' color='transparent' sx={{ boxShadow: 'none' }}>
         <Container maxWidth='md'>
           <Toolbar>
             <Grid
