@@ -34,9 +34,9 @@ import { useNavigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { createItem, clearErrors } from 'store/slices/itemSlice';
+import { createTrailer, clearErrors } from 'store/slices/trailerSlice';
 
-const AddItem = () => {
+const AddTrailer = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -104,9 +104,9 @@ const AddItem = () => {
     } else {
       const { title } = data;
       dispatch(
-        createItem({ title, userId, firstName, lastName, imageURL })
+        createTrailer({ title, userId, firstName, lastName, imageURL })
       ).then((action) => {
-        if (!action?.payload?.itemId) {
+        if (!action?.payload?.trailerId) {
           setErrorMessage(action.payload);
           setIsAlertShowing(true);
           setTimeout(() => {
@@ -114,7 +114,7 @@ const AddItem = () => {
             setIsAlertShowing(false);
           }, 5000);
         } else {
-          navigate(routes.ADD_ITEM_SUCCESS);
+          navigate(routes.ADD_TRAILER_SUCCESS);
         }
       });
     }
@@ -122,7 +122,7 @@ const AddItem = () => {
 
   const steps = [
     {
-      label: 'Upload images of your item',
+      label: 'Upload images of your trailer',
       description: (
         <Grid item container xs={12}>
           <Grid item xs={12}>
@@ -161,7 +161,7 @@ const AddItem = () => {
       ),
     },
     {
-      label: 'Provide details about your item',
+      label: 'Provide details about your trailer',
       description: (
         <TextField
           label='Title'
@@ -200,7 +200,7 @@ const AddItem = () => {
         align='center'
         sx={{ mb: 3, fontSize: 32 }}
       >
-        Add item
+        Add trailer
       </Typography>
       <Stepper activeStep={activeStep} orientation='vertical'>
         {steps.map((step, index) => (
@@ -256,7 +256,7 @@ const AddItem = () => {
             disabled={loading}
             sx={{ mt: 1, mr: 1, textTransform: 'none' }}
           >
-            Add item
+            Add trailer
           </Button>
           <Button
             onClick={handleBack}
@@ -273,4 +273,4 @@ const AddItem = () => {
   );
 };
 
-export default AddItem;
+export default AddTrailer;

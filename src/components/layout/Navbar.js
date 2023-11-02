@@ -105,8 +105,8 @@ export default function Navbar() {
     { route: routes.DASHBOARD, label: 'Your dashboard' },
     { route: routes.ACCOUNT, label: 'Account settings' },
     { route: routes.NOTIFICATIONS, label: 'Notifications' },
-    { route: routes.ADD_ITEM, label: 'Add item' },
-    { route: routes.VIEW_ITEMS, label: 'View items' },
+    { route: routes.ADD_TRAILER, label: 'Add trailer' },
+    { route: routes.VIEW_TRAILERS, label: 'View trailers' },
   ];
 
   const renderMenu = (anchorEl, handleClose, items) => {

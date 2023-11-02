@@ -6,79 +6,87 @@ import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 // API Requests to Firestore Database
 
-const createItem = createAsyncThunk(
-  'item/createItem',
+const createTrailer = createAsyncThunk(
+  'trailer/createTrailer',
   async ({ title, userId, firstName, lastName, imageURL }) => {
     try {
-      const response = await post('/items/create-item', {
+      const response = await post('/trailers/create-trailer', {
         title,
         userId,
         firstName,
         lastName,
         imageURL,
       });
-      return response.item;
+      return response.trailer;
     } catch (error) {
-      throw new Error('Failed to create item data.');
+      throw new Error('Failed to create trailer data.');
     }
   }
 );
 
-const fetchItem = createAsyncThunk('item/fetchItem', async (itemId) => {
-  try {
-    const response = await get('/items/get-item-details', { itemId });
-    return response;
-  } catch (error) {
-    throw new Error('Failed to fetch item data.');
-  }
-});
-
-const fetchItems = createAsyncThunk('item/fetchItems', async () => {
-  try {
-    const response = await get('/items/get-all-items');
-    return response;
-  } catch (error) {
-    throw new Error('Failed to fetch items data.');
-  }
-});
-
-const updateItem = createAsyncThunk(
-  'item/updateItem',
-  async ({ itemId, updateData }) => {
+const fetchTrailer = createAsyncThunk(
+  'trailer/fetchTrailer',
+  async (trailerId) => {
     try {
-      const response = await patch('/items/update-item', {
-        itemId,
+      const response = await get('/trailers/get-trailer-details', {
+        trailerId,
+      });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to fetch trailer data.');
+    }
+  }
+);
+
+const fetchTrailers = createAsyncThunk('trailer/fetchTrailers', async () => {
+  try {
+    const response = await get('/trailers/get-all-trailers');
+    return response;
+  } catch (error) {
+    throw new Error('Failed to fetch trailers data.');
+  }
+});
+
+const updateTrailer = createAsyncThunk(
+  'trailer/updateTrailer',
+  async ({ trailerId, updateData }) => {
+    try {
+      const response = await patch('/trailers/update-trailer', {
+        trailerId,
         updateData,
       });
-      return response.item;
+      return response.trailer;
     } catch (error) {
-      throw new Error('Failed to update item data.');
+      throw new Error('Failed to update trailer data.');
     }
   }
 );
 
-const deleteItem = createAsyncThunk('item/deleteItem', async (itemId) => {
-  try {
-    const response = await del('/items/delete-item', { itemId });
-    return response;
-  } catch (error) {
-    throw new Error('Failed to delete item data.');
+const deleteTrailer = createAsyncThunk(
+  'trailer/deleteTrailer',
+  async (trailerId) => {
+    try {
+      const response = await del('/trailers/delete-trailer', { trailerId });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to delete trailer data.');
+    }
   }
-});
+);
 
-// Action to clear item data, typically after logout
-const clearItemData = createAction('item/clearItemData');
-const clearErrors = createAction('item/clearErrors');
+// Action to clear trailer data, typically after logout
+const clearTrailerData = createAction('trailer/clearTrailerData');
+const clearErrors = createAction('trailer/clearErrors');
 
-const itemSlice = createSlice({
-  name: 'item',
+const trailerSlice = createSlice({
+  name: 'trailer',
   initialState: {
     data: [],
     loading: false,
     error: null,
   },
   reducers: {
-    clearItemData: (state) => {
+    clearTrailerData: (state) => {
       return {
         data: [],
         loading: false,
@@ -94,14 +102,14 @@ const itemSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(createItem.pending, (state) => {
+      .addCase(createTrailer.pending, (state) => {
         return {
           ...state,
           loading: true,
           error: null,
         };
       })
-      .addCase(createItem.fulfilled, (state, action) => {
+      .addCase(createTrailer.fulfilled, (state, action) => {
         return {
           ...state,
           data: [...state.data, action.payload],
@@ -109,7 +117,7 @@ const itemSlice = createSlice({
           error: null,
         };
       })
-      .addCase(createItem.rejected, (state, action) => {
+      .addCase(createTrailer.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -117,14 +125,14 @@ const itemSlice = createSlice({
         };
       })
 
-      .addCase(fetchItem.pending, (state) => {
+      .addCase(fetchTrailer.pending, (state) => {
         return {
           ...state,
           loading: true,
           error: null,
         };
       })
-      .addCase(fetchItem.fulfilled, (state, action) => {
+      .addCase(fetchTrailer.fulfilled, (state, action) => {
         return {
           ...state,
           data: action.payload,
@@ -132,7 +140,7 @@ const itemSlice = createSlice({
           error: null,
         };
       })
-      .addCase(fetchItem.rejected, (state, action) => {
+      .addCase(fetchTrailer.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -140,14 +148,14 @@ const itemSlice = createSlice({
         };
       })
 
-      .addCase(fetchItems.pending, (state) => {
+      .addCase(fetchTrailers.pending, (state) => {
         return {
           ...state,
           loading: true,
           error: null,
         };
       })
-      .addCase(fetchItems.fulfilled, (state, action) => {
+      .addCase(fetchTrailers.fulfilled, (state, action) => {
         return {
           ...state,
           data: action.payload,
@@ -155,7 +163,7 @@ const itemSlice = createSlice({
           error: null,
         };
       })
-      .addCase(fetchItems.rejected, (state, action) => {
+      .addCase(fetchTrailers.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -163,21 +171,21 @@ const itemSlice = createSlice({
         };
       })
 
-      .addCase(updateItem.pending, (state) => {
+      .addCase(updateTrailer.pending, (state) => {
         return {
           ...state,
           loading: true,
           error: null,
         };
       })
-      .addCase(updateItem.fulfilled, (state, action) => {
+      .addCase(updateTrailer.fulfilled, (state, action) => {
         return {
           ...state,
           data: action.payload,
           loading: false,
         };
       })
-      .addCase(updateItem.rejected, (state, action) => {
+      .addCase(updateTrailer.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -185,14 +193,14 @@ const itemSlice = createSlice({
         };
       })
 
-      .addCase(deleteItem.pending, (state) => {
+      .addCase(deleteTrailer.pending, (state) => {
         return {
           ...state,
           loading: true,
           error: null,
         };
       })
-      .addCase(deleteItem.fulfilled, (state) => {
+      .addCase(deleteTrailer.fulfilled, (state) => {
         return {
           ...state,
           data: null,
@@ -200,7 +208,7 @@ const itemSlice = createSlice({
           error: null,
         };
       })
-      .addCase(deleteItem.rejected, (state, action) => {
+      .addCase(deleteTrailer.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -211,13 +219,13 @@ const itemSlice = createSlice({
 });
 
 // Export the async thunk and reducer
-export const { reducer: itemReducer } = itemSlice;
+export const { reducer: trailerReducer } = trailerSlice;
 export {
-  deleteItem,
-  createItem,
-  fetchItem,
-  fetchItems,
-  updateItem,
-  clearItemData,
+  deleteTrailer,
+  createTrailer,
+  fetchTrailer,
+  fetchTrailers,
+  updateTrailer,
+  clearTrailerData,
   clearErrors,
 };

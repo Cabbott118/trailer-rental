@@ -17,10 +17,10 @@ import ContactUs from 'pages/contactUs/ContactUs';
 import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
 import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
 import Dashboard from 'pages/dashboard/Dashboard';
-import AddItem from 'pages/items/AddItem';
-import AddItemSuccess from 'pages/items/AddItemSuccess';
-import ViewItems from 'pages/items/ViewItems';
-import ViewItem from 'pages/items/ViewItem';
+import AddTrailer from 'pages/trailers/AddTrailer';
+import AddTrailerSuccess from 'pages/trailers/AddTrailerSuccess';
+import ViewTrailers from 'pages/trailers/ViewTrailers';
+import ViewTrailer from 'pages/trailers/ViewTrailer';
 import RequireAuth from 'routes/requireAuth';
 
 // React Router
@@ -45,21 +45,29 @@ function App() {
               <Route index path='' element={<Dashboard />} />
             </Route>
             <Route
-              path={routes.ITEMS}
+              path={routes.TRAILERS}
               element={
                 <RequireAuth>
                   <Outlet />
                 </RequireAuth>
               }
             >
-              <Route index path={routes.ADD_ITEM} element={<AddItem />} />
+              <Route index path={routes.ADD_TRAILER} element={<AddTrailer />} />
               <Route
                 index
-                path={routes.ADD_ITEM_SUCCESS}
-                element={<AddItemSuccess />}
+                path={routes.ADD_TRAILER_SUCCESS}
+                element={<AddTrailerSuccess />}
               />
-              <Route index path={routes.VIEW_ITEMS} element={<ViewItems />} />
-              <Route index path={routes.VIEW_ITEM} element={<ViewItem />} />
+              <Route
+                index
+                path={routes.VIEW_TRAILERS}
+                element={<ViewTrailers />}
+              />
+              <Route
+                index
+                path={routes.VIEW_TRAILER}
+                element={<ViewTrailer />}
+              />
             </Route>
             <Route path='/about-us' element={<AboutUs />} />
             <Route path='/contact-us' element={<ContactUs />} />

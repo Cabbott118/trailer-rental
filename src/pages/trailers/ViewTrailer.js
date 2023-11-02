@@ -24,15 +24,15 @@ import {
 // React Router
 import { useLocation } from 'react-router-dom';
 
-const ViewItem = () => {
+const ViewTrailer = () => {
   const theme = useTheme();
   const location = useLocation();
-  const item = location.state.item;
+  const trailer = location.state.trailer;
 
   const previousPages = [
     {
-      name: 'View items',
-      route: routes.VIEW_ITEMS,
+      name: 'View trailers',
+      route: routes.VIEW_TRAILERS,
     },
   ];
 
@@ -41,20 +41,20 @@ const ViewItem = () => {
       <Container maxWidth='md'>
         <BreadcrumbNavigator
           previousPages={previousPages}
-          currentPage={item.title}
+          currentPage={trailer.title}
         />
       </Container>
       <Container maxWidth='md' sx={{ mt: 3 }}>
         <CardMedia
           component='img'
-          image={item.imageURL}
-          alt={item.title}
+          image={trailer.imageURL}
+          alt={trailer.title}
           sx={{ maxWidth: '100%' }}
         />
         <Grid container spacing={1} sx={{ mt: 1 }}>
           <Grid item xs={12}>
             <Typography variant='h3' component='h1'>
-              {item.title}
+              {trailer.title}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -68,7 +68,7 @@ const ViewItem = () => {
         <Grid container>
           <Grid item xs={12}>
             <Typography>
-              <b>This image is a great value.</b> Some additional info about
+              <b>This trailer is a great value.</b> Some additional info about
               values.
             </Typography>
           </Grid>
@@ -77,13 +77,13 @@ const ViewItem = () => {
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={10}>
             <Typography variant='h5'>
-              Item posted by {item.owner.ownerName.firstName}
+              Trailer posted by {trailer.owner.ownerName.firstName}
             </Typography>
-            <Typography>{formatCreatedAt(item.createdAt)}</Typography>
+            <Typography>{formatCreatedAt(trailer.createdAt)}</Typography>
           </Grid>
           <Grid item xs={2}>
             <Avatar sx={{ bgcolor: theme.palette.primary.main }}>
-              {getUserInitials(item.owner.ownerName)}
+              {getUserInitials(trailer.owner.ownerName)}
             </Avatar>
           </Grid>
         </Grid>
@@ -92,4 +92,4 @@ const ViewItem = () => {
   );
 };
 
-export default ViewItem;
+export default ViewTrailer;

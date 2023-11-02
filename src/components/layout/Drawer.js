@@ -112,14 +112,14 @@ const Drawer = () => {
             />
             <MenuItem
               icon={<AddBoxOutlinedIcon />}
-              primaryText='Add item'
-              to={routes.ADD_ITEM}
+              primaryText='Add trailer'
+              to={routes.ADD_TRAILER}
               onClick={toggleDrawer}
             />
             <MenuItem
               icon={<GridViewOutlinedIcon />}
-              primaryText='View items'
-              to={routes.VIEW_ITEMS}
+              primaryText='View trailers'
+              to={routes.VIEW_TRAILERS}
               onClick={toggleDrawer}
             />
           </List>

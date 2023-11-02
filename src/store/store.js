@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { userReducer } from 'store/slices/userSlice';
-import { itemReducer } from 'store/slices/itemSlice';
+import { trailerReducer } from 'store/slices/trailerSlice';
 
 const persistedState = localStorage.getItem('reduxState');
 const initialState = persistedState ? JSON.parse(persistedState) : {};
@@ -9,7 +9,7 @@ const store = configureStore({
   preloadedState: initialState,
   reducer: {
     user: userReducer,
-    item: itemReducer,
+    trailer: trailerReducer,
   },
 });
 

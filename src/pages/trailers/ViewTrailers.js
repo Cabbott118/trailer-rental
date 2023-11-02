@@ -15,20 +15,20 @@ import { useNavigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchItems, clearErrors } from 'store/slices/itemSlice';
+import { fetchTrailers, clearErrors } from 'store/slices/trailerSlice';
 
-const ViewItems = () => {
+const ViewTrailers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, loading } = useSelector((state) => state.item);
+  const { data, loading } = useSelector((state) => state.trailer);
 
   useEffect(() => {
-    dispatch(fetchItems());
+    dispatch(fetchTrailers());
   }, []);
 
-  const handleNavigateToItem = (item) => {
-    navigate(routes.VIEW_ITEM, { state: { item } });
+  const handleNavigateToTrailer = (trailer) => {
+    navigate(routes.VIEW_TRAILER, { state: { trailer } });
   };
 
   if (loading) {
@@ -44,24 +44,24 @@ const ViewItems = () => {
           align='center'
           sx={{ py: 3, fontSize: 32 }}
         >
-          View items
+          View trailers
         </Typography>
         <Container maxWidth='md' sx={{ mb: 3 }}>
           <Grid container spacing={6}>
-            {data.map((item) => (
-              <Grid item key={item?.itemId} xs={12} md={6}>
+            {data.map((trailer) => (
+              <Grid item key={trailer?.trailerId} xs={12} md={6}>
                 <Grid
                   container
                   spacing={1}
-                  onClick={() => handleNavigateToItem(item)}
+                  onClick={() => handleNavigateToTrailer(trailer)}
                   sx={{ cursor: 'pointer' }}
                 >
                   <Grid item xs={12}>
                     <CardMedia
                       component='img'
                       height='300'
-                      image={item.imageURL}
-                      alt={item.title}
+                      image={trailer.imageURL}
+                      alt={trailer.title}
                       sx={{ borderRadius: 3 }}
                     />
                   </Grid>
@@ -72,7 +72,7 @@ const ViewItems = () => {
                         variant='h5'
                         sx={{ fontWeight: 500 }}
                       >
-                        {item?.title}
+                        {trailer?.title}
                       </Typography>
                     </Grid>
                     <Grid item xs={2}>
@@ -82,13 +82,13 @@ const ViewItems = () => {
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant='body2' color='text.secondary'>
-                        {item.owner.ownerName.firstName}{' '}
-                        {item.owner.ownerName.lastName}
+                        {trailer.owner.ownerName.firstName}{' '}
+                        {trailer.owner.ownerName.lastName}
                       </Typography>
                     </Grid>
                     <Grid item xs={12}>
                       <Typography variant='body2' color='text.secondary'>
-                        {formatCreatedAt(item?.createdAt)}
+                        {formatCreatedAt(trailer?.createdAt)}
                       </Typography>
                     </Grid>
                   </Grid>
@@ -109,10 +109,10 @@ const ViewItems = () => {
         align='center'
         sx={{ py: 3, fontSize: 32 }}
       >
-        No items found
+        No trailers found
       </Typography>
     </div>
   );
 };
 
-export default ViewItems;
+export default ViewTrailers;

@@ -7,7 +7,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // Redux
 import { useDispatch } from 'react-redux';
 import { clearUserData, logoutUser } from 'store/slices/userSlice';
-import { clearItemData } from 'store/slices/itemSlice';
+import { clearTrailerData } from 'store/slices/trailerSlice';
 
 // Routes
 import routes from 'constants/routes';
@@ -22,7 +22,7 @@ export default function Logout({ variant }) {
     await Promise.all([
       dispatch(logoutUser()),
       dispatch(clearUserData()),
-      dispatch(clearItemData()),
+      dispatch(clearTrailerData()),
     ]);
     navigate(routes.LOGIN, { state: { from: location } });
   };

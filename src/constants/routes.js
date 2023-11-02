@@ -13,12 +13,12 @@ const routes = {
   // User
   DASHBOARD: '/dashboard',
 
-  // Item
-  ITEMS: '/items',
-  ADD_ITEM: '/items/add-item',
-  VIEW_ITEMS: '/items/view-items',
-  VIEW_ITEM: '/items/view-item',
-  ADD_ITEM_SUCCESS: '/items/add-item-success',
+  // Trailer
+  TRAILERS: '/trailers',
+  ADD_TRAILER: '/trailers/add-trailer',
+  VIEW_TRAILERS: '/trailers/view-trailers',
+  VIEW_TRAILER: '/trailers/view-trailer',
+  ADD_TRAILER_SUCCESS: '/trailers/add-trailer-success',
 };
 
 export default routes;

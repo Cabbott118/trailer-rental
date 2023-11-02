@@ -9,9 +9,9 @@ const app = express();
 app.use(cors({ origin: true }));
 
 const userRoutes = require('./routes/users/userRoutes');
-const itemRoutes = require('./routes/items/itemRoutes');
+const trailerRoutes = require('./routes/trailers/trailerRoutes');
 
 app.use('/users', userRoutes);
-app.use('/items', itemRoutes);
+app.use('/trailers', trailerRoutes);
 
 exports.api = functions.https.onRequest(app);
