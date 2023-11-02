@@ -7,9 +7,14 @@ const router = express.Router();
 
 router.post('/create-trailer', async (req, res) => {
   try {
-    const { title, userId, firstName, lastName, imageURL } = req.body;
+    const { type, city, state, userId, firstName, lastName, imageURL } =
+      req.body;
     const newTrailer = {
-      title,
+      type,
+      location: {
+        city,
+        state,
+      },
       owner: {
         ownerId: userId,
         ownerName: {
@@ -17,6 +22,7 @@ router.post('/create-trailer', async (req, res) => {
           lastName,
         },
       },
+      searchableTerms: [city.toLowerCase(), type.toLowerCase()],
       imageURL,
       createdAt: Firestore.FieldValue.serverTimestamp(),
     };
@@ -50,6 +56,31 @@ router.get('/get-all-trailers', async (req, res) => {
     let query = trailersRef; // Initialize the query
 
     const querySnapshot = await query.orderBy('createdAt', 'desc').get(); // Execute the query
+    const trailersData = querySnapshot.docs.map((doc) => doc.data());
+
+    return res.status(200).json(trailersData);
+  } catch (error) {
+    console.error('Error retrieving trailers:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+router.get('/search-trailers', async (req, res) => {
+  try {
+    const searchTerm = req.query.searchTerm;
+    const trailersRef = admin.firestore().collection('trailers');
+
+    const querySnapshot = await trailersRef
+      .where('searchableTerms', 'array-contains', searchTerm.toLowerCase())
+      .orderBy('createdAt', 'desc')
+      .get();
+
+    if (querySnapshot.empty) {
+      return res.status(404).json({
+        message: 'No trailers were found in our search',
+      });
+    }
+
     const trailersData = querySnapshot.docs.map((doc) => doc.data());
 
     return res.status(200).json(trailersData);

@@ -1,11 +1,21 @@
 {
   "indexes": [
     {
-      "collectionGroup": "items",
+      "collectionGroup": "trailers",
       "queryScope": "COLLECTION",
       "fields": [
+        { "fieldPath": "searchableTerms", "order": "ASCENDING" },
         { "fieldPath": "createdAt", "order": "DESCENDING" },
-        { "fieldPath": "createdAt", "order": "ASCENDING" }
+        { "fieldPath": "__name__", "order": "DESCENDING" }
+      ]
+    },
+    {
+      "collectionGroup": "trailers",
+      "queryScope": "COLLECTION",
+      "fields": [
+        { "fieldPath": "searchableTerms", "order": "ASCENDING" },
+        { "fieldPath": "createdAt", "order": "DESCENDING" },
+        { "fieldPath": "__name__", "order": "DESCENDING" }
       ]
     }
   ],

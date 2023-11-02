@@ -8,10 +8,12 @@ import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
 
 const createTrailer = createAsyncThunk(
   'trailer/createTrailer',
-  async ({ title, userId, firstName, lastName, imageURL }) => {
+  async ({ type, city, state, userId, firstName, lastName, imageURL }) => {
     try {
       const response = await post('/trailers/create-trailer', {
-        title,
+        type,
+        city,
+        state,
         userId,
         firstName,
         lastName,
@@ -46,6 +48,19 @@ const fetchTrailers = createAsyncThunk('trailer/fetchTrailers', async () => {
     throw new Error('Failed to fetch trailers data.');
   }
 });
+
+const searchTrailers = createAsyncThunk(
+  'trailer/searchTrailers',
+  async (searchTerm) => {
+    try {
+      console.log(searchTerm);
+      const response = await get('/trailers/search-trailers', { searchTerm });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to fetch trailers data.');
+    }
+  }
+);
 
 const updateTrailer = createAsyncThunk(
   'trailer/updateTrailer',
@@ -171,6 +186,29 @@ const trailerSlice = createSlice({
         };
       })
 
+      .addCase(searchTrailers.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(searchTrailers.fulfilled, (state, action) => {
+        return {
+          ...state,
+          data: action.payload,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(searchTrailers.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
+      })
+
       .addCase(updateTrailer.pending, (state) => {
         return {
           ...state,
@@ -225,6 +263,7 @@ export {
   createTrailer,
   fetchTrailer,
   fetchTrailers,
+  searchTrailers,
   updateTrailer,
   clearTrailerData,
   clearErrors,

@@ -41,20 +41,20 @@ const ViewTrailer = () => {
       <Container maxWidth='md'>
         <BreadcrumbNavigator
           previousPages={previousPages}
-          currentPage={trailer.title}
+          currentPage={trailer.type}
         />
       </Container>
       <Container maxWidth='md' sx={{ mt: 3 }}>
         <CardMedia
           component='img'
           image={trailer.imageURL}
-          alt={trailer.title}
+          alt={trailer.type}
           sx={{ maxWidth: '100%' }}
         />
         <Grid container spacing={1} sx={{ mt: 1 }}>
           <Grid item xs={12}>
             <Typography variant='h3' component='h1'>
-              {trailer.title}
+              {trailer.type}
             </Typography>
           </Grid>
           <Grid item xs={12}>

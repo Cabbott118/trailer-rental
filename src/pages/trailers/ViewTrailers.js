@@ -61,7 +61,7 @@ const ViewTrailers = () => {
                       component='img'
                       height='300'
                       image={trailer.imageURL}
-                      alt={trailer.title}
+                      alt={trailer.type}
                       sx={{ borderRadius: 3 }}
                     />
                   </Grid>
@@ -72,7 +72,7 @@ const ViewTrailers = () => {
                         variant='h5'
                         sx={{ fontWeight: 500 }}
                       >
-                        {trailer?.title}
+                        {trailer?.type}
                       </Typography>
                     </Grid>
                     <Grid item xs={2}>

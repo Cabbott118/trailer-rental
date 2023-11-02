@@ -5,6 +5,8 @@ import Alert from 'components/common/Alert';
 
 // Constants
 import routes from 'constants/routes';
+import trailerTypes from 'constants/trailer.json';
+import states from 'constants/states.json';
 
 // Firebase
 import { storage } from 'providers/firebase';
@@ -16,6 +18,7 @@ import {
   Container,
   Grid,
   LinearProgress,
+  MenuItem,
   Paper,
   Step,
   Stepper,
@@ -102,9 +105,17 @@ const AddTrailer = () => {
       setErrorMessage('An image must be uploaded.');
       setIsAlertShowing(true);
     } else {
-      const { title } = data;
+      const { type, city, state } = data;
       dispatch(
-        createTrailer({ title, userId, firstName, lastName, imageURL })
+        createTrailer({
+          type,
+          city,
+          state,
+          userId,
+          firstName,
+          lastName,
+          imageURL,
+        })
       ).then((action) => {
         if (!action?.payload?.trailerId) {
           setErrorMessage(action.payload);
@@ -163,14 +174,54 @@ const AddTrailer = () => {
     {
       label: 'Provide details about your trailer',
       description: (
-        <TextField
-          label='Title'
-          fullWidth
-          {...register('title', { required: true })}
-          error={errors.title?.type === 'required'}
-          helperText={errors.title?.type === 'required' && 'Title is required'}
-          sx={{ my: 1 }}
-        />
+        <Grid container>
+          <Grid item xs={12}>
+            <TextField
+              label='Trailer type'
+              select
+              fullWidth
+              defaultValue={''}
+              {...register('type', { required: true })}
+              error={errors.type === 'required'}
+              helperText={
+                errors.type === 'required' && 'The type of trailer is required'
+              }
+            >
+              {trailerTypes.map((type) => (
+                <MenuItem key={type.name} value={type.name}>
+                  {type.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label='City'
+              fullWidth
+              {...register('city', { required: true })}
+              error={errors.city === 'required'}
+              helperText={errors.city === 'required' && 'City is required'}
+              sx={{ my: 1 }}
+            />
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label='State'
+              select
+              fullWidth
+              defaultValue={''}
+              {...register('state', { required: true })}
+              error={errors.state === 'required'}
+              helperText={errors.state === 'required' && 'State is required'}
+            >
+              {states.map((state) => (
+                <MenuItem key={state.abbreviation} value={state.abbreviation}>
+                  {state.name}
+                </MenuItem>
+              ))}
+            </TextField>
+          </Grid>
+        </Grid>
       ),
     },
   ];
