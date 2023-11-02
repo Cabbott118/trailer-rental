@@ -20,6 +20,7 @@ import Dashboard from 'pages/dashboard/Dashboard';
 import AddItem from 'pages/items/AddItem';
 import AddItemSuccess from 'pages/items/AddItemSuccess';
 import ViewItems from 'pages/items/ViewItems';
+import ViewItem from 'pages/items/ViewItem';
 import RequireAuth from 'routes/requireAuth';
 
 // React Router
@@ -58,6 +59,7 @@ function App() {
                 element={<AddItemSuccess />}
               />
               <Route index path={routes.VIEW_ITEMS} element={<ViewItems />} />
+              <Route index path={routes.VIEW_ITEM} element={<ViewItem />} />
             </Route>
             <Route path='/about-us' element={<AboutUs />} />
             <Route path='/contact-us' element={<ContactUs />} />

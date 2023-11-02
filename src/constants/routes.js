@@ -17,6 +17,7 @@ const routes = {
   ITEMS: '/items',
   ADD_ITEM: '/items/add-item',
   VIEW_ITEMS: '/items/view-items',
+  VIEW_ITEM: '/items/view-item',
   ADD_ITEM_SUCCESS: '/items/add-item-success',
 };
 
