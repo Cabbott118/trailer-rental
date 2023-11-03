@@ -85,7 +85,7 @@ export default function Dashboard() {
             }}
           >
             {!loading ? (
-              <Typography variant='h4' component='h1'>
+              <Typography variant='h1'>
                 {data?.fullName?.firstName} {data?.fullName?.lastName}
               </Typography>
             ) : (

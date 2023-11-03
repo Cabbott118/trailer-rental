@@ -239,18 +239,8 @@ const AddTrailer = () => {
   };
 
   return (
-    <Container
-      maxWidth='md'
-      component='form'
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{ mt: 3 }}
-    >
-      <Typography
-        variant='h4'
-        component='h1'
-        align='center'
-        sx={{ mb: 3, fontSize: 32 }}
-      >
+    <Container maxWidth='md' component='form' onSubmit={handleSubmit(onSubmit)}>
+      <Typography variant='h1' align='center' sx={{ my: 3 }}>
         Add trailer
       </Typography>
       <Stepper activeStep={activeStep} orientation='vertical'>

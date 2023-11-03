@@ -38,12 +38,7 @@ const ViewTrailers = () => {
   if (data && data.length > 0) {
     return (
       <div>
-        <Typography
-          variant='h4'
-          component='h1'
-          align='center'
-          sx={{ py: 3, fontSize: 32 }}
-        >
+        <Typography variant='h1' align='center' sx={{ my: 3 }}>
           View trailers
         </Typography>
         <Container maxWidth='md' sx={{ mb: 3 }}>

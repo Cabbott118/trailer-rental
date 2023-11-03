@@ -50,73 +50,10 @@ export default function Home() {
     }
   }, []);
 
-  // const headingStyle = {
-  //   textTransform: 'uppercase',
-  //   fontWeight: '700',
-  //   fontSize: '4rem',
-  //   [theme.breakpoints.down('sm')]: {
-  //     fontSize: '2rem',
-  //   },
-  // };
-
-  // const subHeadingStyle = {
-  //   color: theme.palette.primary.contrastText,
-  //   my: '1.5rem',
-  //   fontSize: '2rem',
-  //   [theme.breakpoints.down('sm')]: {
-  //     fontSize: '1.5rem',
-  //   },
-  // };
-
   if (loading) return <p>Loading...</p>;
 
   return (
     <Container maxWidth='md'>
-      {/* <Box
-        sx={{
-          minHeight: '15rem',
-          py: '3rem',
-          backgroundImage: `linear-gradient(to bottom right, ${theme.palette.primary.dark}, ${theme.palette.secondary.dark})`,
-        }}
-      >
-        <Container maxWidth='md'>
-          {data?.fullName?.firstName ? (
-            <Typography
-              variant='h6'
-              component='h1'
-              align='center'
-              sx={{ color: theme.palette.primary.contrastText }}
-            >
-              Welcome, <i>{data?.fullName?.firstName}</i>
-            </Typography>
-          ) : null}
-          <Typography
-            variant='h1'
-            component='h1'
-            align='center'
-            color='primary'
-            sx={headingStyle}
-          >
-            This is a template
-          </Typography>
-          <Typography
-            variant='h4'
-            component='h4'
-            align='center'
-            sx={subHeadingStyle}
-          >
-            Created by <b>Caleb Abbott</b>, this template is intended to be
-            cloned to quickly develop web apps using the following techs:
-          </Typography>
-          <Typography color='primary'>
-            <code>
-              React, Firebase (Hosting, Firestore, & Authentication),
-              Material-UI (MUI), Redux & Redux-Toolkit, React-rotuer, Axios, and
-              Dotenv
-            </code>
-          </Typography>
-        </Container>
-      </Box> */}
       <Grid container component='form' onSubmit={handleSubmit(onSubmit)}>
         <Grid item xs={8}>
           <TextField
@@ -141,8 +78,8 @@ export default function Home() {
           </Button>
         </Grid>
       </Grid>
-
-      <Divider sx={{ my: 3 }} />
+      <Typography variant='h1'>Test</Typography>
+      {/* <Divider sx={{ my: 3 }} />
       {trailerData
         ? trailerData.map((trailer, index) => (
             <Paper key={index} elevation={3} sx={{ my: 1, p: 2 }}>
@@ -156,7 +93,7 @@ export default function Home() {
               {trailer.type}
             </Paper>
           ))
-        : null}
+        : null} */}
     </Container>
   );
 }

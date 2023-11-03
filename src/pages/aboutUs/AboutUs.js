@@ -4,12 +4,7 @@ import { Container, Paper, Typography } from '@mui/material';
 const AboutUs = () => {
   return (
     <Container maxWidth='md'>
-      <Typography
-        variant='h4'
-        component='h1'
-        align='center'
-        sx={{ py: 3, fontSize: 32 }}
-      >
+      <Typography variant='h1' align='center' sx={{ my: 3 }}>
         About us
       </Typography>
       <Typography variant='body1' sx={{ pb: 3, fontSize: 20 }}>

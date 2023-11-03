@@ -2,14 +2,6 @@ import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    // primary: {
-    //   main: '#0B7064',
-    //   contrastText: '#DDE6ED',
-    // },
-    // secondary: {
-    //   main: '#705900',
-    //   contrastText: '#DDE6ED',
-    // },
     primary: {
       main: '#00C7E6',
       contrastText: '#DDE6ED',
@@ -49,5 +41,33 @@ const theme = createTheme({
     ].join(','),
   },
 });
+
+theme.typography.h1 = {
+  fontWeight: 500,
+  fontFamily: [
+    '-apple-system',
+    'BlinkMacSystemFont',
+    '"Segoe UI"',
+    'Roboto',
+    '"Helvetica Neue"',
+    'Arial',
+    'sans-serif',
+    '"Apple Color Emoji"',
+    '"Segoe UI Emoji"',
+    '"Segoe UI Symbol"',
+  ],
+  [theme.breakpoints.up('xs')]: {
+    fontSize: 24,
+  },
+  [theme.breakpoints.up('sm')]: {
+    fontSize: 32, // Font size for small screens and larger
+  },
+  [theme.breakpoints.up('md')]: {
+    fontSize: 40,
+  },
+  [theme.breakpoints.up('lg')]: {
+    fontSize: 48,
+  },
+};
 
 export default theme;

@@ -37,12 +37,7 @@ const ContactUs = () => {
   return (
     <Box component='form' onSubmit={handleSubmit(onSubmit)}>
       <Container maxWidth='xs'>
-        <Typography
-          variant='h4'
-          component='h1'
-          align='center'
-          sx={{ py: 3, fontSize: 32 }}
-        >
+        <Typography variant='h1' align='center' sx={{ my: 3 }}>
           Contact us
         </Typography>
         <Grid container spacing={3}>
