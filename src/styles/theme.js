@@ -4,13 +4,17 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#00C7E6',
-      contrastText: '#DDE6ED',
+      contrastText: '#fff',
     },
     secondary: {
       main: '#F79B19',
+      contrastText: '#fff',
     },
     background: {
       default: '#ffffff',
+    },
+    text: {
+      primary: '#000',
     },
   },
   additionalPalette: {
@@ -66,7 +70,7 @@ theme.typography.h1 = {
     fontSize: 40,
   },
   [theme.breakpoints.up('lg')]: {
-    fontSize: 48,
+    fontSize: 44,
   },
 };
 

@@ -1,7 +1,16 @@
+// MUI
 import { Alert as MuiAlert } from '@mui/material';
 
-const Alert = ({ text, severity, ...rest }) => (
-  <MuiAlert severity={severity} {...rest}>
+// React Router
+import { Link } from 'react-router-dom';
+
+const Alert = ({ text, severity, route, ...rest }) => (
+  <MuiAlert
+    severity={severity}
+    component={route ? Link : 'div'}
+    to={route}
+    {...rest}
+  >
     {text}
   </MuiAlert>
 );

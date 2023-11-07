@@ -7,14 +7,8 @@ import routes from 'constants/routes';
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 // MUI
-import {
-  Button,
-  Box,
-  Container,
-  TextField,
-  Typography,
-  useTheme,
-} from '@mui/material';
+import { Button, Box, Container, TextField, Typography } from '@mui/material';
+import theme from 'styles/theme';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -29,7 +23,6 @@ const linkStyles = {
 
 export default function ForgotPassword() {
   const auth = getAuth();
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [isError, setIsError] = useState(false);

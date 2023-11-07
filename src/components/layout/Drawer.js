@@ -19,7 +19,6 @@ import {
   ListItemText,
   ListSubheader,
   Typography,
-  useTheme,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -59,8 +58,6 @@ const MenuItem = ({ icon, primaryText, to, onClick }) => {
 };
 
 const Drawer = () => {
-  const theme = useTheme();
-
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = (event) => {

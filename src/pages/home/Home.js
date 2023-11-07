@@ -11,7 +11,6 @@ import {
   Paper,
   TextField,
   Typography,
-  useTheme,
 } from '@mui/material';
 
 // React Hook Form
@@ -24,8 +23,6 @@ import { searchTrailers } from 'store/slices/trailerSlice';
 
 export default function Home() {
   document.title = 'Trailer Rental';
-
-  const theme = useTheme();
 
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.user);
@@ -53,7 +50,7 @@ export default function Home() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <Container maxWidth='md'>
+    <Container maxWidth='md' sx={{ pt: 10 }}>
       <Grid container component='form' onSubmit={handleSubmit(onSubmit)}>
         <Grid item xs={8}>
           <TextField
@@ -78,7 +75,6 @@ export default function Home() {
           </Button>
         </Grid>
       </Grid>
-      <Typography variant='h1'>Test</Typography>
       {/* <Divider sx={{ my: 3 }} />
       {trailerData
         ? trailerData.map((trailer, index) => (

@@ -12,6 +12,12 @@ const routes = {
 
   // User
   DASHBOARD: '/dashboard',
+  PROFILE: '/dashboard/profile',
+  NOTIFICATIONS: '/dashboard/notifications',
+  NOTIFICATION: '/dashboard/notifications/:notificationId',
+  VERIFY_IDENTITY: '/dashboard/verify-identity',
+  VERIFY_EMAIL: '/dashboard/verify-email',
+  ADD_BANK_ACCOUNT: '/dashboard/add-bank-account',
 
   // Trailer
   TRAILERS: '/trailers',
@@ -19,6 +25,9 @@ const routes = {
   VIEW_TRAILERS: '/trailers/view-trailers',
   VIEW_TRAILER: '/trailers/view-trailer',
   ADD_TRAILER_SUCCESS: '/trailers/add-trailer-success',
+
+  // Test
+  TEST: '/',
 };
 
 export default routes;

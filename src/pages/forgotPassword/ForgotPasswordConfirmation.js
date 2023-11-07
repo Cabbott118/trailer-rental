@@ -4,13 +4,13 @@ import { useEffect, useState } from 'react';
 import routes from 'constants/routes';
 
 // MUI
-import { Box, Container, Typography, useTheme } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
+import theme from 'styles/theme';
 
 // React Router
 import { useNavigate } from 'react-router-dom';
 
 export default function ForgotPasswordConfirmation() {
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const [timer, setTimer] = useState(5);

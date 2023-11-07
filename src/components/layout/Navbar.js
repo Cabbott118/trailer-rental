@@ -39,8 +39,8 @@ import {
   Tooltip,
   Typography,
   useMediaQuery,
-  useTheme,
 } from '@mui/material';
+import theme from 'styles/theme';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 // React Router
@@ -51,7 +51,6 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { fetchNotifications } from 'store/slices/notificationsSlice';
 
 export default function Navbar() {
-  const theme = useTheme();
   const auth = getAuth();
   // const db = getFirestore();
   const dispatch = useDispatch();
@@ -141,8 +140,8 @@ export default function Navbar() {
 
   return (
     <>
-      <AppBar position='static' color='transparent' sx={{ boxShadow: 'none' }}>
-        <Container maxWidth='md'>
+      <AppBar position='fixed' color='inherit' sx={{ boxShadow: 1 }}>
+        <Container maxWidth='lg'>
           <Toolbar>
             <Grid
               container

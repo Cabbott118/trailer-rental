@@ -17,6 +17,10 @@ import ContactUs from 'pages/contactUs/ContactUs';
 import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
 import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
 import Dashboard from 'pages/dashboard/Dashboard';
+import VerifyIdentity from 'pages/dashboard/subPages/VerifyIdentity';
+import VerifyEmail from 'pages/dashboard/subPages/VerifyEmail';
+import AddBankAccount from 'pages/dashboard/subPages/AddBankAccount';
+import Profile from 'pages/dashboard/profile/Profile';
 import AddTrailer from 'pages/trailers/AddTrailer';
 import AddTrailerSuccess from 'pages/trailers/AddTrailerSuccess';
 import ViewTrailers from 'pages/trailers/ViewTrailers';
@@ -43,6 +47,22 @@ function App() {
               }
             >
               <Route index path='' element={<Dashboard />} />
+              <Route index path={routes.PROFILE} element={<Profile />} />
+              <Route
+                index
+                path={routes.VERIFY_IDENTITY}
+                element={<VerifyIdentity />}
+              />
+              <Route
+                index
+                path={routes.VERIFY_EMAIL}
+                element={<VerifyEmail />}
+              />
+              <Route
+                index
+                path={routes.ADD_BANK_ACCOUNT}
+                element={<AddBankAccount />}
+              />
             </Route>
             <Route
               path={routes.TRAILERS}
