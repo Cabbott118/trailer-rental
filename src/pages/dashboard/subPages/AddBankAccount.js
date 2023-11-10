@@ -86,7 +86,7 @@ const AddBankAccount = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <TextField
-                label='Account holder name'
+                label={`Account holder's name`}
                 fullWidth
                 {...register('accountHolderName', { required: true })}
                 error={errors.accountHolderName?.type === 'required'}

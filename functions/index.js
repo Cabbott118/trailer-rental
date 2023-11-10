@@ -35,8 +35,6 @@ exports.createStripeAccount = functions.https.onRequest(async (req, res) => {
     //   },
     // });
     // Create a Custom Stripe Connect account for an individual.
-    const ipAddress = requestIP.getClientIp(req);
-    console.log(ipAddress);
     const account = await stripe.accounts.create({
       type: 'custom',
       country: 'US',

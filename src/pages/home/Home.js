@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import image1 from 'assets/images/image1.jpg';
 import image2 from 'assets/images/image2.jpg';
 import image3 from 'assets/images/image3.jpg';
+import image4 from 'assets/images/image4.jpg';
 
 // MUI
 import {
@@ -18,6 +19,9 @@ import {
   Typography,
 } from '@mui/material';
 import theme from 'styles/theme';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -29,6 +33,9 @@ import { searchTrailers } from 'store/slices/trailerSlice';
 
 export default function Home() {
   document.title = 'Trailer Rental';
+
+  const [pickUpDate, setPickUpDate] = useState(null);
+  const [returnDate, setReturnDate] = useState(null);
 
   const dispatch = useDispatch();
   const { data, loading } = useSelector((state) => state.user);
@@ -44,7 +51,7 @@ export default function Home() {
 
   const onSubmit = (data) => {
     const { searchTerm } = data;
-    dispatch(searchTrailers(searchTerm));
+    dispatch(searchTrailers({ searchTerm, pickUpDate, returnDate }));
   };
 
   useEffect(() => {
@@ -58,25 +65,14 @@ export default function Home() {
   return (
     <Box
       sx={{
-        position: 'relative',
         minHeight: '100vh',
+        backgroundImage: `url(${image4})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
       }}
     >
-      <Box
-        sx={{
-          position: 'absolute',
-          top: 0,
-          right: 0,
-          bottom: 0,
-          left: 0,
-          backgroundImage: `url(${image2})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundRepeat: 'no-repeat',
-          filter: 'brightness(50%)',
-        }}
-      />
-      <Container maxWidth='md' sx={{ pt: 30, position: 'relative' }}>
+      <Container maxWidth='sm' sx={{ pt: 20 }}>
         <Grid container component='form' onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12}>
             <Typography variant='h1' color='primary'>
@@ -95,6 +91,9 @@ export default function Home() {
             sx={{ bgcolor: '#fff', p: 3, mt: 3, borderRadius: 3 }}
           >
             <Grid item xs={12} sx={{ mb: 3 }}>
+              <Typography variant='h6' sx={{ mb: 2 }}>
+                What are you looking for?
+              </Typography>
               <TextField
                 label='Trailer type / location'
                 fullWidth
@@ -105,6 +104,28 @@ export default function Home() {
                   'Search term is required'
                 }
               />
+            </Grid>
+            <Grid item xs={12} sx={{ mb: 3 }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  disablePast
+                  value={pickUpDate}
+                  onChange={setPickUpDate}
+                  label='Pick up date (optional)'
+                  sx={{ width: '100%' }}
+                />
+              </LocalizationProvider>
+            </Grid>
+            <Grid item xs={12} sx={{ mb: 3 }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  disablePast
+                  value={returnDate}
+                  onChange={setReturnDate}
+                  label='Return date (optional)'
+                  sx={{ width: '100%' }}
+                />
+              </LocalizationProvider>
             </Grid>
             <Grid item xs={12}>
               <Button

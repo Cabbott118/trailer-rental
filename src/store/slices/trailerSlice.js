@@ -51,10 +51,14 @@ const fetchTrailers = createAsyncThunk('trailer/fetchTrailers', async () => {
 
 const searchTrailers = createAsyncThunk(
   'trailer/searchTrailers',
-  async (searchTerm) => {
+  async ({ searchTerm, pickUpDate, returnDate }) => {
     try {
-      console.log(searchTerm);
-      const response = await get('/trailers/search-trailers', { searchTerm });
+      console.log(searchTerm, pickUpDate.$d, returnDate.$d);
+      const response = await get('/trailers/search-trailers', {
+        searchTerm,
+        pickUpDate,
+        returnDate,
+      });
       return response;
     } catch (error) {
       throw new Error('Failed to fetch trailers data.');
