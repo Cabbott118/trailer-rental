@@ -56,27 +56,48 @@ const logoutUser = createAsyncThunk(
 );
 
 // Async thunk to delete a user's credentials & records in Firestore
-const deleteUser = createAsyncThunk('user/deleteUser', async (userId) => {
-  try {
-    await deleteCredentials();
-    const response = await del('/users/delete-user', { userId });
-    return response;
-  } catch (error) {
-    throw new Error('Failed to delete user data.');
+const deleteUser = createAsyncThunk(
+  'user/deleteUser',
+  async ({ userId, stripeAccountId }) => {
+    try {
+      await deleteCredentials();
+      const response = await del('/users/delete-user', {
+        userId,
+        stripeAccountId,
+      });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to delete user data.');
+    }
   }
-});
+);
 
 // API Requests to Firestore Database
 
 const createUser = createAsyncThunk(
   'user/createUser',
-  async ({ email, userId, firstName, lastName }) => {
+  async ({
+    email,
+    userId,
+    firstName,
+    lastName,
+    phoneNumber,
+    day,
+    month,
+    year,
+    userType,
+  }) => {
     try {
       const response = await post('/users/create-user', {
         email,
         userId,
         firstName,
         lastName,
+        phoneNumber,
+        day,
+        month,
+        year,
+        userType,
       });
       return response.user;
     } catch (error) {
@@ -113,6 +134,20 @@ const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
   }
 });
 
+const fetchStripeAccount = createAsyncThunk(
+  'user/fetchStripeAccount',
+  async (stripeAccountId) => {
+    try {
+      const response = await get('/users/get-stripe-account-details', {
+        stripeAccountId,
+      });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to fetch Stripe account data.');
+    }
+  }
+);
+
 const updateUser = createAsyncThunk(
   'user/updateUser',
   async ({ userId, updateData }) => {
@@ -137,6 +172,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     data: null,
+    stripe: null,
     loading: false,
     error: null,
   },
@@ -144,6 +180,7 @@ const userSlice = createSlice({
     clearUserData: (state) => {
       return {
         data: null,
+        stripe: null,
         loading: false,
         error: null,
       };
@@ -237,6 +274,7 @@ const userSlice = createSlice({
         return {
           ...state,
           data: null,
+          stripe: null,
           loading: false,
           error: null,
         };
@@ -317,6 +355,29 @@ const userSlice = createSlice({
         };
       })
 
+      .addCase(fetchStripeAccount.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(fetchStripeAccount.fulfilled, (state, action) => {
+        return {
+          ...state,
+          stripe: action.payload,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(fetchStripeAccount.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
+      })
+
       .addCase(updateUser.pending, (state) => {
         return {
           ...state,
@@ -351,6 +412,7 @@ export {
   createUser,
   createFirebaseUser,
   fetchUser,
+  fetchStripeAccount,
   updateUser,
   clearUserData,
   clearErrors,

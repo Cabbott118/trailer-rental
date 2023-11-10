@@ -1,36 +1,71 @@
 import { createTheme } from '@mui/material/styles';
+import { getFirestore, getDoc, doc } from 'firebase/firestore';
+import { firebaseApp } from 'providers/firebase'; // Adjust the path accordingly
 
-const theme = createTheme({
-  palette: {
-    primary: {
-      main: '#00C7E6',
-      contrastText: '#fff',
+async function fetchColors() {
+  const firestore = getFirestore(firebaseApp);
+
+  // Assume you have a Firebase collection named 'colors' with documents 'primary' and 'secondary'
+  const primaryColorDoc = await getDoc(doc(firestore, 'colors', 'primary'));
+  const secondaryColorDoc = await getDoc(doc(firestore, 'colors', 'secondary'));
+
+  return {
+    primary: primaryColorDoc.data().color,
+    secondary: secondaryColorDoc.data().color,
+  };
+}
+
+async function createCustomTheme() {
+  const colors = await fetchColors();
+
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: colors.primary,
+        contrastText: '#fff',
+      },
+      secondary: {
+        main: colors.secondary,
+        contrastText: '#fff',
+      },
+      background: {
+        default: '#ffffff',
+      },
+      text: {
+        primary: '#000',
+      },
     },
-    secondary: {
-      main: '#F79B19',
-      contrastText: '#fff',
+    additionalPalette: {
+      primary: '#F0F0F0',
+      secondary: '#CCCCCC',
     },
-    background: {
-      default: '#ffffff',
+    breakpoints: {
+      values: {
+        xs: 0,
+        sm: 600,
+        md: 900,
+        lg: 1200,
+        xl: 1536,
+      },
     },
-    text: {
-      primary: '#000',
+    typography: {
+      fontFamily: [
+        '-apple-system',
+        'BlinkMacSystemFont',
+        '"Segoe UI"',
+        'Roboto',
+        '"Helvetica Neue"',
+        'Arial',
+        'sans-serif',
+        '"Apple Color Emoji"',
+        '"Segoe UI Emoji"',
+        '"Segoe UI Symbol"',
+      ].join(','),
     },
-  },
-  additionalPalette: {
-    primary: '#F0F0F0',
-    secondary: '#CCCCCC',
-  },
-  breakpoints: {
-    values: {
-      xs: 0,
-      sm: 600,
-      md: 900,
-      lg: 1200,
-      xl: 1536,
-    },
-  },
-  typography: {
+  });
+
+  theme.typography.h1 = {
+    fontWeight: 500,
     fontFamily: [
       '-apple-system',
       'BlinkMacSystemFont',
@@ -42,36 +77,22 @@ const theme = createTheme({
       '"Apple Color Emoji"',
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
-    ].join(','),
-  },
-});
+    ],
+    [theme.breakpoints.up('xs')]: {
+      fontSize: 24,
+    },
+    [theme.breakpoints.up('sm')]: {
+      fontSize: 32, // Font size for small screens and larger
+    },
+    [theme.breakpoints.up('md')]: {
+      fontSize: 40,
+    },
+    [theme.breakpoints.up('lg')]: {
+      fontSize: 44,
+    },
+  };
 
-theme.typography.h1 = {
-  fontWeight: 500,
-  fontFamily: [
-    '-apple-system',
-    'BlinkMacSystemFont',
-    '"Segoe UI"',
-    'Roboto',
-    '"Helvetica Neue"',
-    'Arial',
-    'sans-serif',
-    '"Apple Color Emoji"',
-    '"Segoe UI Emoji"',
-    '"Segoe UI Symbol"',
-  ],
-  [theme.breakpoints.up('xs')]: {
-    fontSize: 24,
-  },
-  [theme.breakpoints.up('sm')]: {
-    fontSize: 32, // Font size for small screens and larger
-  },
-  [theme.breakpoints.up('md')]: {
-    fontSize: 40,
-  },
-  [theme.breakpoints.up('lg')]: {
-    fontSize: 44,
-  },
-};
+  return theme;
+}
 
-export default theme;
+export default createCustomTheme;

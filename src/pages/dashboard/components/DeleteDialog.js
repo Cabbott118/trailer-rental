@@ -14,14 +14,17 @@ import {
 } from '@mui/material';
 
 // React Router
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 // Redux
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser } from 'store/slices/userSlice';
 
-const DeleteDialog = ({ userId }) => {
+const DeleteDialog = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { data, stripe, loading } = useSelector((state) => state.user);
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -34,9 +37,10 @@ const DeleteDialog = ({ userId }) => {
   };
 
   const handleDeleteAccount = () => {
-    dispatch(deleteUser(userId)).then(() => {
+    const { userId, stripeAccountId } = data;
+    dispatch(deleteUser({ userId, stripeAccountId })).then(() => {
       setDialogOpen(false);
-      <Navigate to={routes.HOME} replace />;
+      navigate(routes.HOME, { replace: true });
     });
   };
 
@@ -60,6 +64,7 @@ const DeleteDialog = ({ userId }) => {
         <DialogActions>
           <Button
             onClick={handleCloseDialog}
+            disabled={loading}
             sx={{ textTransform: 'none' }}
             autoFocus
           >
@@ -69,6 +74,7 @@ const DeleteDialog = ({ userId }) => {
             color='error'
             variant='contained'
             onClick={handleDeleteAccount}
+            disabled={loading}
             sx={{ textTransform: 'none' }}
           >
             Delete Account

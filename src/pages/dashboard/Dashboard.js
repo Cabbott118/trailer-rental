@@ -24,6 +24,7 @@ import {
   Grid,
   Paper,
   Skeleton,
+  TextField,
   Typography,
 } from '@mui/material';
 
@@ -32,11 +33,11 @@ import { Link } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from 'store/slices/userSlice';
+import { fetchStripeAccount, fetchUser } from 'store/slices/userSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
-  const { data, loading } = useSelector((state) => state.user);
+  const { data, stripe, loading } = useSelector((state) => state.user);
 
   document.title = data?.fullName?.firstName
     ? `${data.fullName.firstName}'s Dashboard`
@@ -44,7 +45,8 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (data && data.userId) {
-      dispatch(fetchUser(data.userId));
+      dispatch(fetchUser(data?.userId));
+      dispatch(fetchStripeAccount(data?.stripeAccountId));
     }
   }, [dispatch]);
 
@@ -76,8 +78,46 @@ export default function Dashboard() {
           <WelcomeTile userData={data} />
           <CreateTrailerTile userData={data} />
           <NotificationsTile />
+          <Grid item xs={12}>
+            <Paper elevation={0} sx={{ bgcolor: '#ggg' }}>
+              {loading ? (
+                <p>Loading...</p>
+              ) : (
+                <TextField
+                  label='User Data'
+                  multiline
+                  fullWidth
+                  value={JSON.stringify(data, null, 2)} // Convert JSON to a formatted string
+                  variant='outlined'
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              )}
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper elevation={0} sx={{ bgcolor: '#ggg' }}>
+              {stripe ? (
+                <TextField
+                  label='Stripe Data'
+                  multiline
+                  fullWidth
+                  value={JSON.stringify(stripe, null, 2)} // Convert JSON to a formatted string
+                  variant='outlined'
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              ) : null}
+            </Paper>
+          </Grid>
         </Grid>
       </Container>
+      <DeleteDialog
+        userId={data?.userId}
+        stripeAccountId={data?.stripeAccountId}
+      />
     </Box>
   );
 }
