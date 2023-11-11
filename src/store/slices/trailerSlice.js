@@ -51,11 +51,11 @@ const fetchTrailers = createAsyncThunk('trailer/fetchTrailers', async () => {
 
 const searchTrailers = createAsyncThunk(
   'trailer/searchTrailers',
-  async ({ searchTerm, pickUpDate, returnDate }) => {
+  async ({ location, type, pickUpDate, returnDate }) => {
     try {
-      console.log(searchTerm, pickUpDate.$d, returnDate.$d);
       const response = await get('/trailers/search-trailers', {
-        searchTerm,
+        location,
+        type,
         pickUpDate,
         returnDate,
       });

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "trailer-rental-eca77"
-  }
+    "default": "trailer-rental-eca77",
+    "prod": "trailer-rental-eca77"
+  },
+  "targets": {},
+  "etags": {}
 }
