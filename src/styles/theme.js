@@ -156,10 +156,10 @@ theme.typography.h1 = {
   //   '"Segoe UI Symbol"',
   // ],
   [theme.breakpoints.up('xs')]: {
-    fontSize: 24,
+    fontSize: 28,
   },
   [theme.breakpoints.up('sm')]: {
-    fontSize: 32, // Font size for small screens and larger
+    fontSize: 34, // Font size for small screens and larger
   },
   [theme.breakpoints.up('md')]: {
     fontSize: 40,

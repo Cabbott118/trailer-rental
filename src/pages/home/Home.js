@@ -27,6 +27,7 @@ import {
   Paper,
   TextField,
   Typography,
+  useMediaQuery,
 } from '@mui/material';
 import theme from 'styles/theme';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
@@ -53,6 +54,8 @@ export default function Home() {
   const { data: trailerData, loading: trailerLoading } = useSelector(
     (state) => state.trailer
   );
+
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
   const {
     register,
@@ -97,7 +100,7 @@ export default function Home() {
         backgroundRepeat: 'no-repeat',
       }}
     >
-      <Container maxWidth='sm' sx={{ pt: 20 }}>
+      <Container maxWidth='sm' sx={{ pt: isMobile ? 15 : 20 }}>
         <Grid container component='form' onSubmit={handleSubmit(onSubmit)}>
           <Grid item xs={12}>
             <Typography variant='h1' color='primary'>
