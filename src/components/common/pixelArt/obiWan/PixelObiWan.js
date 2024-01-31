@@ -5,7 +5,7 @@ import { Box, Container } from '@mui/material';
 
 const PixelObiWan = () => {
   return (
-    <Container className='pixel-block' maxWidth='sm' sx={{ mt: -20 }}>
+    <Container className='pixel-block' maxWidth='sm' sx={{ mt: -10 }}>
       <Box className='pixelized--obiwan'></Box>
     </Container>
   );

@@ -5,7 +5,7 @@ import { Box, Container } from '@mui/material';
 
 const PixelDarthVader = () => {
   return (
-    <Container className='pixel-block' maxWidth='sm' sx={{ mt: -20 }}>
+    <Container className='pixel-block' maxWidth='sm' sx={{ mt: -10 }}>
       <Box className='pixelized--vader'></Box>
     </Container>
   );
