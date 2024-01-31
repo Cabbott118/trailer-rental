@@ -25,14 +25,14 @@ import Home from 'features/home/pages/Home';
 import AboutUs from 'features/experience/pages/AboutUs';
 import ContactUs from 'features/experience/pages/ContactUs';
 
-import Dashboard from 'pages/dashboard/Dashboard';
-import VerifyIdentity from 'pages/dashboard/subPages/VerifyIdentity';
-import VerifyEmail from 'pages/dashboard/subPages/VerifyEmail';
-import AddBankAccount from 'pages/dashboard/subPages/AddBankAccount';
-import Profile from 'pages/dashboard/profile/Profile';
+import Dashboard from 'features/dashboard/pages/Dashboard';
+import VerifyIdentity from 'features/dashboard/subPages/VerifyIdentity';
+import VerifyEmail from 'features/dashboard/subPages/VerifyEmail';
+import AddBankAccount from 'features/dashboard/subPages/AddBankAccount';
+import Profile from 'features/profile/pages/Profile';
 
-import AddTrailer from 'pages/trailers/AddTrailer';
-import AddTrailerSuccess from 'pages/trailers/AddTrailerSuccess';
+import AddTrailer from 'features/listings/pages/AddTrailer';
+import AddTrailerSuccess from 'features/listings/pages/AddTrailerSuccess';
 import Search from 'features/search/pages/Search';
 import ViewTrailer from 'features/listings/pages/ViewTrailer';
 

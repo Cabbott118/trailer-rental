@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import HomeBanner from 'features/home/components/HomeBanner';
 import SearchWidget from 'features/home/components/SearchWidget';
 
+// Temp
+import SearchBar from 'components/common/SearchBar';
+
 // MUI
 import { Box, Container, useTheme } from '@mui/material';
 
@@ -35,6 +38,7 @@ export default function Home() {
       <Container maxWidth='sm' sx={{ minHeight: '100vh' }}>
         <HomeBanner />
         <SearchWidget />
+        {/* <SearchBar /> */}
       </Container>
     </Box>
   );

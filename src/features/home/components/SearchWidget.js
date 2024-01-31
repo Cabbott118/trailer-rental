@@ -1,10 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
 
 // MUI
-import { Button, Grid, TextField, Typography, useTheme } from '@mui/material';
+import {
+  Autocomplete,
+  Button,
+  Grid,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -13,15 +20,37 @@ import { useForm } from 'react-hook-form';
 import { Navigate } from 'react-router-dom';
 
 // Redux
-import { useDispatch } from 'react-redux';
-import { filterTrailers } from 'store/slices/trailerSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTrailers, filterTrailers } from 'store/slices/trailerSlice';
 
 export default function SearchWidget() {
   document.title = 'Trailer Rental';
+  const [inputValue, setInputValue] = useState('');
+  const [options, setOptions] = useState([]);
   const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
-
+  const { trailerList, loading } = useSelector((state) => state.trailer);
   const theme = useTheme();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    // Fetch trailers data only if inputValue is not empty
+    if (inputValue.trim() !== '') {
+      dispatch(fetchTrailers());
+
+      // Filter out duplicate entries based on the city property
+      const uniqueOptions = Array.from(
+        new Set(trailerList.map((trailer) => trailer.location.city))
+      ).map((city) => {
+        return trailerList.find((trailer) => trailer.location.city === city);
+      });
+
+      setOptions(uniqueOptions);
+    }
+  }, [inputValue]);
+
+  const handleInputChange = (event, newInputValue) => {
+    setInputValue(newInputValue);
+  };
 
   const {
     register,
@@ -66,14 +95,23 @@ export default function SearchWidget() {
           </Typography>
         </Grid>
         <Grid item xs={12} sx={{ mb: 3 }}>
-          <TextField
-            label='Trailer location'
-            fullWidth
-            {...register('location', { required: true })}
-            error={errors.location?.type === 'required'}
-            helperText={
-              errors.location?.type === 'required' && 'Location is required'
-            }
+          <Autocomplete
+            options={options}
+            getOptionLabel={(option) => option.location.city}
+            inputValue={inputValue}
+            onInputChange={handleInputChange}
+            renderInput={(params) => (
+              <TextField
+                {...params}
+                label='Trailer location'
+                fullWidth
+                {...register('location', { required: true })}
+                error={errors.location?.type === 'required'}
+                helperText={
+                  errors.location?.type === 'required' && 'Location is required'
+                }
+              />
+            )}
           />
         </Grid>
         <Grid item xs={12}>

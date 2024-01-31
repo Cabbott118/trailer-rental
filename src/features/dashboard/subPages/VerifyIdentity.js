@@ -2,7 +2,14 @@
 import ROUTES from 'resources/routes-constants';
 
 // MUI
-import { Box, Button, Container, Grid, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -32,8 +39,12 @@ const VerifyIdentity = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: '#eee', minHeight: '80vh', py: 12 }}>
-      <Container maxWidth='sm'>Verify Identity</Container>
+    <Box sx={{ minHeight: '80vh', py: 12 }}>
+      <Container maxWidth='sm'>
+        <Typography variant='h4' component='h1' color='text.primary'>
+          Verify Identity
+        </Typography>
+      </Container>
     </Box>
   );
 };

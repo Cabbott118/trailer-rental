@@ -49,7 +49,7 @@ export default function FilterTrailers() {
     >
       <Grid item xs={12}>
         <TextField
-          label='Location'
+          label='Trailer location'
           fullWidth
           defaultValue={searchedLocation}
           {...register('location', { required: true })}

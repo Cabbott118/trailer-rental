@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
-import WelcomeTile from 'pages/dashboard/components/WelcomeTile';
-import NotificationsTile from 'pages/dashboard/components/NotificationsTile';
-import CreateTrailerTile from 'pages/dashboard/components/CreateTrailerTile';
-import DeleteDialog from 'pages/dashboard/components/DeleteDialog';
+import WelcomeTile from 'features/dashboard/components/WelcomeTile';
+import NotificationsTile from 'features/dashboard/components/NotificationsTile';
+import CreateTrailerTile from 'features/dashboard/components/CreateTrailerTile';
+import DeleteDialog from 'features/dashboard/components/DeleteDialog';
 
 // Constants
 import ROUTES from 'resources/routes-constants';

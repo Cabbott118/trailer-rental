@@ -39,7 +39,7 @@ const VerifyEmail = () => {
   };
 
   return (
-    <Box sx={{ bgcolor: '#eee', minHeight: '80vh', py: 12 }}>
+    <Box sx={{ minHeight: '80vh', py: 12 }}>
       <Container maxWidth='sm'>
         <Card sx={{ pt: 3, px: 3, pb: 1 }}>
           <Typography gutterBottom variant='h5' component='div'>
