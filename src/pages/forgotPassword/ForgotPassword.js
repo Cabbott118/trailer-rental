@@ -1,14 +1,20 @@
 import { useState } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // Firebase
 import { getAuth, sendPasswordResetEmail } from 'firebase/auth';
 
 // MUI
-import { Button, Box, Container, TextField, Typography } from '@mui/material';
-import theme from 'styles/theme';
+import {
+  Button,
+  Box,
+  Container,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -23,6 +29,7 @@ const linkStyles = {
 
 export default function ForgotPassword() {
   const auth = getAuth();
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const [isError, setIsError] = useState(false);
@@ -37,7 +44,7 @@ export default function ForgotPassword() {
     setIsError(false);
     try {
       await sendPasswordResetEmail(auth, data.email);
-      navigate(routes.FORGOT_PASSWORD_CONFRIMATION);
+      navigate(ROUTES.FORGOT_PASSWORD_CONFRIMATION);
     } catch (error) {
       setIsError(true);
     }
@@ -88,7 +95,7 @@ export default function ForgotPassword() {
         >
           Send Email
         </Button>
-        <Link to={routes.SIGNUP} style={linkStyles}>
+        <Link to={ROUTES.SIGNUP} style={linkStyles}>
           Don't have an account? Sign up
         </Link>
       </Container>

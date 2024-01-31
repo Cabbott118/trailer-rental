@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
@@ -6,30 +6,20 @@ import WelcomeTile from 'pages/dashboard/components/WelcomeTile';
 import NotificationsTile from 'pages/dashboard/components/NotificationsTile';
 import CreateTrailerTile from 'pages/dashboard/components/CreateTrailerTile';
 import DeleteDialog from 'pages/dashboard/components/DeleteDialog';
-import UpdateDialog from 'pages/dashboard/components/UpdateDialog';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 import { verifyEmail, verifyIdentity } from 'constants/alertContent';
-
-// Helpers
-import getUserInitials from 'services/helpers/getUserInitials';
 
 // MUI
 import {
-  Avatar,
   Box,
-  Button,
   Container,
   Grid,
   Paper,
-  Skeleton,
   TextField,
   Typography,
 } from '@mui/material';
-
-// React Router
-import { Link } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -57,19 +47,26 @@ export default function Dashboard() {
   };
 
   return (
-    <Box sx={{ bgcolor: '#eee', minHeight: '80vh', py: 12 }}>
+    <Box
+      sx={{
+        bgcolor: '#eee',
+        minHeight: '80vh',
+        py: 2,
+        mt: -5,
+      }}
+    >
       <Container maxWidth='lg'>
         {renderAlert(
           !data?.verified?.identity,
           'warning',
           verifyIdentity,
-          routes.VERIFY_IDENTITY
+          ROUTES.VERIFY_IDENTITY
         )}
         {renderAlert(
           !data?.verified?.email,
           'warning',
           verifyEmail,
-          routes.VERIFY_EMAIL
+          ROUTES.VERIFY_EMAIL
         )}
         <Typography variant='h1' sx={{ my: 1 }}>
           Dashboard

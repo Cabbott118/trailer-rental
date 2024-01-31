@@ -10,7 +10,7 @@ import { clearUserData, logoutUser } from 'store/slices/userSlice';
 import { clearTrailerData } from 'store/slices/trailerSlice';
 
 // Routes
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 export default function Logout({ variant }) {
   const dispatch = useDispatch();
@@ -24,7 +24,7 @@ export default function Logout({ variant }) {
       dispatch(clearUserData()),
       dispatch(clearTrailerData()),
     ]);
-    navigate(routes.LOGIN, { state: { from: location } });
+    navigate(ROUTES.LOGIN, { state: { from: location } });
   };
 
   return (

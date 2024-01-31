@@ -1,18 +1,19 @@
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
-import { Grid } from '@mui/material';
+import { Grid, useTheme } from '@mui/material';
 
 // React Router
 import { Link } from 'react-router-dom';
 
-const linkStyles = {
-  color: '#124559',
-  fontSize: '.9rem',
-};
-
 const AuthenticationFooter = ({ type }) => {
+  const theme = useTheme();
+  const linkStyles = {
+    color: theme.palette.primary.contrastText,
+    fontSize: '.9rem',
+  };
+
   switch (type) {
     case 'Login':
       return (
@@ -23,7 +24,7 @@ const AuthenticationFooter = ({ type }) => {
             </Link>
           </Grid>
           <Grid item>
-            <Link to={routes.SIGNUP} style={linkStyles}>
+            <Link to={ROUTES.SIGNUP} style={linkStyles}>
               Don't have an account? Sign up
             </Link>
           </Grid>
@@ -34,7 +35,7 @@ const AuthenticationFooter = ({ type }) => {
       return (
         <Grid container justifyContent='flex-end' sx={{ mt: '1rem' }}>
           <Grid item>
-            <Link to={routes.LOGIN} style={linkStyles}>
+            <Link to={ROUTES.LOGIN} style={linkStyles}>
               Already have an account? Sign in
             </Link>
           </Grid>

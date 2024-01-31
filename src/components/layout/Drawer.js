@@ -4,11 +4,10 @@ import { useState } from 'react';
 import Logout from 'components/common/Logout';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
 import {
-  Badge,
   Box,
   Divider,
   Drawer as MuiDrawer,
@@ -18,7 +17,7 @@ import {
   ListItemButton,
   ListItemText,
   ListSubheader,
-  Typography,
+  useTheme,
 } from '@mui/material';
 
 import MenuIcon from '@mui/icons-material/Menu';
@@ -35,6 +34,10 @@ import CloseIcon from '@mui/icons-material/Close';
 
 // React Router
 import { Link } from 'react-router-dom';
+
+// Redux
+import { useDispatch, useSelector } from 'react-redux';
+import { switchTheme } from 'store/slices/uiSlice';
 
 const MenuItem = ({ icon, primaryText, to, onClick }) => {
   return (
@@ -58,6 +61,8 @@ const MenuItem = ({ icon, primaryText, to, onClick }) => {
 };
 
 const Drawer = () => {
+  const theme = useTheme();
+  const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = (event) => {
@@ -71,11 +76,19 @@ const Drawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
   };
 
+  const toggleTheme = () => {
+    dispatch(switchTheme());
+  };
+
   return (
     <>
       <MuiDrawer anchor='top' open={isDrawerOpen} onClose={toggleDrawer}>
         <Box
-          sx={{ pt: 1, minHeight: '100vh' }}
+          sx={{
+            pt: 1,
+            minHeight: '100vh',
+            bgcolor: theme.palette.background.default,
+          }}
           onClick={toggleDrawer}
           onKeyDown={toggleDrawer}
         >
@@ -94,7 +107,11 @@ const Drawer = () => {
             subheader={
               <ListSubheader
                 component='div'
-                sx={{ textTransform: 'uppercase', letterSpacing: 1 }}
+                sx={{
+                  textTransform: 'uppercase',
+                  letterSpacing: 1,
+                  bgcolor: theme.palette.background.default,
+                }}
               >
                 Menu
               </ListSubheader>
@@ -104,19 +121,19 @@ const Drawer = () => {
             <MenuItem
               icon={<HomeOutlinedIcon />}
               primaryText='Home'
-              to={routes.HOME}
+              to={ROUTES.HOME}
               onClick={toggleDrawer}
             />
             <MenuItem
               icon={<AddBoxOutlinedIcon />}
               primaryText='Add trailer'
-              to={routes.ADD_TRAILER}
+              to={ROUTES.ADD_TRAILER}
               onClick={toggleDrawer}
             />
             <MenuItem
               icon={<GridViewOutlinedIcon />}
-              primaryText='View trailers'
-              to={routes.VIEW_TRAILERS}
+              primaryText='Find trailers'
+              to={ROUTES.FIND_TRAILERS}
               onClick={toggleDrawer}
             />
           </List>
@@ -126,7 +143,10 @@ const Drawer = () => {
             subheader={
               <ListSubheader
                 component='div'
-                sx={{ textTransform: 'uppercase' }}
+                sx={{
+                  textTransform: 'uppercase',
+                  bgcolor: theme.palette.background.default,
+                }}
               >
                 Account
               </ListSubheader>
@@ -136,7 +156,7 @@ const Drawer = () => {
             <MenuItem
               icon={<AccountCircleOutlinedIcon />}
               primaryText='Your dashboard'
-              to={routes.DASHBOARD}
+              to={ROUTES.DASHBOARD}
               onClick={toggleDrawer}
             />
           </List>
@@ -146,7 +166,10 @@ const Drawer = () => {
             subheader={
               <ListSubheader
                 component='div'
-                sx={{ textTransform: 'uppercase' }}
+                sx={{
+                  textTransform: 'uppercase',
+                  bgcolor: theme.palette.background.default,
+                }}
               >
                 Resources & Support
               </ListSubheader>
@@ -156,18 +179,19 @@ const Drawer = () => {
             <MenuItem
               icon={<GroupsOutlinedIcon />}
               primaryText='About us'
-              to={routes.ABOUT_US}
+              to={ROUTES.ABOUT_US}
               onClick={toggleDrawer}
             />
             <MenuItem
               icon={<ContactSupportOutlinedIcon />}
               primaryText='Contact us'
-              to={routes.CONTACT_US}
+              to={ROUTES.CONTACT_US}
               onClick={toggleDrawer}
             />
           </List>
           <Divider variant='middle' sx={{ mt: 3, mb: 1 }} />
           <List>
+            <ListItem onClick={toggleTheme}>Toggle theme</ListItem>
             <ListItem>
               <Logout />
             </ListItem>

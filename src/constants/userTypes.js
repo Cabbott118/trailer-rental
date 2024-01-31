@@ -1,6 +1,6 @@
-const types = {
+const TYPES = {
   HOST: 'host',
   RENTER: 'renter',
 };
 
-export default types;
+export default TYPES;

@@ -1,105 +1,10 @@
-// import { createTheme } from '@mui/material/styles';
-// import { getFirestore, getDoc, doc } from 'firebase/firestore';
-// import { firebaseApp } from 'providers/firebase'; // Adjust the path accordingly
-
-// async function fetchColors() {
-//   const firestore = getFirestore(firebaseApp);
-
-//   // Assume you have a Firebase collection named 'colors' with documents 'primary' and 'secondary'
-//   const primaryColorDoc = await getDoc(doc(firestore, 'colors', 'primary'));
-//   const secondaryColorDoc = await getDoc(doc(firestore, 'colors', 'secondary'));
-
-//   return {
-//     primary: primaryColorDoc.data().color,
-//     secondary: secondaryColorDoc.data().color,
-//   };
-// }
-
-// const colors = await fetchColors();
-
-// const theme = createTheme({
-//   palette: {
-//     primary: {
-//       main: colors.primary,
-//       contrastText: '#fff',
-//     },
-//     secondary: {
-//       main: colors.secondary,
-//       contrastText: '#fff',
-//     },
-//     background: {
-//       default: '#ffffff',
-//     },
-//     text: {
-//       primary: '#000',
-//     },
-//   },
-//   additionalPalette: {
-//     primary: '#F0F0F0',
-//     secondary: '#CCCCCC',
-//   },
-//   breakpoints: {
-//     values: {
-//       xs: 0,
-//       sm: 600,
-//       md: 900,
-//       lg: 1200,
-//       xl: 1536,
-//     },
-//   },
-//   typography: {
-//     fontFamily: [
-//       '-apple-system',
-//       'BlinkMacSystemFont',
-//       '"Segoe UI"',
-//       'Roboto',
-//       '"Helvetica Neue"',
-//       'Arial',
-//       'sans-serif',
-//       '"Apple Color Emoji"',
-//       '"Segoe UI Emoji"',
-//       '"Segoe UI Symbol"',
-//     ].join(','),
-//   },
-// });
-
-// theme.typography.h1 = {
-//   fontWeight: 500,
-//   // fontFamily: [
-//   //   '-apple-system',
-//   //   'BlinkMacSystemFont',
-//   //   '"Segoe UI"',
-//   //   'Roboto',
-//   //   '"Helvetica Neue"',
-//   //   'Arial',
-//   //   'sans-serif',
-//   //   '"Apple Color Emoji"',
-//   //   '"Segoe UI Emoji"',
-//   //   '"Segoe UI Symbol"',
-//   // ],
-//   [theme.breakpoints.up('xs')]: {
-//     fontSize: 24,
-//   },
-//   [theme.breakpoints.up('sm')]: {
-//     fontSize: 32, // Font size for small screens and larger
-//   },
-//   [theme.breakpoints.up('md')]: {
-//     fontSize: 40,
-//   },
-//   [theme.breakpoints.up('lg')]: {
-//     fontSize: 44,
-//   },
-// };
-
-// export default theme;
-
 import { createTheme } from '@mui/material/styles';
 
-const theme = createTheme({
+const lightTheme = createTheme({
   palette: {
     primary: {
       main: '#00C7E6',
-      contrastText: '#fff',
+      contrastText: '#000',
     },
     secondary: {
       main: '#F79B19',
@@ -138,35 +43,78 @@ const theme = createTheme({
       '"Segoe UI Emoji"',
       '"Segoe UI Symbol"',
     ].join(','),
+    h1: {
+      fontWeight: 500,
+      fontSize: 28,
+      '@media (min-width:600px)': {
+        fontSize: 34,
+      },
+      '@media (min-width:900px)': {
+        fontSize: 40,
+      },
+      '@media (min-width:1200px)': {
+        fontSize: 44,
+      },
+    },
   },
 });
 
-theme.typography.h1 = {
-  fontWeight: 500,
-  // fontFamily: [
-  //   '-apple-system',
-  //   'BlinkMacSystemFont',
-  //   '"Segoe UI"',
-  //   'Roboto',
-  //   '"Helvetica Neue"',
-  //   'Arial',
-  //   'sans-serif',
-  //   '"Apple Color Emoji"',
-  //   '"Segoe UI Emoji"',
-  //   '"Segoe UI Symbol"',
-  // ],
-  [theme.breakpoints.up('xs')]: {
-    fontSize: 28,
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    paletteName: 'dark',
+    primary: {
+      main: '#00C7E6',
+      contrastText: '#fff',
+    },
+    secondary: {
+      main: '#F79B19',
+      contrastText: '#fff',
+    },
+    background: {
+      default: '#212121',
+    },
   },
-  [theme.breakpoints.up('sm')]: {
-    fontSize: 34, // Font size for small screens and larger
+  additionalPalette: {
+    primary: '#102A43',
+    secondary: '#0D1C2B',
   },
-  [theme.breakpoints.up('md')]: {
-    fontSize: 40,
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
+    },
   },
-  [theme.breakpoints.up('lg')]: {
-    fontSize: 44,
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    h1: {
+      fontWeight: 500,
+      fontSize: 28,
+      '@media (min-width:600px)': {
+        fontSize: 34,
+      },
+      '@media (min-width:900px)': {
+        fontSize: 40,
+      },
+      '@media (min-width:1200px)': {
+        fontSize: 44,
+      },
+    },
   },
-};
+});
 
-export default theme;
+export { lightTheme, darkTheme };

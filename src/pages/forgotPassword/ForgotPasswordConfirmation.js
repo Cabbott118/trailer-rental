@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
-import { Box, Container, Typography } from '@mui/material';
-import theme from 'styles/theme';
+import { Box, Container, Typography, useTheme } from '@mui/material';
 
 // React Router
 import { useNavigate } from 'react-router-dom';
 
 export default function ForgotPasswordConfirmation() {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const [timer, setTimer] = useState(5);
@@ -21,7 +21,7 @@ export default function ForgotPasswordConfirmation() {
     }, 1000);
 
     setTimeout(() => {
-      navigate(routes.LOGIN);
+      navigate(ROUTES.LOGIN);
     }, 5000);
 
     return () => {

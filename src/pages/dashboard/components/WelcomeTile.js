@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // Helpers
 import getUserInitials from 'services/helpers/getUserInitials';
@@ -16,15 +16,17 @@ import {
   Paper,
   Skeleton,
   Typography,
+  useTheme,
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import theme from 'styles/theme';
 
 // React Router
 import { Link } from 'react-router-dom';
 
 const WelcomeTile = ({ userData }) => {
+  const theme = useTheme();
+
   return (
     <Grid item xs={12} md={6}>
       <Paper variant='outlined' sx={{ minHeight: '200px' }}>
@@ -81,7 +83,7 @@ const WelcomeTile = ({ userData }) => {
                 variant='text'
                 fullWidth
                 component={Link}
-                to={routes.PROFILE}
+                to={ROUTES.PROFILE}
                 sx={{ textTransform: 'none' }}
               >
                 View profile{' '}

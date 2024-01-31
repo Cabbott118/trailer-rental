@@ -65,18 +65,36 @@ router.get('/get-all-trailers', async (req, res) => {
   }
 });
 
+router.get('/get-trailer-details', async (req, res) => {
+  try {
+    const trailerId = req.query.trailerId;
+    const trailerRef = admin.firestore().collection('trailers').doc(trailerId);
+    const trailerDoc = await trailerRef.get();
+
+    if (!trailerDoc.exists) {
+      return res.status(404).json({ message: 'Trailer not found' });
+    }
+
+    const trailerDetails = trailerDoc.data();
+    return res.status(200).json(trailerDetails);
+  } catch (error) {
+    console.error('Error retrieving trailer details:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 router.get('/search-trailers', async (req, res) => {
   try {
-    const searchTerm = req.query.searchTerm;
+    const location = req.query.location;
     const trailersRef = admin.firestore().collection('trailers');
 
     const querySnapshot = await trailersRef
-      .where('searchableTerms', 'array-contains', searchTerm.toLowerCase())
+      .where('searchableTerms', 'array-contains', location.toLowerCase())
       .orderBy('createdAt', 'desc')
       .get();
 
     if (querySnapshot.empty) {
-      return res.status(404).json({
+      return res.status(200).json({
         message: 'No trailers were found in our search',
       });
     }
@@ -86,7 +104,9 @@ router.get('/search-trailers', async (req, res) => {
     return res.status(200).json(trailersData);
   } catch (error) {
     console.error('Error retrieving trailers:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({
+      message: 'Internal Server Error',
+    });
   }
 });
 

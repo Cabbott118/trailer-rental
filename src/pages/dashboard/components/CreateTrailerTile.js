@@ -2,7 +2,7 @@
 import Alert from 'components/common/Alert';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 import { addBankAccount } from 'constants/alertContent';
 
 // MUI
@@ -39,7 +39,7 @@ const CreateTrailerTile = ({ userData }) => {
                 !userData?.verified?.bankAccount,
                 'warning',
                 addBankAccount,
-                routes.ADD_BANK_ACCOUNT
+                ROUTES.ADD_BANK_ACCOUNT
               )}
             </Grid>
           </Grid>
@@ -48,7 +48,7 @@ const CreateTrailerTile = ({ userData }) => {
               <Typography variant='h6'>List your trailer</Typography>
             </Grid>
             <Grid item xs={12}>
-              <Typography variant='body2' color='textSecondary'>
+              <Typography variant='body2' color='text.secondary'>
                 Provide some details about the trailer you'll be renting out,
                 and start making money!
               </Typography>
@@ -59,7 +59,7 @@ const CreateTrailerTile = ({ userData }) => {
                 fullWidth
                 disabled={!userData?.verified?.bankAccount}
                 component={Link}
-                to={routes.PROFILE}
+                to={ROUTES.PROFILE}
                 sx={{ textTransform: 'none' }}
               >
                 List trailer

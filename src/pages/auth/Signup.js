@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
@@ -6,8 +6,8 @@ import AuthenticationHeader from 'pages/auth/components/AuthenticationHeader';
 import AuthenticationFooter from 'pages/auth/components/AuthenticationFooter';
 
 // Constants
-import routes from 'constants/routes';
-import types from 'constants/user';
+import ROUTES from 'resources/routes-constants';
+import TYPES from 'constants/userTypes';
 
 // Helpers
 import passwordMatch from 'services/helpers/passwordMatch';
@@ -17,7 +17,6 @@ import errorTransformer from 'constants/errorTransformer';
 import {
   Box,
   Button,
-  Card,
   Container,
   Grid,
   Paper,
@@ -25,14 +24,12 @@ import {
   ToggleButton,
   ToggleButtonGroup,
   Typography,
+  useTheme,
 } from '@mui/material';
-import theme from 'styles/theme';
+
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-// MUI Tel Input
-import { MuiTelInput } from 'mui-tel-input';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -47,12 +44,13 @@ import { signUpUser, createUser, clearUserData } from 'store/slices/userSlice';
 export default function Signup() {
   const pageName = 'Sign up';
   document.title = pageName;
+  const theme = useTheme();
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordMissmatch, setPasswordMissmatch] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
-  const [userType, setUserType] = useState(types.RENTER);
+  const [userType, setUserType] = useState(TYPES.RENTER);
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
   const dispatch = useDispatch();
@@ -115,11 +113,11 @@ export default function Signup() {
   };
 
   if (data) {
-    return <Navigate to={routes.HOME} replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   const renderUserTypeContent = () => {
-    if (userType === types.RENTER) {
+    if (userType === TYPES.RENTER) {
       return (
         <Grid item xs={12}>
           <Paper elevation={0} sx={{ p: 3, bgcolor: '#eee' }}>
@@ -127,7 +125,7 @@ export default function Signup() {
           </Paper>
         </Grid>
       );
-    } else if (userType === types.HOST) {
+    } else if (userType === TYPES.HOST) {
       return (
         <Grid item xs={12}>
           <Paper elevation={0} sx={{ p: 3, bgcolor: '#eee' }}>
@@ -139,7 +137,11 @@ export default function Signup() {
   };
 
   return (
-    <Box component='form' onSubmit={handleSubmit(onSubmit)}>
+    <Box
+      component='form'
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh' }}
+    >
       <Container maxWidth='xs'>
         <AuthenticationHeader title={pageName} />
         <Grid container spacing={3}>
@@ -151,15 +153,15 @@ export default function Signup() {
               exclusive
               onChange={toggleUserType}
             >
-              <ToggleButton value={types.RENTER} sx={{ textTransform: 'none' }}>
+              <ToggleButton value={TYPES.RENTER} sx={{ textTransform: 'none' }}>
                 Renter
               </ToggleButton>
-              <ToggleButton value={types.HOST} sx={{ textTransform: 'none' }}>
+              <ToggleButton value={TYPES.HOST} sx={{ textTransform: 'none' }}>
                 Host
               </ToggleButton>
             </ToggleButtonGroup>
           </Grid>
-          {renderUserTypeContent()}
+          {/* {renderUserTypeContent()} */}
           <Grid item xs={6}>
             <TextField
               autoFocus

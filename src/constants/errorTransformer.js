@@ -16,7 +16,7 @@ const errorTransformer = (error) => {
       return 'The email is improperly formatted email. Try again.';
       break;
 
-    case 'Firebase: Error (auth/wrong-password).':
+    case 'Firebase: Error (auth/invalid-login-credentials).':
       return 'Incorrect email or password.';
       break;
 

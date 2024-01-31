@@ -1,8 +1,11 @@
 // Lib
-import { get, post, patch, del } from 'lib/axios';
+import { get, post, patch, del } from 'services/axiosServices';
 
 // Redux
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
+
+// Resources
+import ENDPOINTS from 'resources/api-constants';
 
 // Services (Firebase Services)
 import {
@@ -61,7 +64,7 @@ const deleteUser = createAsyncThunk(
   async ({ userId, stripeAccountId }) => {
     try {
       await deleteCredentials();
-      const response = await del('/users/delete-user', {
+      const response = await del(ENDPOINTS.DELETE_USER, {
         userId,
         stripeAccountId,
       });
@@ -88,7 +91,7 @@ const createUser = createAsyncThunk(
     userType,
   }) => {
     try {
-      const response = await post('/users/create-user', {
+      const response = await post(ENDPOINTS.CREATE_USER, {
         email,
         userId,
         firstName,
@@ -110,7 +113,7 @@ const createFirebaseUser = createAsyncThunk(
   'user/createFirebaseUser',
   async ({ email, firstName, lastName, userType }) => {
     try {
-      const response = await post('/users/create-firebase-user', {
+      const response = await post(ENDPOINTS.CREATE_FIREBASE_USER, {
         email,
         password: process.env.REACT_APP_STANDARD_USER_CREATION,
         firstName,
@@ -127,7 +130,7 @@ const createFirebaseUser = createAsyncThunk(
 
 const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
   try {
-    const response = await get('/users/get-user-details', { userId });
+    const response = await get(ENDPOINTS.GET_USER_DETAILS, { userId });
     return response;
   } catch (error) {
     throw new Error('Failed to fetch user data.');
@@ -138,7 +141,7 @@ const fetchStripeAccount = createAsyncThunk(
   'user/fetchStripeAccount',
   async (stripeAccountId) => {
     try {
-      const response = await get('/users/get-stripe-account-details', {
+      const response = await get(ENDPOINTS.GET_STRIPE_ACCOUNT_DETAILS, {
         stripeAccountId,
       });
       return response;
@@ -153,7 +156,7 @@ const updateUser = createAsyncThunk(
   async ({ userId, updateData }) => {
     try {
       changeEmail(updateData.email);
-      const response = await patch('/users/update-user', {
+      const response = await patch(ENDPOINTS.UPDATE_USER, {
         userId,
         updateData,
       });

@@ -1,22 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 // Components
 import Drawer from 'components/layout/Drawer';
 import Logout from 'components/common/Logout';
 
 // Constants
-import routes from 'constants/routes';
-
-// Firebase
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
-import {
-  getFirestore,
-  collection,
-  query,
-  where,
-  orderBy,
-  onSnapshot,
-} from 'firebase/firestore';
+import ROUTES from 'resources/routes-constants';
 
 // Helpers
 import getUserInitials from 'services/helpers/getUserInitials';
@@ -27,20 +16,17 @@ import {
   Avatar,
   Badge,
   Box,
-  Button,
   Container,
-  Divider,
   Grid,
   IconButton,
-  ListItemIcon,
   Menu,
   MenuItem,
   Toolbar,
   Tooltip,
   Typography,
   useMediaQuery,
+  useTheme,
 } from '@mui/material';
-import theme from 'styles/theme';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 // React Router
@@ -48,49 +34,22 @@ import { Link, Outlet } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-// import { fetchNotifications } from 'store/slices/notificationsSlice';
+import { switchTheme } from 'store/slices/uiSlice';
 
 export default function Navbar() {
-  const auth = getAuth();
-  // const db = getFirestore();
+  const theme = useTheme();
   const dispatch = useDispatch();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [anchorEl, setAnchorEl] = useState(null);
-  const [unreadNotifications, setUnreadNotifications] = useState(null);
 
   const { data: userData } = useSelector((state) => state.user);
 
-  // const { data: notificationsData } = useSelector(
-  //   (state) => state.notifications
-  // );
-
-  // useEffect(() => {
-  //   const filteredNotifications = notificationsData?.filter(
-  //     (notification) => !notification?.hasBeenRead
-  //   );
-  //   setUnreadNotifications(filteredNotifications?.length);
-  // }, [notificationsData]);
-
-  // useEffect for gathering new notis
-  // useEffect(() => {
-
-  //     const q = query(
-  //       collection(db, 'notifications'),
-  //       where('notificationOwner', '==', userData.uid),
-  //       orderBy('createdAt', 'desc')
-  //     );
-
-  //     const unsubscribe = onSnapshot(q, (snapshot) => {
-  //       const notificationData = snapshot.docs.map((doc) => doc.data());
-  //       dispatch(fetchNotifications(userData.uid));
-  //     });
-
-  //     return () => unsubscribe();
-  //   }
-  // }, [db]);
-
   const open = Boolean(anchorEl);
+
+  const toggleTheme = () => {
+    dispatch(switchTheme());
+  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -101,11 +60,11 @@ export default function Navbar() {
   };
 
   const menuItems = [
-    { route: routes.DASHBOARD, label: 'Your dashboard' },
-    { route: routes.ACCOUNT, label: 'Account settings' },
-    { route: routes.NOTIFICATIONS, label: 'Notifications' },
-    { route: routes.ADD_TRAILER, label: 'Add trailer' },
-    { route: routes.VIEW_TRAILERS, label: 'View trailers' },
+    { route: ROUTES.DASHBOARD, label: 'Your dashboard' },
+    { route: ROUTES.ACCOUNT, label: 'Account settings' },
+    { route: ROUTES.NOTIFICATIONS, label: 'Notifications' },
+    { route: ROUTES.ADD_TRAILER, label: 'Add trailer' },
+    { route: ROUTES.FIND_TRAILERS, label: 'Find trailers' },
   ];
 
   const renderMenu = (anchorEl, handleClose, items) => {
@@ -133,13 +92,16 @@ export default function Navbar() {
             {item.label}
           </MenuItem>
         ))}
+        <MenuItem onClick={toggleTheme} sx={{ fontSize: 18 }}>
+          Toggle theme
+        </MenuItem>
         {showLogoutCondition && <Logout />}
       </Menu>
     );
   };
 
   return (
-    <>
+    <Box>
       <AppBar position='fixed' color='inherit' sx={{ boxShadow: 1 }}>
         <Container maxWidth='lg'>
           <Toolbar>
@@ -152,7 +114,7 @@ export default function Navbar() {
               <Grid item>
                 <MenuItem
                   component={Link}
-                  to={routes.HOME}
+                  to={ROUTES.HOME}
                   sx={{
                     color: theme.palette.text.primary,
                     fontWeight: 500,
@@ -167,7 +129,7 @@ export default function Navbar() {
                     <>
                       <Drawer sx={{ position: 'relative' }} />
                       <Badge
-                        badgeContent={unreadNotifications}
+                        // badgeContent={unreadNotifications}
                         color='error'
                         sx={{
                           position: 'absolute',
@@ -202,12 +164,17 @@ export default function Navbar() {
                           >
                             <Grid item>
                               <Avatar sx={{ bgcolor: '#333' }}>
-                                <Typography sx={{ fontWeight: 500 }}>
+                                <Typography
+                                  sx={{
+                                    color: theme.palette.secondary.contrastText,
+                                    fontWeight: 500,
+                                  }}
+                                >
                                   {getUserInitials(userData?.fullName)}
                                 </Typography>
                               </Avatar>
                               <Badge
-                                badgeContent={unreadNotifications}
+                                // badgeContent={unreadNotifications}
                                 color='error'
                                 sx={{
                                   position: 'absolute',
@@ -229,7 +196,7 @@ export default function Navbar() {
                     <Grid item>
                       <MenuItem
                         component={Link}
-                        to={routes.SIGNUP}
+                        to={ROUTES.SIGNUP}
                         sx={{
                           color: theme.palette.primary.main,
                           fontWeight: 500,
@@ -241,7 +208,7 @@ export default function Navbar() {
                     <Grid item>
                       <MenuItem
                         component={Link}
-                        to={routes.LOGIN}
+                        to={ROUTES.LOGIN}
                         sx={{
                           color: theme.palette.primary.main,
                           fontWeight: 500,
@@ -261,6 +228,6 @@ export default function Navbar() {
       {renderMenu(anchorEl, handleClose, menuItems)}
 
       <Outlet />
-    </>
+    </Box>
   );
 }

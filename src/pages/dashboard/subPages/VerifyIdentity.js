@@ -1,5 +1,5 @@
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
 import { Box, Button, Container, Grid, TextField } from '@mui/material';

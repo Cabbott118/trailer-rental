@@ -1,41 +1,41 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // Helpers
 import formatCreatedAt from 'services/helpers/dateFormatter';
 
 // MUI
 import { CardMedia, Container, Grid, Typography } from '@mui/material';
-import StarIcon from '@mui/icons-material/Star';
+// import StarIcon from '@mui/icons-material/Star';
 
 // React Router
 import { useNavigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTrailers, clearErrors } from 'store/slices/trailerSlice';
+import { fetchTrailers } from 'store/slices/trailerSlice';
 
 const ViewTrailers = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, loading } = useSelector((state) => state.trailer);
+  const { trailerList, loading } = useSelector((state) => state.trailer);
 
   useEffect(() => {
     dispatch(fetchTrailers());
-  }, []);
+  }, [dispatch]);
 
   const handleNavigateToTrailer = (trailer) => {
-    navigate(routes.VIEW_TRAILER, { state: { trailer } });
+    navigate(ROUTES.VIEW_TRAILER, { state: { trailer } });
   };
 
   if (loading) {
     return <p>Loading...</p>;
   }
 
-  if (data && data.length > 0) {
+  if (trailerList && trailerList.length > 0) {
     return (
       <div>
         <Typography variant='h1' align='center' sx={{ my: 3 }}>
@@ -43,7 +43,7 @@ const ViewTrailers = () => {
         </Typography>
         <Container maxWidth='md' sx={{ mb: 3 }}>
           <Grid container spacing={6}>
-            {data.map((trailer) => (
+            {trailerList.map((trailer) => (
               <Grid item key={trailer?.trailerId} xs={12} md={6}>
                 <Grid
                   container
@@ -94,20 +94,20 @@ const ViewTrailers = () => {
         </Container>
       </div>
     );
+  } else {
+    return (
+      <div>
+        <Typography
+          variant='h4'
+          component='h1'
+          align='center'
+          sx={{ py: 3, fontSize: 32 }}
+        >
+          No trailers found
+        </Typography>
+      </div>
+    );
   }
-
-  return (
-    <div>
-      <Typography
-        variant='h4'
-        component='h1'
-        align='center'
-        sx={{ py: 3, fontSize: 32 }}
-      >
-        No trailers found
-      </Typography>
-    </div>
-  );
 };
 
 export default ViewTrailers;

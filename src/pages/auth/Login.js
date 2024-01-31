@@ -6,7 +6,7 @@ import AuthenticationHeader from 'pages/auth/components/AuthenticationHeader';
 import AuthenticationFooter from 'pages/auth/components/AuthenticationFooter';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // Firebase
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
@@ -15,7 +15,14 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import errorTransformer from 'constants/errorTransformer';
 
 // MUI
-import { Box, Button, Container, Grid, TextField } from '@mui/material';
+import {
+  Box,
+  Button,
+  Container,
+  Grid,
+  TextField,
+  useTheme,
+} from '@mui/material';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -31,6 +38,7 @@ export default function Login() {
   const pageName = 'Login';
   document.title = pageName;
 
+  const theme = useTheme();
   const auth = getAuth();
 
   const [showPassword, setShowPassword] = useState(false);
@@ -73,11 +81,15 @@ export default function Login() {
   }, [auth, dispatch]);
 
   if (data) {
-    return <Navigate to={routes.HOME} replace />;
+    return <Navigate to={ROUTES.HOME} replace />;
   }
 
   return (
-    <Box component='form' onSubmit={handleSubmit(onSubmit)}>
+    <Box
+      component='form'
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{ bgcolor: theme.palette.background.default, minHeight: '100vh' }}
+    >
       <Container maxWidth='xs'>
         <AuthenticationHeader title={pageName} />
         <Grid container spacing={3}>

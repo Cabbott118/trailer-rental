@@ -1,35 +1,25 @@
-import { useEffect, useState } from 'react';
-
 // Constants
-import routes from 'constants/routes';
-
-// Helpers
-import getUserInitials from 'services/helpers/getUserInitials';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
 import {
-  Avatar,
-  Box,
   Button,
-  Container,
   Grid,
   List,
   ListItem,
-  ListItemAvatar,
   ListItemText,
   Paper,
-  Skeleton,
   Typography,
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import theme from 'styles/theme';
 
 // React Router
 import { Link } from 'react-router-dom';
 
-const WelcomeTile = ({ userData }) => {
+const NotificationsTile = ({ userData }) => {
+  // TODO: Pass in userData.userId to retrieve notifications
   const notifications = [
     {
       text: 'Logged in successfully- MOCK',
@@ -50,6 +40,7 @@ const WelcomeTile = ({ userData }) => {
       notificationId: '789',
     },
   ];
+
   const notificationsList = () => {
     return (
       <List>
@@ -57,7 +48,7 @@ const WelcomeTile = ({ userData }) => {
           <ListItem
             key={notification?.notificationId}
             component={Link}
-            to={routes.NOTIFICATION.replace(
+            to={ROUTES.NOTIFICATION.replace(
               ':notificationId',
               notification?.notificationId
             )}
@@ -65,7 +56,7 @@ const WelcomeTile = ({ userData }) => {
               bgcolor: notification?.isRead ? '' : '#eee',
               borderRadius: 3,
               my: 1,
-              color: theme.palette.text.primary,
+              color: 'text.primary',
             }}
           >
             {notification?.isRead ? (
@@ -78,7 +69,7 @@ const WelcomeTile = ({ userData }) => {
               secondary={notification.timestamp}
               primaryTypographyProps={{ variant: 'body2' }}
               secondaryTypographyProps={{
-                color: 'textSecondary',
+                color: 'text.secondary',
               }}
               sx={{}}
             />
@@ -106,7 +97,7 @@ const WelcomeTile = ({ userData }) => {
                 variant='text'
                 fullWidth
                 component={Link}
-                to={routes.NOTIFICATIONS}
+                to={ROUTES.NOTIFICATIONS}
                 sx={{ textTransform: 'none' }}
               >
                 View notifications{' '}
@@ -120,4 +111,4 @@ const WelcomeTile = ({ userData }) => {
   );
 };
 
-export default WelcomeTile;
+export default NotificationsTile;

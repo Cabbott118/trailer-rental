@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Alert from 'components/common/Alert';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // Helpers
 import errorTransformer from 'constants/errorTransformer';

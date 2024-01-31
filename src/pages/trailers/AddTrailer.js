@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import Alert from 'components/common/Alert';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 import trailerTypes from 'constants/trailer.json';
 import states from 'constants/states.json';
 
@@ -125,7 +125,7 @@ const AddTrailer = () => {
             setIsAlertShowing(false);
           }, 5000);
         } else {
-          navigate(routes.ADD_TRAILER_SUCCESS);
+          navigate(ROUTES.ADD_TRAILER_SUCCESS);
         }
       });
     }

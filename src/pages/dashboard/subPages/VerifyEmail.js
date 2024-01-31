@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
 import {
@@ -34,7 +34,7 @@ const VerifyEmail = () => {
       },
     };
     dispatch(updateUser({ userId, updateData })).then(() => {
-      navigate(routes.DASHBOARD);
+      navigate(ROUTES.DASHBOARD);
     });
   };
 

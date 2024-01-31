@@ -1,4 +1,4 @@
-const routes = {
+const ROUTES = {
   // Auth
   LOGIN: '/login',
   SIGNUP: '/signup',
@@ -22,7 +22,7 @@ const routes = {
   // Trailer
   TRAILERS: '/trailers',
   ADD_TRAILER: '/trailers/add-trailer',
-  VIEW_TRAILERS: '/trailers/view-trailers',
+  FIND_TRAILERS: '/trailers/find-trailers',
   VIEW_TRAILER: '/trailers/view-trailer',
   ADD_TRAILER_SUCCESS: '/trailers/add-trailer-success',
 
@@ -30,4 +30,4 @@ const routes = {
   TEST: '/',
 };
 
-export default routes;
+export default ROUTES;

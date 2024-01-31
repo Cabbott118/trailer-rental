@@ -1,8 +1,11 @@
 // Lib
-import { get, post, patch, del } from 'lib/axios';
+import { get, post, patch, del } from 'services/axiosServices';
 
 // Redux
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
+
+// Resources
+import ENDPOINTS from 'resources/api-constants';
 
 // API Requests to Firestore Database
 
@@ -10,7 +13,7 @@ const createTrailer = createAsyncThunk(
   'trailer/createTrailer',
   async ({ type, city, state, userId, firstName, lastName, imageURL }) => {
     try {
-      const response = await post('/trailers/create-trailer', {
+      const response = await post(ENDPOINTS.CREATE_TRAILER, {
         type,
         city,
         state,
@@ -30,7 +33,7 @@ const fetchTrailer = createAsyncThunk(
   'trailer/fetchTrailer',
   async (trailerId) => {
     try {
-      const response = await get('/trailers/get-trailer-details', {
+      const response = await get(ENDPOINTS.GET_TRAILER_DETAILS, {
         trailerId,
       });
       return response;
@@ -42,24 +45,30 @@ const fetchTrailer = createAsyncThunk(
 
 const fetchTrailers = createAsyncThunk('trailer/fetchTrailers', async () => {
   try {
-    const response = await get('/trailers/get-all-trailers');
+    const response = await get(ENDPOINTS.GET_ALL_TRAILERS);
     return response;
   } catch (error) {
     throw new Error('Failed to fetch trailers data.');
   }
 });
 
-const searchTrailers = createAsyncThunk(
-  'trailer/searchTrailers',
-  async ({ location, type, pickUpDate, returnDate }) => {
+const filterTrailers = createAsyncThunk(
+  'trailer/filterTrailers',
+  async ({ location, type }, { getState }) => {
     try {
-      const response = await get('/trailers/search-trailers', {
-        location,
-        type,
-        pickUpDate,
-        returnDate,
-      });
-      return response;
+      const response = await get(ENDPOINTS.GET_ALL_TRAILERS);
+      let filteredList = response.filter((trailer) =>
+        trailer.location.city.toLowerCase().includes(location.toLowerCase())
+      );
+
+      // Check if type is provided and filter accordingly
+      if (type) {
+        filteredList = filteredList.filter(
+          (trailer) => trailer.type.toLowerCase() === type.toLowerCase()
+        );
+      }
+
+      return { filteredList, location, type };
     } catch (error) {
       throw new Error('Failed to fetch trailers data.');
     }
@@ -70,7 +79,7 @@ const updateTrailer = createAsyncThunk(
   'trailer/updateTrailer',
   async ({ trailerId, updateData }) => {
     try {
-      const response = await patch('/trailers/update-trailer', {
+      const response = await patch(ENDPOINTS.UDPATE_TRAILER, {
         trailerId,
         updateData,
       });
@@ -85,7 +94,7 @@ const deleteTrailer = createAsyncThunk(
   'trailer/deleteTrailer',
   async (trailerId) => {
     try {
-      const response = await del('/trailers/delete-trailer', { trailerId });
+      const response = await del(ENDPOINTS.DELETE_TRAILER, { trailerId });
       return response;
     } catch (error) {
       throw new Error('Failed to delete trailer data.');
@@ -100,14 +109,21 @@ const clearErrors = createAction('trailer/clearErrors');
 const trailerSlice = createSlice({
   name: 'trailer',
   initialState: {
-    data: [],
+    trailerList: [],
+    filteredList: [],
+    searchedLocation: null,
+    selectedTrailer: null,
     loading: false,
     error: null,
   },
   reducers: {
     clearTrailerData: (state) => {
       return {
-        data: [],
+        trailerList: [],
+        filteredList: [],
+        searchedLocation: null,
+        searchedType: null,
+        selectedTrailer: null,
         loading: false,
         error: null,
       };
@@ -131,7 +147,7 @@ const trailerSlice = createSlice({
       .addCase(createTrailer.fulfilled, (state, action) => {
         return {
           ...state,
-          data: [...state.data, action.payload],
+          trailerList: [...state.trailerList, action.payload],
           loading: false,
           error: null,
         };
@@ -154,7 +170,7 @@ const trailerSlice = createSlice({
       .addCase(fetchTrailer.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          selectedTrailer: action.payload,
           loading: false,
           error: null,
         };
@@ -177,7 +193,7 @@ const trailerSlice = createSlice({
       .addCase(fetchTrailers.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          trailerList: action.payload,
           loading: false,
           error: null,
         };
@@ -190,22 +206,24 @@ const trailerSlice = createSlice({
         };
       })
 
-      .addCase(searchTrailers.pending, (state) => {
+      .addCase(filterTrailers.pending, (state) => {
         return {
           ...state,
           loading: true,
           error: null,
         };
       })
-      .addCase(searchTrailers.fulfilled, (state, action) => {
+      .addCase(filterTrailers.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          filteredList: action.payload.filteredList,
+          searchedLocation: action.payload.location,
+          searchedType: action.payload.type,
           loading: false,
           error: null,
         };
       })
-      .addCase(searchTrailers.rejected, (state, action) => {
+      .addCase(filterTrailers.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -223,7 +241,7 @@ const trailerSlice = createSlice({
       .addCase(updateTrailer.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          trailerList: action.payload,
           loading: false,
         };
       })
@@ -245,7 +263,7 @@ const trailerSlice = createSlice({
       .addCase(deleteTrailer.fulfilled, (state) => {
         return {
           ...state,
-          data: null,
+          trailerList: null,
           loading: false,
           error: null,
         };
@@ -267,7 +285,7 @@ export {
   createTrailer,
   fetchTrailer,
   fetchTrailers,
-  searchTrailers,
+  filterTrailers,
   updateTrailer,
   clearTrailerData,
   clearErrors,

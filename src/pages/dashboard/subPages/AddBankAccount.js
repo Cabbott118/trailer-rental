@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 import states from 'constants/states.json';
 
 // MUI
@@ -62,7 +62,7 @@ const AddBankAccount = () => {
     const updateData = {};
 
     // dispatch(updateUser({ userId, updateData })).then(() => {
-    //   navigate(routes.DASHBOARD);
+    //   navigate(ROUTES.DASHBOARD);
     // });
   };
 
@@ -80,7 +80,7 @@ const AddBankAccount = () => {
           <Grid container spacing={3}>
             <Grid item xs={12}>
               <Typography variant='h6'>Account information</Typography>
-              <Typography variant='body2' color='textSecondary'>
+              <Typography variant='body2' color='text.secondary'>
                 Provide details for the account you'd like money deposited to.
               </Typography>
             </Grid>
@@ -122,7 +122,7 @@ const AddBankAccount = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant='h6'>Billing information</Typography>
-              <Typography variant='body2' color='textSecondary'>
+              <Typography variant='body2' color='text.secondary'>
                 Provide details for the billing address.
               </Typography>
             </Grid>
@@ -183,7 +183,7 @@ const AddBankAccount = () => {
             </Grid>
             <Grid item xs={12}>
               <Typography variant='h6'>Additional information</Typography>
-              <Typography variant='body2' color='textSecondary'>
+              <Typography variant='body2' color='text.secondary'>
                 Our payment processing software requires a couple more items
                 from you.
               </Typography>

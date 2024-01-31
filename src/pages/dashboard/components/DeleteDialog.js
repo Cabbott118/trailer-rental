@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 // Constants
-import routes from 'constants/routes';
+import ROUTES from 'resources/routes-constants';
 
 // MUI
 import {
@@ -40,7 +40,7 @@ const DeleteDialog = () => {
     const { userId, stripeAccountId } = data;
     dispatch(deleteUser({ userId, stripeAccountId })).then(() => {
       setDialogOpen(false);
-      navigate(routes.HOME, { replace: true });
+      navigate(ROUTES.HOME, { replace: true });
     });
   };
 
