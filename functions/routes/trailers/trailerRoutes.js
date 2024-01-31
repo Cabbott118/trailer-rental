@@ -83,31 +83,31 @@ router.get('/get-trailer-details', async (req, res) => {
   }
 });
 
-router.get('/search-trailers', async (req, res) => {
-  try {
-    const location = req.query.location;
-    const trailersRef = admin.firestore().collection('trailers');
+// router.get('/search-trailers', async (req, res) => {
+//   try {
+//     const location = req.query.location;
+//     const trailersRef = admin.firestore().collection('trailers');
 
-    const querySnapshot = await trailersRef
-      .where('searchableTerms', 'array-contains', location.toLowerCase())
-      .orderBy('createdAt', 'desc')
-      .get();
+//     const querySnapshot = await trailersRef
+//       .where('searchableTerms', 'array-contains', location.toLowerCase())
+//       .orderBy('createdAt', 'desc')
+//       .get();
 
-    if (querySnapshot.empty) {
-      return res.status(200).json({
-        message: 'No trailers were found in our search',
-      });
-    }
+//     if (querySnapshot.empty) {
+//       return res.status(200).json({
+//         message: 'No trailers were found in our search',
+//       });
+//     }
 
-    const trailersData = querySnapshot.docs.map((doc) => doc.data());
+//     const trailersData = querySnapshot.docs.map((doc) => doc.data());
 
-    return res.status(200).json(trailersData);
-  } catch (error) {
-    console.error('Error retrieving trailers:', error);
-    return res.status(500).json({
-      message: 'Internal Server Error',
-    });
-  }
-});
+//     return res.status(200).json(trailersData);
+//   } catch (error) {
+//     console.error('Error retrieving trailers:', error);
+//     return res.status(500).json({
+//       message: 'Internal Server Error',
+//     });
+//   }
+// });
 
 module.exports = router;

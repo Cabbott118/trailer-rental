@@ -30,7 +30,6 @@ export default function Home() {
     <Box
       sx={{
         bgcolor: theme.palette.background.default,
-        // bgcolor: theme.additionalPalette.secondary,
       }}
     >
       <Container maxWidth='sm' sx={{ minHeight: '100vh' }}>

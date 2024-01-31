@@ -29,7 +29,10 @@ const WelcomeTile = ({ userData }) => {
 
   return (
     <Grid item xs={12} md={6}>
-      <Paper variant='outlined' sx={{ minHeight: '200px' }}>
+      <Paper
+        variant='outlined'
+        sx={{ minHeight: '200px', bgcolor: theme.additionalPalette.primary }}
+      >
         <Grid container>
           <Grid
             item
@@ -40,7 +43,8 @@ const WelcomeTile = ({ userData }) => {
             <Grid item xs={12}>
               <Typography
                 variant='h6'
-                color={theme.palette.primary.contrastText}
+                color='#fff'
+                // color={theme.palette.primary.contrastText}
               >
                 Welcome, {userData?.fullName?.firstName}!
               </Typography>
@@ -54,6 +58,7 @@ const WelcomeTile = ({ userData }) => {
                   height: 80,
                   bgcolor: theme.palette.primary.dark,
                   fontWeight: 500,
+                  color: '#fff',
                   fontSize: 30,
                   mb: '-4rem',
                 }}

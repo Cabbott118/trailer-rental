@@ -7,7 +7,7 @@ import FilterTrailersLoader from 'features/search/loaders/FilterTrailersLoader';
 import trailerTypes from 'constants/trailer.json';
 
 // MUI
-import { Button, Grid, MenuItem, TextField } from '@mui/material';
+import { Button, Grid, MenuItem, TextField, useTheme } from '@mui/material';
 
 // React Hook Form
 import { useForm } from 'react-hook-form';
@@ -18,6 +18,7 @@ import { filterTrailers } from 'store/slices/trailerSlice';
 
 export default function FilterTrailers() {
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const { searchedLocation, searchedType, loading } = useSelector(
     (state) => state.trailer
@@ -66,7 +67,7 @@ export default function FilterTrailers() {
           {...register('type')}
         >
           {trailerTypes.map((type) => (
-            <MenuItem key={type.name} value={type.name}>
+            <MenuItem key={type.name} value={type.value}>
               {type.name}
             </MenuItem>
           ))}
@@ -77,7 +78,11 @@ export default function FilterTrailers() {
           type='submit'
           fullWidth
           variant='contained'
-          sx={{ mt: 1, textTransform: 'none' }}
+          sx={{
+            mt: 1,
+            textTransform: 'none',
+            color: theme.palette.secondary.contrastText,
+          }}
         >
           Search
         </Button>

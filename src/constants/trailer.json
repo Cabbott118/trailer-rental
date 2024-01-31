@@ -1,11 +1,18 @@
 [
   {
-    "name": "Dump"
+    "name": "Select",
+    "value": ""
   },
   {
-    "name": "Enclosed"
+    "name": "Dump",
+    "value": "Dump"
   },
   {
-    "name": "Landscaping"
+    "name": "Enclosed",
+    "value": "Enclosed"
+  },
+  {
+    "name": "Landscaping",
+    "value": "Landscaping"
   }
 ]

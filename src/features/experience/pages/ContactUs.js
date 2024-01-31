@@ -11,6 +11,7 @@ import {
   Grid,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 
 // React Hook Form
@@ -20,6 +21,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 const ContactUs = () => {
+  const theme = useTheme();
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
   const dispatch = useDispatch();
@@ -35,9 +37,14 @@ const ContactUs = () => {
     console.log(subject, email, message);
   };
   return (
-    <Box component='form' onSubmit={handleSubmit(onSubmit)}>
+    <Box component='form' onSubmit={handleSubmit(onSubmit)} sx={{ pt: 8 }}>
       <Container maxWidth='xs'>
-        <Typography variant='h1' align='center' sx={{ my: 3 }}>
+        <Typography
+          variant='h1'
+          align='center'
+          color='text.primary'
+          sx={{ my: 3 }}
+        >
           Contact us
         </Typography>
         <Grid container spacing={3}>
@@ -87,7 +94,10 @@ const ContactUs = () => {
               variant='contained'
               type='submit'
               fullWidth
-              sx={{ textTransform: 'none' }}
+              sx={{
+                textTransform: 'none',
+                color: theme.palette.secondary.contrastText,
+              }}
             >
               Send
             </Button>

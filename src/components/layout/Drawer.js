@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 // Components
+import ThemeSwitch from 'components/common/ThemeSwitch';
 import Logout from 'components/common/Logout';
 
 // Constants
@@ -25,19 +26,12 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import GridViewOutlinedIcon from '@mui/icons-material/GridViewOutlined';
 import AddBoxOutlinedIcon from '@mui/icons-material/AddBoxOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-// import CorporateFareOutlinedIcon from '@mui/icons-material/CorporateFareOutlined';
-// import NotificationsOutlinedIcon from '@mui/icons-material/NotificationsOutlined';
-// import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import ContactSupportOutlinedIcon from '@mui/icons-material/ContactSupportOutlined';
 import GroupsOutlinedIcon from '@mui/icons-material/GroupsOutlined';
 import CloseIcon from '@mui/icons-material/Close';
 
 // React Router
 import { Link } from 'react-router-dom';
-
-// Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { switchTheme } from 'store/slices/uiSlice';
 
 const MenuItem = ({ icon, primaryText, to, onClick }) => {
   return (
@@ -52,9 +46,6 @@ const MenuItem = ({ icon, primaryText, to, onClick }) => {
           }}
           sx={{ pl: 1 }}
         />
-        {/* {notifications > 0 && (
-          <Badge badgeContent={notifications} color='error' />
-        )} */}
       </ListItemButton>
     </ListItem>
   );
@@ -62,7 +53,6 @@ const MenuItem = ({ icon, primaryText, to, onClick }) => {
 
 const Drawer = () => {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const toggleDrawer = (event) => {
@@ -74,10 +64,6 @@ const Drawer = () => {
     }
 
     setIsDrawerOpen(!isDrawerOpen);
-  };
-
-  const toggleTheme = () => {
-    dispatch(switchTheme());
   };
 
   return (
@@ -124,12 +110,12 @@ const Drawer = () => {
               to={ROUTES.HOME}
               onClick={toggleDrawer}
             />
-            <MenuItem
+            {/* <MenuItem
               icon={<AddBoxOutlinedIcon />}
               primaryText='Add trailer'
               to={ROUTES.ADD_TRAILER}
               onClick={toggleDrawer}
-            />
+            /> */}
             <MenuItem
               icon={<GridViewOutlinedIcon />}
               primaryText='Find trailers'
@@ -191,7 +177,7 @@ const Drawer = () => {
           </List>
           <Divider variant='middle' sx={{ mt: 3, mb: 1 }} />
           <List>
-            <ListItem onClick={toggleTheme}>Toggle theme</ListItem>
+            <ThemeSwitch />
             <ListItem>
               <Logout />
             </ListItem>

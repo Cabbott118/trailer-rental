@@ -9,7 +9,6 @@ import DeleteDialog from 'pages/dashboard/components/DeleteDialog';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
-import { verifyEmail, verifyIdentity } from 'constants/alertContent';
 
 // MUI
 import {
@@ -19,6 +18,7 @@ import {
   Paper,
   TextField,
   Typography,
+  useTheme,
 } from '@mui/material';
 
 // Redux
@@ -27,6 +27,7 @@ import { fetchStripeAccount, fetchUser } from 'store/slices/userSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
+  const theme = useTheme();
   const { data, stripe, loading } = useSelector((state) => state.user);
 
   document.title = data?.fullName?.firstName
@@ -49,26 +50,25 @@ export default function Dashboard() {
   return (
     <Box
       sx={{
-        bgcolor: '#eee',
+        bgcolor: theme.palette.background.default,
         minHeight: '80vh',
-        py: 2,
-        mt: -5,
+        py: 10,
       }}
     >
       <Container maxWidth='lg'>
         {renderAlert(
           !data?.verified?.identity,
           'warning',
-          verifyIdentity,
+          'verifyIdentity',
           ROUTES.VERIFY_IDENTITY
         )}
         {renderAlert(
           !data?.verified?.email,
           'warning',
-          verifyEmail,
+          'verifyEmail',
           ROUTES.VERIFY_EMAIL
         )}
-        <Typography variant='h1' sx={{ my: 1 }}>
+        <Typography variant='h1' color='text.primary' sx={{ my: 3 }}>
           Dashboard
         </Typography>
         <Grid container spacing={3}>
@@ -76,7 +76,7 @@ export default function Dashboard() {
           <CreateTrailerTile userData={data} />
           <NotificationsTile />
           <Grid item xs={12}>
-            <Paper elevation={0} sx={{ bgcolor: '#ggg' }}>
+            <Paper elevation={0} sx={{ bgcolor: theme.palette.secondary.dark }}>
               {loading ? (
                 <p>Loading...</p>
               ) : (
@@ -94,7 +94,7 @@ export default function Dashboard() {
             </Paper>
           </Grid>
           <Grid item xs={12}>
-            <Paper elevation={0} sx={{ bgcolor: '#ggg' }}>
+            <Paper elevation={0} sx={{ bgcolor: theme.palette.secondary.dark }}>
               {stripe ? (
                 <TextField
                   label='Stripe Data'

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 // Components
 import BreadcrumbNavigator from 'components/common/BreadcrumbNavigator';
+import ListingNotFound from 'features/listings/components/ListingNotFound';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
@@ -38,7 +39,7 @@ const ViewTrailer = () => {
 
   const { selectedTrailer, loading } = useSelector((state) => state.trailer);
 
-  const trailer = location.state.trailer;
+  const trailer = location?.state?.trailer;
 
   const previousPages = [
     {
@@ -50,6 +51,8 @@ const ViewTrailer = () => {
   useEffect(() => {
     dispatch(fetchTrailer(trailer?.trailerId));
   }, [dispatch, trailer?.trailerId]);
+
+  if (!trailer) return <ListingNotFound />;
 
   if (loading) {
     return <p>Loading...</p>;
@@ -126,7 +129,7 @@ const ViewTrailer = () => {
             <Avatar
               sx={{
                 bgcolor: theme.palette.primary.main,
-                color: 'text.primary',
+                color: '#fff',
               }}
             >
               {getUserInitials(selectedTrailer?.owner.ownerName)}

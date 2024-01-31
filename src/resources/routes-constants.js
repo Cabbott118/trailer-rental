@@ -23,7 +23,7 @@ const ROUTES = {
   TRAILERS: '/trailers',
   ADD_TRAILER: '/trailers/add-trailer',
   FIND_TRAILERS: '/trailers/find-trailers',
-  VIEW_TRAILER: '/trailers/view-trailer',
+  VIEW_TRAILER: '/trailers/find-trailers/view-trailer/:uid',
   ADD_TRAILER_SUCCESS: '/trailers/add-trailer-success',
 
   // Test

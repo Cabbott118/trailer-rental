@@ -35,7 +35,9 @@ export default function Search() {
   );
 
   const handleNavigateToTrailer = (trailer) => {
-    navigate(ROUTES.VIEW_TRAILER, { state: { trailer } });
+    navigate(ROUTES.VIEW_TRAILER.replace(':uid', trailer?.trailerId), {
+      state: { trailer },
+    });
   };
 
   return (
@@ -52,7 +54,7 @@ export default function Search() {
         component='h1'
         color={theme.palette.primary.contrastText}
       >
-        Search Results
+        Search Trailers
       </Typography>
       <FilterTrailers />
       {loading ? (
@@ -116,11 +118,14 @@ export default function Search() {
         <Grid container justifyContent='center'>
           <Grid item xs={12} sx={{ textAlign: 'center' }}>
             <Typography
-              variant='h4'
+              variant='body1'
               component='h1'
-              sx={{ py: 3, fontSize: 24 }}
+              color='text.primary'
+              sx={{ py: 3 }}
             >
-              We couldn't find any trailers that matched your search
+              {searchedLocation
+                ? "We couldn't find any trailers that matched your search"
+                : ''}
             </Typography>
           </Grid>
         </Grid>

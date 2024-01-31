@@ -5,6 +5,8 @@ import ROUTES from 'resources/routes-constants';
 
 // Components
 import Navbar from 'components/layout/Navbar';
+import PixelObiWan from 'components/common/pixelArt/obiWan/PixelObiWan';
+import PixelDarthVader from 'components/common/pixelArt/darthVader/PixelDarthVader';
 
 // Helpers
 import RequireAuth from 'services/helpers/requireAuth';
@@ -14,24 +16,25 @@ import { Container, Typography, ThemeProvider } from '@mui/material';
 import { lightTheme, darkTheme } from './styles/theme';
 
 // Pages
-import Login from 'pages/auth/Login';
-import Signup from 'pages/auth/Signup';
-// import Home from 'pages/home/Home';
+import Login from 'features/authentication/pages/Login';
+import Signup from 'features/authentication/pages/Signup';
+import ForgotPassword from 'features/authentication/pages/ForgotPassword';
+import ForgotPasswordConfirmation from 'features/authentication/pages/ForgotPasswordConfirmation';
+
 import Home from 'features/home/pages/Home';
-import AboutUs from 'pages/aboutUs/AboutUs';
-import ContactUs from 'pages/contactUs/ContactUs';
-import ForgotPassword from 'pages/forgotPassword/ForgotPassword';
-import ForgotPasswordConfirmation from 'pages/forgotPassword/ForgotPasswordConfirmation';
+import AboutUs from 'features/experience/pages/AboutUs';
+import ContactUs from 'features/experience/pages/ContactUs';
+
 import Dashboard from 'pages/dashboard/Dashboard';
 import VerifyIdentity from 'pages/dashboard/subPages/VerifyIdentity';
 import VerifyEmail from 'pages/dashboard/subPages/VerifyEmail';
 import AddBankAccount from 'pages/dashboard/subPages/AddBankAccount';
 import Profile from 'pages/dashboard/profile/Profile';
+
 import AddTrailer from 'pages/trailers/AddTrailer';
 import AddTrailerSuccess from 'pages/trailers/AddTrailerSuccess';
-// import ViewTrailers from 'pages/trailers/ViewTrailers';
 import Search from 'features/search/pages/Search';
-import ViewTrailer from 'pages/trailers/ViewTrailer';
+import ViewTrailer from 'features/listings/pages/ViewTrailer';
 
 // React Router
 import { Outlet, Route, Routes } from 'react-router-dom';
@@ -43,15 +46,17 @@ import { useSelector } from 'react-redux';
 function App() {
   const { theme } = useSelector((state) => state.ui);
 
+  function changeBackgroundColor(theme) {
+    const backgroundColor =
+      theme === 'dark'
+        ? darkTheme.palette.background.default
+        : lightTheme.palette.background.default;
+    document.body.style.backgroundColor = backgroundColor;
+  }
+
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      console.log('Development');
-    } else if (process.env.NODE_ENV === 'production') {
-      console.log('Production');
-    } else {
-      console.log('Unknown environment');
-    }
-  }, []);
+    changeBackgroundColor(theme);
+  }, [theme]);
 
   return (
     <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
@@ -112,10 +117,11 @@ function App() {
               path='*'
               element={
                 <>
-                  <Container sx={{ height: '90vh', pt: '30vh' }}>
+                  <Container sx={{ height: '90vh', pt: 20 }}>
                     <Typography
                       variant='h1'
                       align='center'
+                      color='text.primary'
                       sx={{ fontSize: 36, fontWeight: 500 }}
                     >
                       404 Not Found
@@ -123,10 +129,12 @@ function App() {
                     <Typography
                       variant='h6'
                       align='center'
+                      color='text.primary'
                       sx={{ fontWeight: 400 }}
                     >
-                      You'll have to journey elsewhere.
+                      You must've fallen asleep at the Hyperdrive
                     </Typography>
+                    {theme === 'light' ? <PixelObiWan /> : <PixelDarthVader />}
                   </Container>
                 </>
               }

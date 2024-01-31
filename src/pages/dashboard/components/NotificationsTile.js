@@ -10,6 +10,7 @@ import {
   ListItemText,
   Paper,
   Typography,
+  useTheme,
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
@@ -19,6 +20,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from 'react-router-dom';
 
 const NotificationsTile = ({ userData }) => {
+  const theme = useTheme();
   // TODO: Pass in userData.userId to retrieve notifications
   const notifications = [
     {
@@ -53,7 +55,9 @@ const NotificationsTile = ({ userData }) => {
               notification?.notificationId
             )}
             sx={{
-              bgcolor: notification?.isRead ? '' : '#eee',
+              bgcolor: notification?.isRead
+                ? ''
+                : theme.additionalPalette.secondary,
               borderRadius: 3,
               my: 1,
               color: 'text.primary',
@@ -81,7 +85,10 @@ const NotificationsTile = ({ userData }) => {
 
   return (
     <Grid item xs={12} md={6}>
-      <Paper variant='outlined' sx={{ minHeight: '200px' }}>
+      <Paper
+        variant='outlined'
+        sx={{ minHeight: '200px', bgcolor: theme.additionalPalette.primary }}
+      >
         <Grid container>
           <Grid item container xs={12} sx={{ pt: 3, pl: 3, borderRadius: 1 }}>
             <Grid item xs={12}>

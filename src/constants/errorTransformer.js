@@ -1,3 +1,5 @@
+// These cases read Firebase errors and return more friendly errors on login/signup
+
 const errorTransformer = (error) => {
   switch (error) {
     case 'Firebase: Error (auth/email-already-in-use).':

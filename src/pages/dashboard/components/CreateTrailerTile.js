@@ -3,7 +3,6 @@ import Alert from 'components/common/Alert';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
-import { addBankAccount } from 'constants/alertContent';
 
 // MUI
 import {
@@ -15,14 +14,15 @@ import {
   Paper,
   Skeleton,
   Typography,
+  useTheme,
 } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import theme from 'styles/theme';
 
 // React Router
 import { Link } from 'react-router-dom';
 
 const CreateTrailerTile = ({ userData }) => {
+  const theme = useTheme();
   const renderAlert = (condition, severity, text, route) => {
     return condition ? (
       <Alert severity={severity} text={text} route={route} />
@@ -31,14 +31,17 @@ const CreateTrailerTile = ({ userData }) => {
 
   return (
     <Grid item xs={12} md={6}>
-      <Paper variant='outlined'>
+      <Paper
+        variant='outlined'
+        sx={{ bgcolor: theme.additionalPalette.primary }}
+      >
         <Grid container>
           <Grid item container xs={12} sx={{ borderRadius: 1 }}>
             <Grid item xs={12}>
               {renderAlert(
                 !userData?.verified?.bankAccount,
                 'warning',
-                addBankAccount,
+                'verifyBankDetails',
                 ROUTES.ADD_BANK_ACCOUNT
               )}
             </Grid>

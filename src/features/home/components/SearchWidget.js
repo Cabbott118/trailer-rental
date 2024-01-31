@@ -81,7 +81,11 @@ export default function SearchWidget() {
             type='submit'
             variant='contained'
             fullWidth
-            sx={{ textTransform: 'none', height: '100%' }}
+            sx={{
+              textTransform: 'none',
+              height: '100%',
+              color: theme.palette.secondary.contrastText,
+            }}
           >
             Search
           </Button>

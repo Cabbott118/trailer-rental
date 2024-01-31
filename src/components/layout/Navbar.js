@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 // Components
 import Drawer from 'components/layout/Drawer';
+import ThemeSwitch from 'components/common/ThemeSwitch';
 import Logout from 'components/common/Logout';
 
 // Constants
@@ -63,7 +64,7 @@ export default function Navbar() {
     { route: ROUTES.DASHBOARD, label: 'Your dashboard' },
     { route: ROUTES.ACCOUNT, label: 'Account settings' },
     { route: ROUTES.NOTIFICATIONS, label: 'Notifications' },
-    { route: ROUTES.ADD_TRAILER, label: 'Add trailer' },
+    // { route: ROUTES.ADD_TRAILER, label: 'Add trailer' },
     { route: ROUTES.FIND_TRAILERS, label: 'Find trailers' },
   ];
 
@@ -92,9 +93,10 @@ export default function Navbar() {
             {item.label}
           </MenuItem>
         ))}
-        <MenuItem onClick={toggleTheme} sx={{ fontSize: 18 }}>
+        {/* <MenuItem onClick={toggleTheme} sx={{ fontSize: 18 }}>
           Toggle theme
-        </MenuItem>
+        </MenuItem> */}
+        <ThemeSwitch />
         {showLogoutCondition && <Logout />}
       </Menu>
     );
@@ -102,7 +104,11 @@ export default function Navbar() {
 
   return (
     <Box>
-      <AppBar position='fixed' color='inherit' sx={{ boxShadow: 1 }}>
+      <AppBar
+        position='fixed'
+        // color={theme.palette.background.default}
+        sx={{ boxShadow: 1, bgcolor: theme.palette.background.default }}
+      >
         <Container maxWidth='lg'>
           <Toolbar>
             <Grid
@@ -163,7 +169,9 @@ export default function Navbar() {
                             }}
                           >
                             <Grid item>
-                              <Avatar sx={{ bgcolor: '#333' }}>
+                              <Avatar
+                                sx={{ bgcolor: theme.palette.primary.dark }}
+                              >
                                 <Typography
                                   sx={{
                                     color: theme.palette.secondary.contrastText,
@@ -184,7 +192,7 @@ export default function Navbar() {
                               />
                             </Grid>
                             <Grid item>
-                              <ArrowDropDownIcon />
+                              <ArrowDropDownIcon sx={{ color: '#333' }} />
                             </Grid>
                           </Grid>
                         </IconButton>
