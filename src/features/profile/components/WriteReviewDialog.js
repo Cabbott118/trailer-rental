@@ -21,6 +21,7 @@ import {
   DialogTitle,
   Grid,
   TextField,
+  useTheme,
 } from '@mui/material';
 
 // React Hook Form
@@ -28,12 +29,13 @@ import { useForm } from 'react-hook-form';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { updateUser, clearErrors } from 'store/slices/userSlice';
+import { createReview, clearErrors } from 'store/slices/reviewSlice';
 
-const UpdateDialog = ({ userId }) => {
+const WriteReviewDialog = ({ profileId }) => {
   const [isAlertShowing, setIsAlertShowing] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
 
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.user);
 
@@ -48,26 +50,25 @@ const UpdateDialog = ({ userId }) => {
     setDialogOpen(false);
   };
 
-  const { register, handleSubmit } = useForm({
-    defaultValues: {
-      fullName: {
-        firstName: user?.fullName?.firstName,
-        lastName: user?.fullName?.lastName,
-      },
-      email: user?.email,
-    },
-  });
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   const onSubmit = (data) => {
-    const updateData = {
-      fullName: {
-        firstName: data.fullName.firstName,
-        lastName: data.fullName.lastName,
-      },
-      email: data.email,
-    };
+    const { reviewBody, reviewRating } = data;
 
-    dispatch(updateUser({ userId, updateData })).then((action) => {
+    dispatch(
+      createReview({
+        writtenById: user?.userId,
+        writtenByFirstName: user?.fullName?.firstName,
+        writtenByLastName: user?.fullName?.lastName,
+        writtenFor: profileId,
+        reviewBody,
+        reviewRating,
+      })
+    ).then((action) => {
       if (action.error) {
         setIsAlertShowing(true);
       } else {
@@ -83,31 +84,30 @@ const UpdateDialog = ({ userId }) => {
         variant='contained'
         color='primary'
         onClick={handleClickOpenDialog}
-        sx={{ textTransform: 'none' }}
+        sx={{
+          textTransform: 'none',
+          color: theme.palette.secondary.contrastText,
+        }}
       >
-        Update Details
+        Write a Review
       </Button>
       <Dialog open={dialogOpen} onClose={handleCloseDialog}>
         <Box component='form' onSubmit={handleSubmit(onSubmit)}>
           <Container maxWidth='xs'>
-            <DialogTitle>{'Update your information'}</DialogTitle>
+            <DialogTitle>{'Write a Review'}</DialogTitle>
             <DialogContent>
-              <Grid container spacing={3} sx={{ mt: 1 }}>
-                <Grid item xs={6}>
-                  <TextField
-                    autoFocus
-                    label='First Name'
-                    {...register('fullName.firstName')}
-                  />
-                </Grid>
-                <Grid item xs={6}>
-                  <TextField
-                    label='Last Name'
-                    {...register('fullName.lastName')}
-                  />
+              Review for: {profileId}
+              <Grid container sx={{ mt: 1 }}>
+                <Grid item xs={12}>
+                  <TextField label='Rating' {...register('reviewRating')} />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField label='Email' fullWidth {...register('email')} />
+                  <TextField
+                    label='Review'
+                    multiline
+                    rows={4}
+                    {...register('reviewBody')}
+                  />
                 </Grid>
                 {isAlertShowing && (
                   <Grid item xs={12}>
@@ -121,15 +121,18 @@ const UpdateDialog = ({ userId }) => {
                 onClick={handleCloseDialog}
                 sx={{ textTransform: 'none' }}
               >
-                Cancel
+                Close
               </Button>
               <Button
                 type='submit'
                 variant='contained'
                 disabled={loading}
-                sx={{ textTransform: 'none' }}
+                sx={{
+                  textTransform: 'none',
+                  color: theme.palette.secondary.contrastText,
+                }}
               >
-                Update Details
+                Submit
               </Button>
             </DialogActions>
           </Container>
@@ -139,4 +142,4 @@ const UpdateDialog = ({ userId }) => {
   );
 };
 
-export default UpdateDialog;
+export default WriteReviewDialog;

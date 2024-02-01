@@ -35,9 +35,7 @@ export default function Search() {
   const navigate = useNavigate();
 
   const handleNavigateToTrailer = (trailer) => {
-    navigate(ROUTES.VIEW_TRAILER.replace(':uid', trailer?.trailerId), {
-      state: { trailer },
-    });
+    navigate(ROUTES.VIEW_TRAILER.replace(':uid', trailer?.trailerId));
   };
 
   return (

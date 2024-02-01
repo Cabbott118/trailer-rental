@@ -23,21 +23,24 @@ import {
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchStripeAccount, fetchUser } from 'store/slices/userSlice';
+import { fetchUser } from 'store/slices/userSlice';
+import { fetchStripeAccount } from 'store/slices/stripeSlice';
 
 export default function Dashboard() {
   const dispatch = useDispatch();
   const theme = useTheme();
-  const { data, stripe, loading } = useSelector((state) => state.user);
 
-  document.title = data?.fullName?.firstName
-    ? `${data.fullName.firstName}'s Dashboard`
+  const { user, loading } = useSelector((state) => state.user);
+  const { stripe } = useSelector((state) => state.stripe);
+
+  document.title = user?.fullName?.firstName
+    ? `${user.fullName.firstName}'s Dashboard`
     : 'Dashboard';
 
   useEffect(() => {
-    if (data && data.userId) {
-      dispatch(fetchUser(data?.userId));
-      dispatch(fetchStripeAccount(data?.stripeAccountId));
+    if (user && user.userId) {
+      dispatch(fetchUser(user?.userId));
+      dispatch(fetchStripeAccount(user?.stripeAccountId));
     }
   }, [dispatch]);
 
@@ -57,13 +60,13 @@ export default function Dashboard() {
     >
       <Container maxWidth='lg'>
         {renderAlert(
-          !data?.verified?.identity,
+          !user?.verified?.identity,
           'warning',
           'verifyIdentity',
           ROUTES.VERIFY_IDENTITY
         )}
         {renderAlert(
-          !data?.verified?.email,
+          !user?.verified?.email,
           'warning',
           'verifyEmail',
           ROUTES.VERIFY_EMAIL
@@ -72,8 +75,8 @@ export default function Dashboard() {
           Dashboard
         </Typography>
         <Grid container spacing={3}>
-          <WelcomeCard userData={data} />
-          <ListTrailerCard userData={data} />
+          <WelcomeCard userData={user} />
+          <ListTrailerCard userData={user} />
           <NotificationsCard />
           <Grid item xs={12}>
             <Paper elevation={0} sx={{ bgcolor: theme.palette.secondary.dark }}>
@@ -84,7 +87,7 @@ export default function Dashboard() {
                   label='User Data'
                   multiline
                   fullWidth
-                  value={JSON.stringify(data, null, 2)} // Convert JSON to a formatted string
+                  value={JSON.stringify(user, null, 2)} // Convert JSON to a formatted string
                   variant='outlined'
                   InputProps={{
                     readOnly: true,
@@ -112,8 +115,8 @@ export default function Dashboard() {
         </Grid>
       </Container>
       <DeleteDialog
-        userId={data?.userId}
-        stripeAccountId={data?.stripeAccountId}
+        userId={user?.userId}
+        stripeAccountId={user?.stripeAccountId}
       />
     </Box>
   );

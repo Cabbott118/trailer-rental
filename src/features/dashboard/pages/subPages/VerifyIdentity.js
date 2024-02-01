@@ -23,8 +23,8 @@ import { updateUser } from 'store/slices/userSlice';
 
 const VerifyIdentity = () => {
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.user);
-  const userId = data?.userId;
+  const { user, loading, error } = useSelector((state) => state.user);
+  const userId = user?.userId;
 
   const {
     register,

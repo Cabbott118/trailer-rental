@@ -24,7 +24,7 @@ const DeleteDialog = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { data, stripe, loading } = useSelector((state) => state.user);
+  const { user, stripe, loading } = useSelector((state) => state.user);
 
   const [dialogOpen, setDialogOpen] = useState(false);
 
@@ -37,7 +37,7 @@ const DeleteDialog = () => {
   };
 
   const handleDeleteAccount = () => {
-    const { userId, stripeAccountId } = data;
+    const { userId, stripeAccountId } = user;
     dispatch(deleteUser({ userId, stripeAccountId })).then(() => {
       setDialogOpen(false);
       navigate(ROUTES.HOME, { replace: true });

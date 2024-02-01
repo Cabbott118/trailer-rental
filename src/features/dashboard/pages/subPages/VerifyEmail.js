@@ -23,14 +23,14 @@ import { updateUser } from 'store/slices/userSlice';
 const VerifyEmail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { data, loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
 
   const handleVerifyEmailClick = () => {
-    const userId = data?.userId;
+    const userId = user?.userId;
     const updateData = {
       verified: {
         email: true,
-        identity: data?.verified?.identity,
+        identity: user?.verified?.identity,
       },
     };
     dispatch(updateUser({ userId, updateData })).then(() => {
@@ -46,7 +46,7 @@ const VerifyEmail = () => {
             Verify your email
           </Typography>
           <Typography variant='body2' color='text.secondary' sx={{ mt: 2 }}>
-            {data?.fullName?.firstName}, to fully use this app, you must verify
+            {user?.fullName?.firstName}, to fully use this app, you must verify
             your email address.
           </Typography>
           <Typography variant='body2' color='text.secondary' sx={{ mt: 1 }}>

@@ -12,10 +12,14 @@ const app = express();
 app.use(cors({ origin: true }));
 
 const userRoutes = require('./routes/users/userRoutes');
+const profileRoutes = require('./routes/profiles/profileRoutes');
 const trailerRoutes = require('./routes/trailers/trailerRoutes');
+const reviewRoutes = require('./routes/reviews/reviewRoutes');
 
 app.use('/users', userRoutes);
+app.use('/profiles', profileRoutes);
 app.use('/trailers', trailerRoutes);
+app.use('/reviews', reviewRoutes);
 
 exports.createStripeAccount = functions.https.onRequest(async (req, res) => {
   try {

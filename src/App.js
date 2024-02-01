@@ -36,6 +36,9 @@ import AddTrailerSuccess from 'features/listings/pages/AddTrailerSuccess';
 import Search from 'features/search/pages/Search';
 import ViewTrailer from 'features/listings/pages/ViewTrailer';
 
+// Error
+import Error from 'components/common/Error';
+
 // React Router
 import { Outlet, Route, Routes } from 'react-router-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -73,7 +76,7 @@ function App() {
               }
             >
               <Route index path='' element={<Dashboard />} />
-              <Route index path={ROUTES.PROFILE} element={<Profile />} />
+
               <Route
                 index
                 path={ROUTES.VERIFY_IDENTITY}
@@ -90,6 +93,11 @@ function App() {
                 element={<AddBankAccount />}
               />
             </Route>
+
+            <Route path={ROUTES.PROFILE} element={<Outlet />}>
+              <Route index path='' element={<Profile />} />
+            </Route>
+
             <Route
               path={ROUTES.TRAILERS}
               element={
@@ -113,6 +121,7 @@ function App() {
             </Route>
             <Route path={ROUTES.ABOUT_US} element={<AboutUs />} />
             <Route path={ROUTES.CONTACT_US} element={<ContactUs />} />
+            <Route path={ROUTES.ERROR} element={<Error />} />
             <Route
               path='*'
               element={

@@ -33,8 +33,8 @@ const AddBankAccount = () => {
   const [value, setValue] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.user);
-  const userId = data?.userId;
+  const { user, loading, error } = useSelector((state) => state.user);
+  const userId = user?.userId;
 
   const {
     register,

@@ -48,7 +48,7 @@ const AddTrailer = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
-  const { data, loading, error } = useSelector((state) => state.user);
+  const { user, loading, error } = useSelector((state) => state.user);
 
   const theme = useTheme();
   const navigate = useNavigate();
@@ -57,7 +57,7 @@ const AddTrailer = () => {
   const {
     userId,
     fullName: { firstName, lastName },
-  } = data;
+  } = user;
 
   const {
     register,

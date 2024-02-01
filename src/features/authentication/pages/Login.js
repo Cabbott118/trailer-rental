@@ -46,7 +46,7 @@ export default function Login() {
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.user);
+  const { user, loading, error } = useSelector((state) => state.user);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -80,7 +80,7 @@ export default function Login() {
     return () => unsubscribe();
   }, [auth, dispatch]);
 
-  if (data) {
+  if (user) {
     return <Navigate to={ROUTES.HOME} replace />;
   }
 

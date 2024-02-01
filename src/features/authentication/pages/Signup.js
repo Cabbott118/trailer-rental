@@ -52,7 +52,7 @@ export default function Signup() {
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
   const dispatch = useDispatch();
-  const { data, loading, error } = useSelector((state) => state.user);
+  const { user, loading, error } = useSelector((state) => state.user);
 
   const toggleUserType = (event, newUserType) => {
     if (newUserType === null) {
@@ -110,7 +110,7 @@ export default function Signup() {
     }
   };
 
-  if (data) {
+  if (user) {
     return <Navigate to={ROUTES.HOME} replace />;
   }
 

@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 
 // Components
 import BreadcrumbNavigator from 'components/common/BreadcrumbNavigator';
-import ListingNotFound from 'features/listings/components/ListingNotFound';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
@@ -10,6 +9,7 @@ import ROUTES from 'resources/routes-constants';
 // Helpers
 import formatCreatedAt from 'services/helpers/dateFormatter';
 import getUserInitials from 'services/helpers/getUserInitials';
+import getIdFromPath from 'services/helpers/getIdFromPath';
 
 // MUI
 import {
@@ -24,7 +24,7 @@ import {
 } from '@mui/material';
 
 // React Router
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
@@ -34,13 +34,15 @@ const ViewTrailer = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { selectedTrailer, loading } = useSelector((state) => state.trailer);
+  const { selectedTrailer, loading, error } = useSelector(
+    (state) => state.trailer
+  );
 
-  const trailer = location?.state?.trailer;
-
+  const { pathname } = location;
   const previousPages = [
     {
       name: 'Find trailers',
@@ -49,13 +51,15 @@ const ViewTrailer = () => {
   ];
 
   useEffect(() => {
-    dispatch(fetchTrailer(trailer?.trailerId));
-  }, [dispatch, trailer?.trailerId]);
-
-  if (!trailer) return <ListingNotFound />;
+    dispatch(fetchTrailer(getIdFromPath(pathname)));
+  }, [dispatch, pathname]);
 
   if (loading) {
     return <p>Loading...</p>;
+  }
+
+  if (error) {
+    return navigate(ROUTES.ERROR);
   }
 
   return (

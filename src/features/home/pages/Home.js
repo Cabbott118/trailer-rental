@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 // Components
 import HomeBanner from 'features/home/components/HomeBanner';
 import SearchWidget from 'features/home/components/SearchWidget';
+import SearchWidgetLoader from 'features/home/loaders/SearchWidgetLoader';
 
 // MUI
 import { Box, Button, Container, useTheme } from '@mui/material';
@@ -15,22 +16,20 @@ import { clearTrailerData } from 'store/slices/trailerSlice';
 export default function Home() {
   document.title = 'Trailer Rental';
 
-  const { data, loading } = useSelector((state) => state.user);
+  const { user, loading } = useSelector((state) => state.user);
 
   const theme = useTheme();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (data && data.userId) {
-      dispatch(fetchUser(data.userId));
+    if (user && user.userId) {
+      dispatch(fetchUser(user.userId));
     }
   }, []);
 
   const clearDataClick = () => {
     dispatch(clearTrailerData());
   };
-
-  if (loading) return <p>Loading...</p>;
 
   return (
     <Box
@@ -40,7 +39,7 @@ export default function Home() {
     >
       <Container maxWidth='sm' sx={{ minHeight: '100vh' }}>
         <HomeBanner />
-        <SearchWidget />
+        {loading ? <SearchWidgetLoader /> : <SearchWidget />}
       </Container>
       <Button onClick={clearDataClick}>Clear Trailer Data</Button>
     </Box>

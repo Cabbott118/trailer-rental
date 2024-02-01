@@ -7,6 +7,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 // Redux
 import { useDispatch } from 'react-redux';
 import { clearUserData, logoutUser } from 'store/slices/userSlice';
+import { clearProfileData } from 'store/slices/profileSlice';
+import { clearStripeData } from 'store/slices/stripeSlice';
 import { clearTrailerData } from 'store/slices/trailerSlice';
 
 // Routes
@@ -22,6 +24,8 @@ export default function Logout({ variant }) {
     await Promise.all([
       dispatch(logoutUser()),
       dispatch(clearUserData()),
+      dispatch(clearProfileData()),
+      dispatch(clearStripeData()),
       dispatch(clearTrailerData()),
     ]);
     navigate(ROUTES.LOGIN, { state: { from: location } });

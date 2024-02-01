@@ -12,12 +12,14 @@ const ROUTES = {
 
   // User
   DASHBOARD: '/dashboard',
-  PROFILE: '/dashboard/profile',
   NOTIFICATIONS: '/dashboard/notifications',
   NOTIFICATION: '/dashboard/notifications/:notificationId',
   VERIFY_IDENTITY: '/dashboard/verify-identity',
   VERIFY_EMAIL: '/dashboard/verify-email',
   ADD_BANK_ACCOUNT: '/dashboard/add-bank-account',
+
+  // Profile
+  PROFILE: '/profile/:uid',
 
   // Trailer
   TRAILERS: '/trailers',
@@ -25,6 +27,9 @@ const ROUTES = {
   FIND_TRAILERS: '/trailers/find-trailers',
   VIEW_TRAILER: '/trailers/find-trailers/view-trailer/:uid',
   ADD_TRAILER_SUCCESS: '/trailers/add-trailer-success',
+
+  // Error
+  ERROR: '/error',
 
   // Test
   TEST: '/',

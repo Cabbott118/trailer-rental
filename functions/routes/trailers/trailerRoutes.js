@@ -83,6 +83,35 @@ router.get('/get-trailer-details', async (req, res) => {
   }
 });
 
+router.get('/get-trailers-owned-by', async (req, res) => {
+  try {
+    const userId = req.query.userId;
+    const trailersRef = admin.firestore().collection('trailers');
+    const querySnapshot = await trailersRef
+      .where('owner.ownerId', '==', userId)
+      .get();
+
+    if (querySnapshot.empty) {
+      return res.status(200).json({
+        message: 'No trailers found for the specified owner',
+        length: 0,
+        trailers: [],
+      });
+    }
+
+    const trailersData = querySnapshot.docs.map((doc) => doc.data());
+
+    return res.status(200).json({
+      message: 'Trailers found',
+      length: trailersData.length,
+      trailers: trailersData,
+    });
+  } catch (error) {
+    console.error('Error retrieving trailers:', error);
+    return res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
 // router.get('/search-trailers', async (req, res) => {
 //   try {
 //     const location = req.query.location;

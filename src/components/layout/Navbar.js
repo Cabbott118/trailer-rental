@@ -44,7 +44,7 @@ export default function Navbar() {
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const { data: userData } = useSelector((state) => state.user);
+  const { user } = useSelector((state) => state.user);
 
   const open = Boolean(anchorEl);
 
@@ -130,7 +130,7 @@ export default function Navbar() {
                 </MenuItem>
               </Grid>
               <Grid item>
-                {userData ? (
+                {user ? (
                   isMobile ? (
                     <>
                       <Drawer sx={{ position: 'relative' }} />
@@ -178,7 +178,7 @@ export default function Navbar() {
                                     fontWeight: 500,
                                   }}
                                 >
-                                  {getUserInitials(userData?.fullName)}
+                                  {getUserInitials(user?.fullName)}
                                 </Typography>
                               </Avatar>
                               <Badge

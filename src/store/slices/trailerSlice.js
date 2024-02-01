@@ -52,6 +52,20 @@ const fetchTrailers = createAsyncThunk('trailer/fetchTrailers', async () => {
   }
 });
 
+const fetchTrailersOwnedBy = createAsyncThunk(
+  'trailer/fetchTrailersOwnedBy',
+  async (userId) => {
+    try {
+      const response = await get(ENDPOINTS.GET_TRAILERS_OWNED_BY, {
+        userId,
+      });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to fetch trailer data.');
+    }
+  }
+);
+
 const filterTrailers = createAsyncThunk(
   'trailer/filterTrailers',
   async ({ location, type }, { getState }) => {
@@ -118,6 +132,7 @@ const trailerSlice = createSlice({
   initialState: {
     trailerList: [],
     filteredList: [],
+    ownedByList: [],
     searchedLocation: null,
     selectedTrailer: null,
     loading: false,
@@ -128,6 +143,7 @@ const trailerSlice = createSlice({
       return {
         trailerList: [],
         filteredList: [],
+        ownedByList: [],
         searchedLocation: null,
         searchedType: null,
         selectedTrailer: null,
@@ -206,6 +222,29 @@ const trailerSlice = createSlice({
         };
       })
       .addCase(fetchTrailers.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
+      })
+
+      .addCase(fetchTrailersOwnedBy.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(fetchTrailersOwnedBy.fulfilled, (state, action) => {
+        return {
+          ...state,
+          ownedByList: action.payload,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(fetchTrailersOwnedBy.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -293,6 +332,7 @@ export {
   createTrailer,
   fetchTrailer,
   fetchTrailers,
+  fetchTrailersOwnedBy,
   filterTrailers,
   updateTrailer,
   clearTrailerData,

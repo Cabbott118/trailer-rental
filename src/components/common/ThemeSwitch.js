@@ -1,11 +1,8 @@
-import { useState } from 'react';
-
 // MUI
 import { Switch, ListItem, ListItemText } from '@mui/material';
 import Brightness4OutlinedIcon from '@mui/icons-material/Brightness4Outlined';
 import Brightness7OutlinedIcon from '@mui/icons-material/Brightness7Outlined';
 
-// Redux
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { switchTheme } from 'store/slices/uiSlice';

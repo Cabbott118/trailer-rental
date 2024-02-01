@@ -137,34 +137,6 @@ const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
   }
 });
 
-const fetchUserProfile = createAsyncThunk(
-  'user/fetchUserProfile',
-  async (userId) => {
-    try {
-      const response = await get(ENDPOINTS.GET_USER_PROFILE_DETAILS, {
-        userId,
-      });
-      return response;
-    } catch (error) {
-      throw new Error('Failed to fetch user data.');
-    }
-  }
-);
-
-const fetchStripeAccount = createAsyncThunk(
-  'user/fetchStripeAccount',
-  async (stripeAccountId) => {
-    try {
-      const response = await get(ENDPOINTS.GET_STRIPE_ACCOUNT_DETAILS, {
-        stripeAccountId,
-      });
-      return response;
-    } catch (error) {
-      throw new Error('Failed to fetch Stripe account data.');
-    }
-  }
-);
-
 const updateUser = createAsyncThunk(
   'user/updateUser',
   async ({ userId, updateData }) => {
@@ -188,18 +160,14 @@ const clearErrors = createAction('user/clearErrors');
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    data: null,
-    profile: null,
-    stripe: null,
+    user: null,
     loading: false,
     error: null,
   },
   reducers: {
     clearUserData: (state) => {
       return {
-        data: null,
-        profile: null,
-        stripe: null,
+        user: null,
         loading: false,
         error: null,
       };
@@ -223,7 +191,7 @@ const userSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           loading: false,
           error: null,
         };
@@ -246,7 +214,7 @@ const userSlice = createSlice({
       .addCase(signUpUser.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           loading: false,
           error: null,
         };
@@ -269,7 +237,7 @@ const userSlice = createSlice({
       .addCase(logoutUser.fulfilled, (state) => {
         return {
           ...state,
-          data: null,
+          user: null,
           loading: false,
           error: null,
         };
@@ -292,8 +260,7 @@ const userSlice = createSlice({
       .addCase(deleteUser.fulfilled, (state) => {
         return {
           ...state,
-          data: null,
-          stripe: null,
+          user: null,
           loading: false,
           error: null,
         };
@@ -316,7 +283,7 @@ const userSlice = createSlice({
       .addCase(createUser.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           loading: false,
           error: null,
         };
@@ -361,58 +328,12 @@ const userSlice = createSlice({
       .addCase(fetchUser.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           loading: false,
           error: null,
         };
       })
       .addCase(fetchUser.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.error.message,
-        };
-      })
-
-      .addCase(fetchUserProfile.pending, (state) => {
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(fetchUserProfile.fulfilled, (state, action) => {
-        return {
-          ...state,
-          profile: action.payload,
-          loading: false,
-          error: null,
-        };
-      })
-      .addCase(fetchUserProfile.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.error.message,
-        };
-      })
-
-      .addCase(fetchStripeAccount.pending, (state) => {
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(fetchStripeAccount.fulfilled, (state, action) => {
-        return {
-          ...state,
-          stripe: action.payload,
-          loading: false,
-          error: null,
-        };
-      })
-      .addCase(fetchStripeAccount.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -430,7 +351,7 @@ const userSlice = createSlice({
       .addCase(updateUser.fulfilled, (state, action) => {
         return {
           ...state,
-          data: action.payload,
+          user: action.payload,
           loading: false,
         };
       })
@@ -454,8 +375,6 @@ export {
   createUser,
   createFirebaseUser,
   fetchUser,
-  fetchUserProfile,
-  fetchStripeAccount,
   updateUser,
   clearUserData,
   clearErrors,

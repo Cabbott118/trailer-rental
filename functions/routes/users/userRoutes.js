@@ -1,6 +1,7 @@
 // userRoutes.js
 const express = require('express');
 const admin = require('firebase-admin');
+const { Firestore } = require('firebase-admin/firestore');
 const stripe = require('stripe')(process.env.REACT_APP_STRIPE_TEST_SECRET);
 const fetch = require('node-fetch');
 const router = express.Router();
@@ -63,7 +64,7 @@ router.post('/create-user', async (req, res) => {
           year,
         },
         userType,
-        createdAt: Math.floor(Date.now() / 1000),
+        createdAt: Firestore.FieldValue.serverTimestamp(),
         stripeAccountId: account.id,
       };
     } else if (userType === 'renter') {
@@ -81,7 +82,7 @@ router.post('/create-user', async (req, res) => {
           year,
         },
         userType,
-        createdAt: Math.floor(Date.now() / 1000),
+        createdAt: Firestore.FieldValue.serverTimestamp(),
       };
     }
 
@@ -162,8 +163,6 @@ router.get('/get-user-profile', async (req, res) => {
   try {
     const userId = req.query.userId;
     const userRef = admin.firestore().collection('users').doc(userId);
-
-    // Select the fields to retrieve
     const userDoc = await userRef.get();
 
     if (!userDoc.exists) {
@@ -175,7 +174,7 @@ router.get('/get-user-profile', async (req, res) => {
       fullName: userDoc.get('fullName'),
       userType: userDoc.get('userType'),
       userId: userDoc.get('userId'),
-      // createdAt: userDoc.get('createdAt'),
+      createdAt: userDoc.get('createdAt'),
     };
 
     return res.status(200).json(userDetails);

@@ -9,9 +9,9 @@ export default function formatCreatedAt(createdAt) {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
+    // hour: 'numeric',
+    // minute: 'numeric',
+    // hour12: true,
   };
 
   return date.toLocaleString('en-US', options);

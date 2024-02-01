@@ -1,24 +1,60 @@
 import { useEffect } from 'react';
 
+// Components
+import WriteReviewDialog from 'features/profile/components/WriteReviewDialog';
+
+// Constants
+import ROUTES from 'resources/routes-constants';
+
+// Helpers
+import formatCreatedAt from 'services/helpers/dateFormatter';
+import getIdFromPath from 'services/helpers/getIdFromPath';
+
 // MUI
-import { Box, Container, Typography } from '@mui/material';
+import {
+  Box,
+  Container,
+  Grid,
+  Paper,
+  TextField,
+  Typography,
+  useTheme,
+} from '@mui/material';
+
+// React Router
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUserProfile } from 'store/slices/userSlice';
+import {
+  fetchProfile,
+  fetchTrailersOwnedBy,
+  fetchReviewsWrittenFor,
+} from 'store/slices/profileSlice';
 
 const Profile = () => {
   const dispatch = useDispatch();
-  // const userData = props.location.state?.userData;
+  const location = useLocation();
+  const navigate = useNavigate();
+  const theme = useTheme();
 
-  const { data, stripe, loading } = useSelector((state) => state.user);
+  const { profile, trailers, reviews, loading, error } = useSelector(
+    (state) => state.profile
+  );
+
+  const { pathname } = location;
+
   useEffect(() => {
-    dispatch(fetchUserProfile(data?.userId));
+    dispatch(fetchProfile(getIdFromPath(pathname)));
+    dispatch(fetchTrailersOwnedBy(getIdFromPath(pathname)));
+    dispatch(fetchReviewsWrittenFor(getIdFromPath(pathname)));
   }, []);
 
-  const timestamp = data?.createdAt;
-  const date = new Date(timestamp * 1000); // Multiply by 1000 to convert seconds to milliseconds
-  const formattedDate = date.toLocaleString(); // Convert date to local time string
+  if (loading) return <p>Loading...</p>;
+
+  if (error) {
+    return navigate(ROUTES.ERROR);
+  }
 
   return (
     <Box sx={{ minHeight: '80vh', py: 12 }}>
@@ -31,8 +67,56 @@ const Profile = () => {
           things such as a bio, location, reviews/ratings, listed trailers, etc.
         </Typography>
         <Typography variant='body1' color='text.primary'>
-          Joined on: {formattedDate}
+          {profile?.fullName?.firstName} {profile?.fullName?.lastName}
         </Typography>
+        <Typography variant='body1' color='text.primary'>
+          {profile?.userType}
+        </Typography>
+        <Typography variant='body1' color='text.primary'>
+          Member since: {formatCreatedAt(profile?.createdAt)}
+        </Typography>
+        <Typography variant='body1' color='text.primary'>
+          Number of trailers listed: {trailers?.length}
+        </Typography>
+        <WriteReviewDialog profileId={getIdFromPath(pathname)} />
+      </Container>
+
+      {/* Temporary display of reviews and trailers */}
+      <Container maxWidth='sm' sx={{ pt: 10 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12}>
+            <Paper elevation={0} sx={{ bgcolor: theme.palette.secondary.dark }}>
+              {reviews ? (
+                <TextField
+                  label='Reviews'
+                  multiline
+                  fullWidth
+                  value={JSON.stringify(reviews, null, 2)} // Convert JSON to a formatted string
+                  variant='outlined'
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              ) : null}
+            </Paper>
+          </Grid>
+          <Grid item xs={12}>
+            <Paper elevation={0} sx={{ bgcolor: theme.palette.secondary.dark }}>
+              {trailers ? (
+                <TextField
+                  label='Trailers'
+                  multiline
+                  fullWidth
+                  value={JSON.stringify(trailers, null, 2)} // Convert JSON to a formatted string
+                  variant='outlined'
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+              ) : null}
+            </Paper>
+          </Grid>
+        </Grid>
       </Container>
     </Box>
   );

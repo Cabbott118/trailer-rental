@@ -22,10 +22,15 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 
 // React Router
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const WelcomeCard = ({ userData }) => {
   const theme = useTheme();
+  const navigate = useNavigate();
+
+  const handleNavigateToProfile = () => {
+    navigate(ROUTES.PROFILE.replace(':uid', userData?.userId));
+  };
 
   return (
     <Grid item xs={12} md={6}>
@@ -87,11 +92,7 @@ const WelcomeCard = ({ userData }) => {
               <Button
                 variant='text'
                 fullWidth
-                component={Link}
-                to={{
-                  pathname: ROUTES.PROFILE,
-                  state: { userData },
-                }}
+                onClick={handleNavigateToProfile}
                 sx={{ textTransform: 'none' }}
               >
                 View profile{' '}
