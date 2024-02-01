@@ -56,8 +56,15 @@ const filterTrailers = createAsyncThunk(
   'trailer/filterTrailers',
   async ({ location, type }, { getState }) => {
     try {
-      const response = await get(ENDPOINTS.GET_ALL_TRAILERS);
-      let filteredList = response.filter((trailer) =>
+      const { trailerList: completeTrailerList } = getState().trailer;
+      let trailerList;
+      if (completeTrailerList.length > 0) {
+        trailerList = completeTrailerList;
+      } else {
+        trailerList = await get(ENDPOINTS.GET_ALL_TRAILERS);
+      }
+
+      let filteredList = trailerList.filter((trailer) =>
         trailer.location.city.toLowerCase().includes(location.toLowerCase())
       );
 
@@ -68,7 +75,7 @@ const filterTrailers = createAsyncThunk(
         );
       }
 
-      return { filteredList, location, type };
+      return { trailerList, filteredList, location, type };
     } catch (error) {
       throw new Error('Failed to fetch trailers data.');
     }
@@ -216,6 +223,7 @@ const trailerSlice = createSlice({
       .addCase(filterTrailers.fulfilled, (state, action) => {
         return {
           ...state,
+          trailerList: action.payload.trailerList,
           filteredList: action.payload.filteredList,
           searchedLocation: action.payload.location,
           searchedType: action.payload.type,

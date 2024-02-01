@@ -40,9 +40,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createTrailer, clearErrors } from 'store/slices/trailerSlice';
 
 const AddTrailer = () => {
-  const theme = useTheme();
-  const navigate = useNavigate();
-
   const [activeStep, setActiveStep] = useState(0);
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null);
@@ -51,8 +48,11 @@ const AddTrailer = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
-  const dispatch = useDispatch();
   const { data, loading, error } = useSelector((state) => state.user);
+
+  const theme = useTheme();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     userId,

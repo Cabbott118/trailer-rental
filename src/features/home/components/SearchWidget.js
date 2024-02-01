@@ -25,32 +25,28 @@ import { fetchTrailers, filterTrailers } from 'store/slices/trailerSlice';
 
 export default function SearchWidget() {
   document.title = 'Trailer Rental';
+
   const [inputValue, setInputValue] = useState('');
-  const [options, setOptions] = useState([]);
-  const [isSubmitted, setIsSubmitted] = useState(false); // State to track form submission
+  const [isSubmitted, setIsSubmitted] = useState(false);
+
   const { trailerList, loading } = useSelector((state) => state.trailer);
+
   const theme = useTheme();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // Fetch trailers data only if inputValue is not empty
-    if (inputValue.trim() !== '') {
+    if (!trailerList || trailerList.length === 0) {
       dispatch(fetchTrailers());
-
-      // Filter out duplicate entries based on the city property
-      const uniqueOptions = Array.from(
-        new Set(trailerList.map((trailer) => trailer.location.city))
-      ).map((city) => {
-        return trailerList.find((trailer) => trailer.location.city === city);
-      });
-
-      setOptions(uniqueOptions);
     }
-  }, [inputValue]);
+  }, []);
 
   const handleInputChange = (event, newInputValue) => {
     setInputValue(newInputValue);
   };
+
+  const options = trailerList
+    .map((trailer) => trailer.location.city)
+    .filter((city, index, self) => self.indexOf(city) === index);
 
   const {
     register,
@@ -97,7 +93,7 @@ export default function SearchWidget() {
         <Grid item xs={12} sx={{ mb: 3 }}>
           <Autocomplete
             options={options}
-            getOptionLabel={(option) => option.location.city}
+            getOptionLabel={(option) => option}
             inputValue={inputValue}
             onInputChange={handleInputChange}
             renderInput={(params) => (

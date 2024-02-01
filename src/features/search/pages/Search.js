@@ -26,13 +26,13 @@ import { useSelector } from 'react-redux';
 export default function Search() {
   document.title = 'Trailer Rental';
 
-  const theme = useTheme();
-  const navigate = useNavigate();
-  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
-
   const { filteredList, searchedLocation, searchedType, loading } = useSelector(
     (state) => state.trailer
   );
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+  const navigate = useNavigate();
 
   const handleNavigateToTrailer = (trailer) => {
     navigate(ROUTES.VIEW_TRAILER.replace(':uid', trailer?.trailerId), {

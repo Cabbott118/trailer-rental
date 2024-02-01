@@ -4,28 +4,31 @@ import { useEffect } from 'react';
 import HomeBanner from 'features/home/components/HomeBanner';
 import SearchWidget from 'features/home/components/SearchWidget';
 
-// Temp
-import SearchBar from 'components/common/SearchBar';
-
 // MUI
-import { Box, Container, useTheme } from '@mui/material';
+import { Box, Button, Container, useTheme } from '@mui/material';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchUser } from 'store/slices/userSlice';
+import { clearTrailerData } from 'store/slices/trailerSlice';
 
 export default function Home() {
   document.title = 'Trailer Rental';
-  const theme = useTheme();
-  const dispatch = useDispatch();
 
   const { data, loading } = useSelector((state) => state.user);
+
+  const theme = useTheme();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (data && data.userId) {
       dispatch(fetchUser(data.userId));
     }
   }, []);
+
+  const clearDataClick = () => {
+    dispatch(clearTrailerData());
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -38,8 +41,8 @@ export default function Home() {
       <Container maxWidth='sm' sx={{ minHeight: '100vh' }}>
         <HomeBanner />
         <SearchWidget />
-        {/* <SearchBar /> */}
       </Container>
+      <Button onClick={clearDataClick}>Clear Trailer Data</Button>
     </Box>
   );
 }
