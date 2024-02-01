@@ -21,7 +21,7 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 // React Router
 import { Link } from 'react-router-dom';
 
-const CreateTrailerTile = ({ userData }) => {
+const ListTrailerCard = ({ userData }) => {
   const theme = useTheme();
   const renderAlert = (condition, severity, text, route) => {
     return condition ? (
@@ -76,4 +76,4 @@ const CreateTrailerTile = ({ userData }) => {
   );
 };
 
-export default CreateTrailerTile;
+export default ListTrailerCard;

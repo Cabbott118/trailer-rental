@@ -19,7 +19,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 // React Router
 import { Link } from 'react-router-dom';
 
-const NotificationsTile = ({ userData }) => {
+const NotificationsCard = ({ userData }) => {
   const theme = useTheme();
   // TODO: Pass in userData.userId to retrieve notifications
   const notifications = [
@@ -118,4 +118,4 @@ const NotificationsTile = ({ userData }) => {
   );
 };
 
-export default NotificationsTile;
+export default NotificationsCard;

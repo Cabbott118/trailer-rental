@@ -137,6 +137,20 @@ const fetchUser = createAsyncThunk('user/fetchUser', async (userId) => {
   }
 });
 
+const fetchUserProfile = createAsyncThunk(
+  'user/fetchUserProfile',
+  async (userId) => {
+    try {
+      const response = await get(ENDPOINTS.GET_USER_PROFILE_DETAILS, {
+        userId,
+      });
+      return response;
+    } catch (error) {
+      throw new Error('Failed to fetch user data.');
+    }
+  }
+);
+
 const fetchStripeAccount = createAsyncThunk(
   'user/fetchStripeAccount',
   async (stripeAccountId) => {
@@ -175,6 +189,7 @@ const userSlice = createSlice({
   name: 'user',
   initialState: {
     data: null,
+    profile: null,
     stripe: null,
     loading: false,
     error: null,
@@ -183,6 +198,7 @@ const userSlice = createSlice({
     clearUserData: (state) => {
       return {
         data: null,
+        profile: null,
         stripe: null,
         loading: false,
         error: null,
@@ -358,6 +374,29 @@ const userSlice = createSlice({
         };
       })
 
+      .addCase(fetchUserProfile.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(fetchUserProfile.fulfilled, (state, action) => {
+        return {
+          ...state,
+          profile: action.payload,
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(fetchUserProfile.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
+      })
+
       .addCase(fetchStripeAccount.pending, (state) => {
         return {
           ...state,
@@ -415,6 +454,7 @@ export {
   createUser,
   createFirebaseUser,
   fetchUser,
+  fetchUserProfile,
   fetchStripeAccount,
   updateUser,
   clearUserData,

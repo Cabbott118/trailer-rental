@@ -2,9 +2,9 @@ import { useEffect } from 'react';
 
 // Components
 import Alert from 'components/common/Alert';
-import WelcomeTile from 'features/dashboard/components/WelcomeTile';
-import NotificationsTile from 'features/dashboard/components/NotificationsTile';
-import CreateTrailerTile from 'features/dashboard/components/CreateTrailerTile';
+import WelcomeCard from 'features/dashboard/components/dashboardCards/WelcomeCard';
+import NotificationsCard from 'features/dashboard/components/dashboardCards/NotificationsCard';
+import ListTrailerCard from 'features/dashboard/components/dashboardCards/ListTrailerCard';
 import DeleteDialog from 'features/dashboard/components/DeleteDialog';
 
 // Constants
@@ -72,9 +72,9 @@ export default function Dashboard() {
           Dashboard
         </Typography>
         <Grid container spacing={3}>
-          <WelcomeTile userData={data} />
-          <CreateTrailerTile userData={data} />
-          <NotificationsTile />
+          <WelcomeCard userData={data} />
+          <ListTrailerCard userData={data} />
+          <NotificationsCard />
           <Grid item xs={12}>
             <Paper elevation={0} sx={{ bgcolor: theme.palette.secondary.dark }}>
               {loading ? (

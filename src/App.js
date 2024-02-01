@@ -26,10 +26,10 @@ import AboutUs from 'features/experience/pages/AboutUs';
 import ContactUs from 'features/experience/pages/ContactUs';
 
 import Dashboard from 'features/dashboard/pages/Dashboard';
-import VerifyIdentity from 'features/dashboard/subPages/VerifyIdentity';
-import VerifyEmail from 'features/dashboard/subPages/VerifyEmail';
-import AddBankAccount from 'features/dashboard/subPages/AddBankAccount';
 import Profile from 'features/profile/pages/Profile';
+import VerifyIdentity from 'features/dashboard/pages/subPages/VerifyIdentity';
+import VerifyEmail from 'features/dashboard/pages/subPages/VerifyEmail';
+import AddBankAccount from 'features/dashboard/pages/subPages/AddBankAccount';
 
 import AddTrailer from 'features/listings/pages/AddTrailer';
 import AddTrailerSuccess from 'features/listings/pages/AddTrailerSuccess';

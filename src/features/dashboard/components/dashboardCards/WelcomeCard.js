@@ -24,7 +24,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 // React Router
 import { Link } from 'react-router-dom';
 
-const WelcomeTile = ({ userData }) => {
+const WelcomeCard = ({ userData }) => {
   const theme = useTheme();
 
   return (
@@ -88,7 +88,10 @@ const WelcomeTile = ({ userData }) => {
                 variant='text'
                 fullWidth
                 component={Link}
-                to={ROUTES.PROFILE}
+                to={{
+                  pathname: ROUTES.PROFILE,
+                  state: { userData },
+                }}
                 sx={{ textTransform: 'none' }}
               >
                 View profile{' '}
@@ -102,4 +105,4 @@ const WelcomeTile = ({ userData }) => {
   );
 };
 
-export default WelcomeTile;
+export default WelcomeCard;
