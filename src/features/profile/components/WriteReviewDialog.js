@@ -20,7 +20,9 @@ import {
   DialogContentText,
   DialogTitle,
   Grid,
+  Rating,
   TextField,
+  Typography,
   useTheme,
 } from '@mui/material';
 
@@ -34,6 +36,7 @@ import { createReview, clearErrors } from 'store/slices/reviewSlice';
 const WriteReviewDialog = ({ profileId }) => {
   const [isAlertShowing, setIsAlertShowing] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
+  const [reviewRating, setReviewRating] = useState(0);
 
   const theme = useTheme();
   const dispatch = useDispatch();
@@ -57,7 +60,7 @@ const WriteReviewDialog = ({ profileId }) => {
   } = useForm();
 
   const onSubmit = (data) => {
-    const { reviewBody, reviewRating } = data;
+    const { reviewBody } = data;
 
     dispatch(
       createReview({
@@ -97,16 +100,31 @@ const WriteReviewDialog = ({ profileId }) => {
             <DialogTitle>{'Write a Review'}</DialogTitle>
             <DialogContent>
               Review for: {profileId}
-              <Grid container sx={{ mt: 1 }}>
+              <Grid container spacing={3} sx={{ mt: 1 }}>
+                <Typography></Typography>
                 <Grid item xs={12}>
-                  <TextField label='Rating' {...register('reviewRating')} />
+                  <Rating
+                    name='simple-controlled'
+                    value={reviewRating}
+                    onChange={(event, rating) => {
+                      setReviewRating(rating);
+                    }}
+                    sx={{ color: theme.palette.primary.main }}
+                  />{' '}
                 </Grid>
                 <Grid item xs={12}>
                   <TextField
                     label='Review'
+                    fullWidth
                     multiline
+                    required
                     rows={4}
                     {...register('reviewBody')}
+                    error={errors.reviewBody?.type === 'required'}
+                    helperText={
+                      errors.reviewBody?.type === 'required' &&
+                      'A review is required'
+                    }
                   />
                 </Grid>
                 {isAlertShowing && (

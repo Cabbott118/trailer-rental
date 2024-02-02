@@ -18,6 +18,7 @@ import {
   Container,
   Divider,
   Grid,
+  Link,
   Typography,
   useMediaQuery,
   useTheme,
@@ -29,6 +30,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTrailer } from 'store/slices/trailerSlice';
+import { fetchReviewsWrittenFor } from 'store/slices/profileSlice';
 
 const ViewTrailer = () => {
   const theme = useTheme();
@@ -42,6 +44,8 @@ const ViewTrailer = () => {
     (state) => state.trailer
   );
 
+  const { reviews } = useSelector((state) => state.profile);
+
   const { pathname } = location;
   const previousPages = [
     {
@@ -52,6 +56,7 @@ const ViewTrailer = () => {
 
   useEffect(() => {
     dispatch(fetchTrailer(getIdFromPath(pathname)));
+    dispatch(fetchReviewsWrittenFor(selectedTrailer?.owner?.ownerId));
   }, [dispatch, pathname]);
 
   if (loading) {
@@ -91,7 +96,11 @@ const ViewTrailer = () => {
           component='img'
           image={selectedTrailer?.imageURL}
           alt={selectedTrailer?.type}
-          sx={{ maxWidth: '100%', borderRadius: 3 }}
+          sx={{
+            maxWidth: '100%',
+            height: isMobile ? '250px' : '300px',
+            borderRadius: 3,
+          }}
         />
         <Grid container sx={{ mt: 1 }}>
           <Grid item xs={12}>
@@ -101,7 +110,8 @@ const ViewTrailer = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography color='text.secondary'>
-              5 stars | 100 reviews
+              5 stars | {reviews?.length}{' '}
+              {reviews?.length > 1 ? 'Reviews' : 'Review'}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -123,7 +133,15 @@ const ViewTrailer = () => {
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={10}>
             <Typography variant='h5' color='text.primary'>
-              Trailer posted by {selectedTrailer?.owner.ownerName.firstName}
+              Trailer posted by{' '}
+              <Link
+                href={ROUTES.PROFILE.replace(
+                  ':uid',
+                  selectedTrailer?.owner?.ownerId
+                )}
+              >
+                {selectedTrailer?.owner.ownerName.firstName}
+              </Link>
             </Typography>
             <Typography color='text.secondary'>
               {formatCreatedAt(selectedTrailer?.createdAt)}

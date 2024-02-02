@@ -45,7 +45,10 @@ router.post('/create-review', async (req, res) => {
     });
   } catch (error) {
     console.error('Error creating review document', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res.status(500).json({
+      message: 'Internal Server Error',
+      error: error.message, // Include the error message in the response
+    });
   }
 });
 
@@ -61,15 +64,22 @@ router.get('/get-reviews-written-for', async (req, res) => {
       return res.status(200).json({
         message: 'No reviews yet',
         length: 0,
+        averageRating: null,
         reviews: [],
       });
     }
 
-    const reviewsData = querySnapshot.docs.map((doc) => doc.data());
+    let ratingTotal = 0;
+    const reviewsData = querySnapshot.docs.map((doc) => {
+      const review = doc.data();
+      ratingTotal += review.reviewRating;
+      return review;
+    });
 
     return res.status(200).json({
       message: 'Reviews found',
       length: reviewsData.length,
+      averageRating: ratingTotal / reviewsData.length,
       reviews: reviewsData,
     });
   } catch (error) {

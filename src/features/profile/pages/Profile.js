@@ -16,6 +16,7 @@ import {
   Container,
   Grid,
   Paper,
+  Rating,
   TextField,
   Typography,
   useTheme,
@@ -42,6 +43,8 @@ const Profile = () => {
     (state) => state.profile
   );
 
+  const { user } = useSelector((state) => state.user);
+
   const { pathname } = location;
 
   useEffect(() => {
@@ -62,23 +65,63 @@ const Profile = () => {
         <Typography variant='h6' component='h1' color='text.primary'>
           Profile
         </Typography>
-        <Typography variant='body1' color='text.primary'>
-          This will be a user's public profile, where other users can view
-          things such as a bio, location, reviews/ratings, listed trailers, etc.
-        </Typography>
-        <Typography variant='body1' color='text.primary'>
-          {profile?.fullName?.firstName} {profile?.fullName?.lastName}
-        </Typography>
-        <Typography variant='body1' color='text.primary'>
-          {profile?.userType}
-        </Typography>
-        <Typography variant='body1' color='text.primary'>
-          Member since: {formatCreatedAt(profile?.createdAt)}
-        </Typography>
-        <Typography variant='body1' color='text.primary'>
-          Number of trailers listed: {trailers?.length}
-        </Typography>
-        <WriteReviewDialog profileId={getIdFromPath(pathname)} />
+        <Grid container spacing={1} sx={{ my: 3 }}>
+          <Grid item xs={12}>
+            <Typography variant='body1' color='text.primary'>
+              {profile?.fullName?.firstName} {profile?.fullName?.lastName}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='body1' color='text.primary'>
+              {profile?.userType}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='body1' color='text.primary'>
+              Member since: {formatCreatedAt(profile?.createdAt)}
+            </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <Typography variant='body1' color='text.primary'>
+              Number of trailers listed: {trailers?.length}
+            </Typography>
+          </Grid>
+          {reviews.list.length === 0 ? (
+            <Grid item xs={12}>
+              <Typography variant='body1' color='text.primary'>
+                {reviews.message}
+              </Typography>
+            </Grid>
+          ) : (
+            <>
+              <Grid item xs={12}>
+                <Typography variant='body1' color='text.primary'>
+                  Number of reviews: {reviews?.length}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Typography variant='body1' color='text.primary'>
+                  Average rating:{' '}
+                </Typography>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Rating
+                  readOnly
+                  name='simple-controlled'
+                  precision={0.1}
+                  value={reviews?.rating}
+                  sx={{ color: theme.palette.primary.main }}
+                />
+              </Grid>
+            </>
+          )}
+        </Grid>
+
+        {getIdFromPath(pathname) !== user?.userId && (
+          <WriteReviewDialog profileId={getIdFromPath(pathname)} />
+        )}
       </Container>
 
       {/* Temporary display of reviews and trailers */}

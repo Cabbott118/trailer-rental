@@ -45,8 +45,8 @@ const fetchReviewsWrittenFor = createAsyncThunk(
       const response = await get(ENDPOINTS.GET_REVIEWS_WRITTEN_FOR, {
         userId,
       });
-      const { reviews, length, message } = response;
-      return { reviews, length, message };
+      const { reviews, length, averageRating, message } = response;
+      return { reviews, length, averageRating, message };
     } catch (error) {
       throw new Error('Failed to fetch review data.');
     }
@@ -64,11 +64,13 @@ const profileSlice = createSlice({
     trailers: {
       list: [],
       length: 0,
+      rating: 0,
       message: '',
     },
     reviews: {
       list: [],
       length: 0,
+      rating: 0,
       message: '',
     },
     loading: false,
@@ -81,11 +83,13 @@ const profileSlice = createSlice({
         trailers: {
           list: [],
           length: 0,
+          rating: 0,
           message: '',
         },
         reviews: {
           list: [],
           length: 0,
+          rating: 0,
           message: '',
         },
         loading: false,
@@ -164,6 +168,7 @@ const profileSlice = createSlice({
           reviews: {
             list: action.payload.reviews,
             length: action.payload.length,
+            rating: action.payload.averageRating,
             message: action.payload.message,
           },
           loading: false,
