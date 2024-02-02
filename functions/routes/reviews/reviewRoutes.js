@@ -17,7 +17,7 @@ router.post('/create-review', async (req, res) => {
     } = req.body;
     const newReview = {
       writtenBy: {
-        name: writtenByFirstName + writtenByLastName,
+        name: `${writtenByFirstName} ${writtenByLastName}`,
         id: writtenById,
       },
       writtenFor,
