@@ -2,6 +2,7 @@ const userResource = '/users';
 const profileResource = '/profiles';
 const trailerResource = '/trailers';
 const reviewResource = '/reviews';
+const reservationResource = '/reservations';
 
 const ENDPOINTS = {
   // Users
@@ -28,6 +29,13 @@ const ENDPOINTS = {
   // Reviews
   CREATE_REVIEW: `${reviewResource}//create-review`,
   GET_REVIEWS_WRITTEN_FOR: `${reviewResource}/get-reviews-written-for`,
+
+  // Reservations
+  GET_RESERVATIONS_ASSIGNED_TO_TRAILER: `${reservationResource}/get-reservations-assigned-trailer`,
+  GET_RESERVATIONS_ASSIGNED_TO_OWNER: `${reservationResource}/get-reservations-assigned-owner`,
+  GET_RESERVATIONS_ASSIGNED_TO_RENTER: `${reservationResource}/get-reservations-assigned-renter`,
+  CREATE_RESERVATION: `${reservationResource}/create-reservation`,
+  UPDATE_RESERVATION: `${reservationResource}/update-reservation`,
 };
 
 export default ENDPOINTS;

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 
 // Components
 import BreadcrumbNavigator from 'components/common/BreadcrumbNavigator';
+import CreateReservation from 'features/reservations/components/CreateReservationDialog';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
@@ -31,6 +32,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTrailer } from 'store/slices/trailerSlice';
 import { fetchReviewsWrittenFor } from 'store/slices/profileSlice';
+import { GridOff } from '@mui/icons-material';
 
 const ViewTrailer = () => {
   const theme = useTheme();
@@ -111,7 +113,7 @@ const ViewTrailer = () => {
           <Grid item xs={12}>
             <Typography color='text.secondary'>
               5 stars | {reviews?.length}{' '}
-              {reviews?.length > 1 ? 'Reviews' : 'Review'}
+              {reviews?.length === 1 ? 'Review' : 'Reviews'}
             </Typography>
           </Grid>
           <Grid item xs={12}>
@@ -121,12 +123,18 @@ const ViewTrailer = () => {
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
-        <Grid container>
+        <Grid container spacing={3}>
           <Grid item xs={12}>
             <Typography color='text.primary'>
               <b>This trailer is a great value.</b> Some additional info about
               values.
             </Typography>
+          </Grid>
+          <Grid item xs={12}>
+            <CreateReservation
+              trailerId={selectedTrailer?.trailerId}
+              ownerId={selectedTrailer?.owner?.ownerId}
+            />
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />

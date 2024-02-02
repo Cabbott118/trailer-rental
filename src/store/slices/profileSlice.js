@@ -1,5 +1,3 @@
-import ROUTES from 'resources/routes-constants';
-
 // Lib
 import { get } from 'services/axiosServices';
 
@@ -38,6 +36,7 @@ const fetchTrailersOwnedBy = createAsyncThunk(
   }
 );
 
+// Move this to reviewSlice?
 const fetchReviewsWrittenFor = createAsyncThunk(
   'profile/fetchReviewsWrittenFor',
   async (userId) => {
@@ -67,6 +66,7 @@ const profileSlice = createSlice({
       rating: 0,
       message: '',
     },
+    // Move this to reviewSlice?
     reviews: {
       list: [],
       length: 0,
@@ -86,6 +86,7 @@ const profileSlice = createSlice({
           rating: 0,
           message: '',
         },
+        // Move this to reviewSlice?
         reviews: {
           list: [],
           length: 0,
@@ -155,6 +156,7 @@ const profileSlice = createSlice({
         };
       })
 
+      // Move this to reviewSlice?
       .addCase(fetchReviewsWrittenFor.pending, (state) => {
         return {
           ...state,

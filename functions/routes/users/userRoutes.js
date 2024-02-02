@@ -20,7 +20,7 @@ router.post('/create-user', async (req, res) => {
       month,
       year,
     } = req.body;
-    if (userType === 'host') {
+    if (userType === 'HOST') {
       const account = await stripe.accounts.create({
         type: 'custom',
         country: 'US',
@@ -67,7 +67,7 @@ router.post('/create-user', async (req, res) => {
         createdAt: Firestore.FieldValue.serverTimestamp(),
         stripeAccountId: account.id,
       };
-    } else if (userType === 'renter') {
+    } else if (userType === 'RENTER') {
       newUser = {
         userId,
         email,

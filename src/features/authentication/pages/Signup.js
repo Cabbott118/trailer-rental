@@ -7,7 +7,7 @@ import AuthenticationFooter from 'features/authentication/components/Authenticat
 
 // Constants
 import ROUTES from 'resources/routes-constants';
-import TYPES from 'constants/userTypes';
+import { USER_TYPE } from 'constants/types';
 
 // Helpers
 import passwordMatch from 'services/helpers/passwordMatch';
@@ -48,7 +48,7 @@ export default function Signup() {
   const [passwordMissmatch, setPasswordMissmatch] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
-  const [userType, setUserType] = useState(TYPES.RENTER);
+  const [userType, setUserType] = useState(USER_TYPE.RENTER);
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
   const dispatch = useDispatch();
@@ -131,10 +131,16 @@ export default function Signup() {
               exclusive
               onChange={toggleUserType}
             >
-              <ToggleButton value={TYPES.RENTER} sx={{ textTransform: 'none' }}>
+              <ToggleButton
+                value={USER_TYPE.RENTER}
+                sx={{ textTransform: 'none' }}
+              >
                 Renter
               </ToggleButton>
-              <ToggleButton value={TYPES.HOST} sx={{ textTransform: 'none' }}>
+              <ToggleButton
+                value={USER_TYPE.HOST}
+                sx={{ textTransform: 'none' }}
+              >
                 Host
               </ToggleButton>
             </ToggleButtonGroup>
