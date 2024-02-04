@@ -20,6 +20,7 @@ import {
   Divider,
   Grid,
   Link,
+  Rating,
   Typography,
   useMediaQuery,
   useTheme,
@@ -32,7 +33,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTrailer } from 'store/slices/trailerSlice';
 import { fetchReviewsWrittenFor } from 'store/slices/profileSlice';
-import { GridOff } from '@mui/icons-material';
 
 const ViewTrailer = () => {
   const theme = useTheme();
@@ -112,13 +112,25 @@ const ViewTrailer = () => {
           </Grid>
           <Grid item xs={12}>
             <Typography color='text.secondary'>
-              5 stars | {reviews?.length}{' '}
-              {reviews?.length === 1 ? 'Review' : 'Reviews'}
+              {selectedTrailer?.location?.city},{' '}
+              {selectedTrailer?.location?.state}
             </Typography>
           </Grid>
-          <Grid item xs={12}>
+          <Grid item xs={12} container>
+            {reviews?.rating === null ? (
+              <Typography color='text.primary'>No rating yet</Typography>
+            ) : (
+              <Rating
+                readOnly
+                name='simple-controlled'
+                precision={0.1}
+                value={reviews?.rating}
+                sx={{ color: theme.palette.primary.main }}
+              />
+            )}
             <Typography color='text.secondary'>
-              Polk City, Florida, United States
+              {' | '} {reviews?.length}{' '}
+              {reviews?.length === 1 ? 'Review' : 'Reviews'}
             </Typography>
           </Grid>
         </Grid>

@@ -105,10 +105,11 @@ const AddTrailer = () => {
       setErrorMessage('An image must be uploaded.');
       setIsAlertShowing(true);
     } else {
-      const { type, city, state } = data;
+      const { type, address, city, state } = data;
       dispatch(
         createTrailer({
           type,
+          address,
           city,
           state,
           userId,
@@ -166,7 +167,9 @@ const AddTrailer = () => {
               />
             </Box>
             <LinearProgress variant='determinate' value={percent} />
-            <Typography variant='body1'>{file?.name}</Typography>
+            <Typography variant='body1' color='text.primary'>
+              {file?.name}
+            </Typography>
           </Grid>
         </Grid>
       ),
@@ -193,6 +196,18 @@ const AddTrailer = () => {
                 </MenuItem>
               ))}
             </TextField>
+          </Grid>
+          <Grid item xs={12}>
+            <TextField
+              label='Address'
+              fullWidth
+              {...register('address', { required: true })}
+              error={errors.address === 'required'}
+              helperText={
+                errors.address === 'required' && 'Address is required'
+              }
+              sx={{ my: 1 }}
+            />
           </Grid>
           <Grid item xs={12}>
             <TextField

@@ -11,10 +11,20 @@ import ENDPOINTS from 'resources/api-constants';
 
 const createTrailer = createAsyncThunk(
   'trailer/createTrailer',
-  async ({ type, city, state, userId, firstName, lastName, imageURL }) => {
+  async ({
+    type,
+    address,
+    city,
+    state,
+    userId,
+    firstName,
+    lastName,
+    imageURL,
+  }) => {
     try {
       const response = await post(ENDPOINTS.CREATE_TRAILER, {
         type,
+        address,
         city,
         state,
         userId,

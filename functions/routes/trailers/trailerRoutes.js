@@ -2,18 +2,45 @@
 const express = require('express');
 const admin = require('firebase-admin');
 const { Firestore } = require('firebase-admin/firestore');
+const functions = require('firebase-functions');
+const googleApiKey = process.env.REACT_APP_GOOGLE_MAPS_API_KEY;
+const axios = require('axios');
 
 const router = express.Router();
 
 router.post('/create-trailer', async (req, res) => {
   try {
-    const { type, city, state, userId, firstName, lastName, imageURL } =
-      req.body;
+    const {
+      type,
+      address,
+      city,
+      state,
+      userId,
+      firstName,
+      lastName,
+      imageURL,
+    } = req.body;
+
+    // Call the Google Maps Geocoding API to convert address to coordinates
+    const apiKey = functions.config().googlemaps.apikey;
+    const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
+      `${address}, ${city}, ${state}`
+    )}&key=${googleApiKey}`;
+    const response = await axios.get(geocodingUrl);
+
+    if (response.data.results.length === 0) {
+      throw new Error(JSON.stringify(response.data));
+    }
+
+    const { lat, lng } = response.data.results[0].geometry.location;
+
     const newTrailer = {
       type,
       location: {
+        address,
         city,
         state,
+        coordinates: { lat, lng },
       },
       owner: {
         ownerId: userId,
@@ -46,7 +73,9 @@ router.post('/create-trailer', async (req, res) => {
     });
   } catch (error) {
     console.error('Error creating trailer document', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res
+      .status(500)
+      .json({ message: 'Internal Server Error', error: error.message });
   }
 });
 

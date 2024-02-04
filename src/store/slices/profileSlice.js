@@ -63,14 +63,13 @@ const profileSlice = createSlice({
     trailers: {
       list: [],
       length: 0,
-      rating: 0,
       message: '',
     },
     // Move this to reviewSlice?
     reviews: {
       list: [],
       length: 0,
-      rating: 0,
+      rating: null,
       message: '',
     },
     loading: false,
@@ -83,14 +82,13 @@ const profileSlice = createSlice({
         trailers: {
           list: [],
           length: 0,
-          rating: 0,
           message: '',
         },
         // Move this to reviewSlice?
         reviews: {
           list: [],
           length: 0,
-          rating: 0,
+          rating: null,
           message: '',
         },
         loading: false,

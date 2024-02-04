@@ -110,12 +110,12 @@ const Drawer = () => {
               to={ROUTES.HOME}
               onClick={toggleDrawer}
             />
-            {/* <MenuItem
+            <MenuItem
               icon={<AddBoxOutlinedIcon />}
               primaryText='Add trailer'
               to={ROUTES.ADD_TRAILER}
               onClick={toggleDrawer}
-            /> */}
+            />
             <MenuItem
               icon={<GridViewOutlinedIcon />}
               primaryText='Find trailers'
