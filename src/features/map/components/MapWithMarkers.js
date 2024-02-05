@@ -28,6 +28,7 @@ function MapWithMarkers() {
   const [accordionExpanded, setAccordionExpanded] = useState(false);
 
   const { filteredList, loading } = useSelector((state) => state.trailer);
+  const { theme: storeTheme } = useSelector((state) => state.ui);
 
   const handleAccordionChange = (event, isExpanded) => {
     setAccordionExpanded(isExpanded);
@@ -46,7 +47,7 @@ function MapWithMarkers() {
         <AccordionDetails>
           <Container sx={{ height: '300px' }}>
             <Map
-              zoom={filteredList?.length > 0 ? 9 : 2}
+              zoom={filteredList?.length > 0 ? 12 : 2}
               center={
                 filteredList?.length > 0
                   ? {
@@ -55,16 +56,20 @@ function MapWithMarkers() {
                     }
                   : { lat: 0, lng: 0 }
               }
-              mapId={process.env.REACT_APP_GOOGLE_MAPS_MAP_ID}
+              mapId={
+                storeTheme === 'light'
+                  ? process.env.REACT_APP_GOOGLE_MAPS_MAP_LIGHT_ID
+                  : process.env.REACT_APP_GOOGLE_MAPS_MAP_DARK_ID
+              }
             >
               {!loading &&
-                filteredList?.map((location, index) => (
+                filteredList?.map((trailer, index) => (
                   <div key={index}>
-                    {location?.coordinates && (
+                    {trailer?.location?.coordinates && (
                       <AdvancedMarker
                         position={{
-                          lat: location.coordinates.lat,
-                          lng: location.coordinates.lng,
+                          lat: trailer?.location?.coordinates.lat,
+                          lng: trailer?.location?.coordinates.lng,
                         }}
                         onClick={() => setOpenInfoWindowIndex(index)}
                       >
@@ -78,12 +83,21 @@ function MapWithMarkers() {
                     {openInfoWindowIndex === index && (
                       <InfoWindow
                         position={{
-                          lat: location.coordinates.lat,
-                          lng: location.coordinates.lng,
+                          lat: trailer?.location.coordinates.lat,
+                          lng: trailer?.location.coordinates.lng,
                         }}
                         onCloseClick={() => setOpenInfoWindowIndex(null)}
                       >
-                        test
+                        <div
+                          style={{
+                            color: 'black',
+                            backgroundColor: '#fff',
+                            padding: '10px',
+                          }}
+                        >
+                          {trailer?.owner?.ownerName?.firstName}'s{' '}
+                          {trailer?.type}
+                        </div>
                       </InfoWindow>
                     )}
                   </div>
