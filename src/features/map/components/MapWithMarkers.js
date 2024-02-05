@@ -1,30 +1,30 @@
 import { useState } from 'react';
+// Constants
+import ROUTES from 'resources/routes-constants';
 
 // MUI
 import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Box,
   Container,
+  Typography,
   useTheme,
 } from '@mui/material';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 // React Google Maps
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-  Pin,
-  InfoWindow,
-} from '@vis.gl/react-google-maps';
+import { APIProvider, Map, AdvancedMarker } from '@vis.gl/react-google-maps';
+
+import { useNavigate } from 'react-router-dom';
 
 // Redux
 import { useSelector } from 'react-redux';
 
 function MapWithMarkers() {
   const theme = useTheme();
-  const [openInfoWindowIndex, setOpenInfoWindowIndex] = useState(null);
+  const navigate = useNavigate();
   const [accordionExpanded, setAccordionExpanded] = useState(false);
 
   const { filteredList, loading } = useSelector((state) => state.trailer);
@@ -34,12 +34,18 @@ function MapWithMarkers() {
     setAccordionExpanded(isExpanded);
   };
 
+  const handleMarkerClick = (trailerId) => {
+    navigate(ROUTES.VIEW_TRAILER.replace(':uid', trailerId));
+  };
+
   return (
     <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}>
       <Accordion
         expanded={accordionExpanded}
         onChange={handleAccordionChange}
-        sx={{ bgcolor: theme.palette.background.default }}
+        sx={{
+          bgcolor: theme.palette.background.default,
+        }}
       >
         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
           {accordionExpanded ? 'Close Map' : 'Open Map'}
@@ -71,34 +77,39 @@ function MapWithMarkers() {
                           lat: trailer?.location?.coordinates.lat,
                           lng: trailer?.location?.coordinates.lng,
                         }}
-                        onClick={() => setOpenInfoWindowIndex(index)}
+                        onClick={() => handleMarkerClick(trailer?.trailerId)}
                       >
-                        <Pin
-                          background={theme.palette.secondary.light}
-                          borderColor={theme.palette.primary.dark}
-                          glyphColor={theme.palette.primary.main}
-                        />
-                      </AdvancedMarker>
-                    )}
-                    {openInfoWindowIndex === index && (
-                      <InfoWindow
-                        position={{
-                          lat: trailer?.location.coordinates.lat,
-                          lng: trailer?.location.coordinates.lng,
-                        }}
-                        onCloseClick={() => setOpenInfoWindowIndex(null)}
-                      >
-                        <div
-                          style={{
-                            color: 'black',
-                            backgroundColor: '#fff',
-                            padding: '10px',
+                        <Box
+                          sx={{
+                            position: 'relative',
+                            width: '100px', // Adjust width as needed
+                            bgcolor: theme.palette.background.default,
+                            padding: '8px', // Adjust padding as needed
+                            borderRadius: '8px',
+                            boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.16)',
+                            marginBottom: '16px', // Adjust margin as needed
+                            textAlign: 'center',
                           }}
                         >
-                          {trailer?.owner?.ownerName?.firstName}'s{' '}
-                          {trailer?.type}
-                        </div>
-                      </InfoWindow>
+                          {/* Point shape */}
+                          <Box
+                            sx={{
+                              position: 'absolute',
+                              bottom: '-16px', // Adjust distance from the bottom as needed
+                              left: 'calc(50% + 12px)', // Adjust horizontal positioning as needed
+                              width: '0',
+                              height: '0',
+                              borderLeft: '8px solid transparent',
+                              borderRight: '8px solid transparent',
+                              borderTop: `16px solid ${theme.palette.background.default}`, // Adjust size and color as needed
+                            }}
+                          />
+                          {/* Content inside the point */}
+                          <Typography variant='body1' color='text.primary'>
+                            ${trailer?.dailyRate}/Day
+                          </Typography>
+                        </Box>
+                      </AdvancedMarker>
                     )}
                   </div>
                 ))}

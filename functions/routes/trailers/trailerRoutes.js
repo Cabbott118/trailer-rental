@@ -15,14 +15,13 @@ router.post('/create-trailer', async (req, res) => {
       address,
       city,
       state,
+      dailyRate,
       userId,
       firstName,
       lastName,
       imageURL,
     } = req.body;
 
-    // Call the Google Maps Geocoding API to convert address to coordinates
-    const apiKey = functions.config().googlemaps.apikey;
     const geocodingUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
       `${address}, ${city}, ${state}`
     )}&key=${googleApiKey}`;
@@ -31,7 +30,7 @@ router.post('/create-trailer', async (req, res) => {
     if (response.data.results.length === 0) {
       throw new Error(JSON.stringify(response.data));
     }
-
+    const dailyRateInt = parseFloat(dailyRate);
     const { lat, lng } = response.data.results[0].geometry.location;
 
     const newTrailer = {
@@ -42,6 +41,7 @@ router.post('/create-trailer', async (req, res) => {
         state,
         coordinates: { lat, lng },
       },
+      dailyRate: dailyRateInt,
       owner: {
         ownerId: userId,
         ownerName: {

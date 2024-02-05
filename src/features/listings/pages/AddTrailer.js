@@ -105,13 +105,14 @@ const AddTrailer = () => {
       setErrorMessage('An image must be uploaded.');
       setIsAlertShowing(true);
     } else {
-      const { type, address, city, state } = data;
+      const { type, address, city, state, dailyRate } = data;
       dispatch(
         createTrailer({
           type,
           address,
           city,
           state,
+          dailyRate,
           userId,
           firstName,
           lastName,
@@ -235,6 +236,32 @@ const AddTrailer = () => {
                 </MenuItem>
               ))}
             </TextField>
+            <Grid item xs={12}>
+              <TextField
+                label='Rate/day'
+                type='number'
+                fullWidth
+                {...register('dailyRate', {
+                  required: true,
+                })}
+                error={errors.dailyRate === 'required'}
+                helperText={
+                  errors.dailyRate === 'required' && 'Daily Rate is required'
+                }
+                InputProps={{
+                  startAdornment: (
+                    <Typography
+                      variant='body1'
+                      color='text.secondary'
+                      sx={{ marginRight: 1 }}
+                    >
+                      $
+                    </Typography>
+                  ),
+                }}
+                sx={{ my: 1 }}
+              />
+            </Grid>
           </Grid>
         </Grid>
       ),

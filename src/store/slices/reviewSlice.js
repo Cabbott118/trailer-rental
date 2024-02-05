@@ -1,7 +1,7 @@
 import ROUTES from 'resources/routes-constants';
 
 // Lib
-import { post } from 'services/axiosServices';
+import { get, post } from 'services/axiosServices';
 
 // Redux
 import { createSlice, createAction, createAsyncThunk } from '@reduxjs/toolkit';
@@ -35,6 +35,21 @@ const createReview = createAsyncThunk(
   }
 );
 
+const fetchReviewsWrittenFor = createAsyncThunk(
+  'profile/fetchReviewsWrittenFor',
+  async (userId) => {
+    try {
+      const response = await get(ENDPOINTS.GET_REVIEWS_WRITTEN_FOR, {
+        userId,
+      });
+      const { reviews, length, averageRating, message } = response;
+      return { reviews, length, averageRating, message };
+    } catch (error) {
+      throw new Error('Failed to fetch review data.');
+    }
+  }
+);
+
 // Action to clear user data, typically after logout
 const clearReviewData = createAction('review/clearReviewData');
 const clearErrors = createAction('review/clearErrors');
@@ -43,6 +58,10 @@ const reviewSlice = createSlice({
   name: 'review',
   initialState: {
     review: {},
+    list: [],
+    length: 0,
+    rating: null,
+    message: '',
     loading: false,
     error: null,
   },
@@ -50,6 +69,10 @@ const reviewSlice = createSlice({
     clearReviewData: (state) => {
       return {
         review: {},
+        list: [],
+        length: 0,
+        rating: null,
+        message: '',
         loading: false,
         error: null,
       };
@@ -84,10 +107,38 @@ const reviewSlice = createSlice({
           loading: false,
           error: action.error.message,
         };
+      })
+
+      .addCase(fetchReviewsWrittenFor.pending, (state) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(fetchReviewsWrittenFor.fulfilled, (state, action) => {
+        return {
+          ...state,
+          reviews: {
+            list: action.payload.reviews,
+            length: action.payload.length,
+            rating: action.payload.averageRating,
+            message: action.payload.message,
+          },
+          loading: false,
+          error: null,
+        };
+      })
+      .addCase(fetchReviewsWrittenFor.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.error.message,
+        };
       });
   },
 });
 
 // Export the async thunk and reducer
 export const { reducer: reviewReducer } = reviewSlice;
-export { createReview, clearReviewData, clearErrors };
+export { createReview, clearReviewData, fetchReviewsWrittenFor, clearErrors };

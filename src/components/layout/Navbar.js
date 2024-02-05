@@ -34,12 +34,10 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { Link, Outlet } from 'react-router-dom';
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { switchTheme } from 'store/slices/uiSlice';
+import { useSelector } from 'react-redux';
 
 export default function Navbar() {
   const theme = useTheme();
-  const dispatch = useDispatch();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,10 +45,6 @@ export default function Navbar() {
   const { user } = useSelector((state) => state.user);
 
   const open = Boolean(anchorEl);
-
-  const toggleTheme = () => {
-    dispatch(switchTheme());
-  };
 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -93,9 +87,6 @@ export default function Navbar() {
             {item.label}
           </MenuItem>
         ))}
-        {/* <MenuItem onClick={toggleTheme} sx={{ fontSize: 18 }}>
-          Toggle theme
-        </MenuItem> */}
         <ThemeSwitch />
         {showLogoutCondition && <Logout />}
       </Menu>
@@ -106,7 +97,6 @@ export default function Navbar() {
     <Box>
       <AppBar
         position='fixed'
-        // color={theme.palette.background.default}
         sx={{ boxShadow: 1, bgcolor: theme.palette.background.default }}
       >
         <Container maxWidth='lg'>

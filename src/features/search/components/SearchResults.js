@@ -25,7 +25,9 @@ export default function SearchResults({ filteredList }) {
             container
             spacing={1}
             onClick={() => handleNavigateToTrailer(trailer)}
-            sx={{ cursor: 'pointer' }}
+            sx={{
+              cursor: 'pointer',
+            }}
           >
             <Grid item xs={12}>
               <CardMedia
@@ -49,7 +51,7 @@ export default function SearchResults({ filteredList }) {
               </Grid>
               <Grid item xs={2}>
                 <Typography align='right' color='text.primary' sx={{ pt: 1 }}>
-                  $499.00
+                  ${trailer?.dailyRate}/Day
                 </Typography>
               </Grid>
               <Grid item xs={12}>

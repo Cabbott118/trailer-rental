@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 // Components
 import BreadcrumbNavigator from 'components/common/BreadcrumbNavigator';
 import CreateReservation from 'features/reservations/components/CreateReservationDialog';
+import ViewTrailerLoader from 'features/listings/loaders/ViewTrailerLoader';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
@@ -19,8 +20,10 @@ import {
   Container,
   Divider,
   Grid,
+  Item,
   Link,
   Rating,
+  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -31,8 +34,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchTrailer } from 'store/slices/trailerSlice';
-import { fetchReviewsWrittenFor } from 'store/slices/profileSlice';
+import {
+  fetchReservationsAssignedToTrailer,
+  fetchTrailer,
+} from 'store/slices/trailerSlice';
+import { fetchReviewsWrittenFor } from 'store/slices/reviewSlice';
 
 const ViewTrailer = () => {
   const theme = useTheme();
@@ -42,11 +48,15 @@ const ViewTrailer = () => {
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const { selectedTrailer, loading, error } = useSelector(
-    (state) => state.trailer
-  );
+  const {
+    selectedTrailer,
+    loading: trailerLoading,
+    error,
+  } = useSelector((state) => state.trailer);
 
-  const { reviews } = useSelector((state) => state.profile);
+  const { reviews, loading: profileLoading } = useSelector(
+    (state) => state.profile
+  );
 
   const { pathname } = location;
   const previousPages = [
@@ -57,12 +67,17 @@ const ViewTrailer = () => {
   ];
 
   useEffect(() => {
-    dispatch(fetchTrailer(getIdFromPath(pathname)));
-    dispatch(fetchReviewsWrittenFor(selectedTrailer?.owner?.ownerId));
+    dispatch(fetchTrailer(getIdFromPath(pathname))).then((trailerAction) => {
+      const trailer = trailerAction.payload;
+      if (trailer) {
+        dispatch(fetchReviewsWrittenFor(trailer?.owner?.ownerId));
+        dispatch(fetchReservationsAssignedToTrailer(trailer?.trailerId));
+      }
+    });
   }, [dispatch, pathname]);
 
-  if (loading) {
-    return <p>Loading...</p>;
+  if (trailerLoading || profileLoading) {
+    return <ViewTrailerLoader />;
   }
 
   if (error) {
@@ -106,38 +121,49 @@ const ViewTrailer = () => {
         />
         <Grid container sx={{ mt: 1 }}>
           <Grid item xs={12}>
-            <Typography variant='h3' component='h1' color='text.primary'>
-              {selectedTrailer?.type}
+            <Typography variant='h4' component='h1' color='text.primary'>
+              {selectedTrailer?.type} trailer
             </Typography>
           </Grid>
           <Grid item xs={12}>
-            <Typography color='text.secondary'>
+            <Typography variant='body1' color='text.secondary'>
               {selectedTrailer?.location?.city},{' '}
               {selectedTrailer?.location?.state}
             </Typography>
           </Grid>
-          <Grid item xs={12} container>
+          <Grid
+            item
+            xs={12}
+            container
+            direction='row'
+            justifyContent='flex-start'
+            alignItems='center'
+          >
             {reviews?.rating === null ? (
-              <Typography color='text.primary'>No rating yet</Typography>
+              <Typography variant='body1' color='text.secondary'>
+                No rating yet
+              </Typography>
             ) : (
-              <Rating
-                readOnly
-                name='simple-controlled'
-                precision={0.1}
-                value={reviews?.rating}
-                sx={{ color: theme.palette.primary.main }}
-              />
+              <>
+                <Rating
+                  readOnly
+                  precision={0.1}
+                  value={reviews?.rating}
+                  size='small'
+                  sx={{ color: theme.palette.primary.main, pr: 0.5 }}
+                />
+                <Typography variant='body1' color='text.secondary'>
+                  {' | '} {reviews?.length}{' '}
+                  {reviews?.length === 1 ? 'Review' : 'Reviews'}
+                </Typography>
+              </>
             )}
-            <Typography color='text.secondary'>
-              {' | '} {reviews?.length}{' '}
-              {reviews?.length === 1 ? 'Review' : 'Reviews'}
-            </Typography>
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <Typography color='text.primary'>
+            <Typography variant='body1' color='text.primary'>
               <b>This trailer is a great value.</b> Some additional info about
               values.
             </Typography>
@@ -146,13 +172,15 @@ const ViewTrailer = () => {
             <CreateReservation
               trailerId={selectedTrailer?.trailerId}
               ownerId={selectedTrailer?.owner?.ownerId}
+              reservations={selectedTrailer?.reservations}
+              trailerLoading={trailerLoading}
             />
           </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
         <Grid container justifyContent='center' alignItems='center'>
           <Grid item xs={10}>
-            <Typography variant='h5' color='text.primary'>
+            <Typography variant='body1' color='text.primary'>
               Trailer posted by{' '}
               <Link
                 href={ROUTES.PROFILE.replace(
@@ -163,8 +191,8 @@ const ViewTrailer = () => {
                 {selectedTrailer?.owner.ownerName.firstName}
               </Link>
             </Typography>
-            <Typography color='text.secondary'>
-              {formatCreatedAt(selectedTrailer?.createdAt)}
+            <Typography variant='body2' color='text.secondary'>
+              Added on {formatCreatedAt(selectedTrailer?.createdAt)}
             </Typography>
           </Grid>
           <Grid item xs={2}>

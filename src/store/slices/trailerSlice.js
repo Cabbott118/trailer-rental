@@ -16,6 +16,7 @@ const createTrailer = createAsyncThunk(
     address,
     city,
     state,
+    dailyRate,
     userId,
     firstName,
     lastName,
@@ -27,6 +28,7 @@ const createTrailer = createAsyncThunk(
         address,
         city,
         state,
+        dailyRate,
         userId,
         firstName,
         lastName,
@@ -133,6 +135,23 @@ const deleteTrailer = createAsyncThunk(
   }
 );
 
+const fetchReservationsAssignedToTrailer = createAsyncThunk(
+  'trailer/fetchReservationsAssignedToTrailer',
+  async (trailerId) => {
+    try {
+      const response = await get(
+        ENDPOINTS.GET_RESERVATIONS_ASSIGNED_TO_TRAILER,
+        {
+          trailerId,
+        }
+      );
+      return response;
+    } catch (error) {
+      throw new Error('Failed to fetch reservation data.');
+    }
+  }
+);
+
 // Action to clear trailer data, typically after logout
 const clearTrailerData = createAction('trailer/clearTrailerData');
 const clearErrors = createAction('trailer/clearErrors');
@@ -143,6 +162,7 @@ const trailerSlice = createSlice({
     trailerList: [],
     filteredList: [],
     ownedByList: [],
+    reservations: null,
     searchedLocation: null,
     selectedTrailer: null,
     loading: false,
@@ -154,6 +174,7 @@ const trailerSlice = createSlice({
         trailerList: [],
         filteredList: [],
         ownedByList: [],
+        reservations: null,
         searchedLocation: null,
         searchedType: null,
         selectedTrailer: null,
@@ -331,6 +352,35 @@ const trailerSlice = createSlice({
           loading: false,
           error: action.payload,
         };
+      })
+
+      .addCase(fetchReservationsAssignedToTrailer.pending, (state, action) => {
+        return {
+          ...state,
+          loading: true,
+          error: null,
+        };
+      })
+      .addCase(
+        fetchReservationsAssignedToTrailer.fulfilled,
+        (state, action) => {
+          return {
+            ...state,
+            selectedTrailer: {
+              ...state.selectedTrailer,
+              reservations: action.payload,
+            },
+            loading: false,
+            error: null,
+          };
+        }
+      )
+      .addCase(fetchReservationsAssignedToTrailer.rejected, (state, action) => {
+        return {
+          ...state,
+          loading: false,
+          error: action.payload,
+        };
       });
   },
 });
@@ -338,13 +388,14 @@ const trailerSlice = createSlice({
 // Export the async thunk and reducer
 export const { reducer: trailerReducer } = trailerSlice;
 export {
-  deleteTrailer,
   createTrailer,
   fetchTrailer,
   fetchTrailers,
   fetchTrailersOwnedBy,
   filterTrailers,
   updateTrailer,
+  deleteTrailer,
+  fetchReservationsAssignedToTrailer,
   clearTrailerData,
   clearErrors,
 };

@@ -84,7 +84,9 @@ router.get('/get-reviews-written-for', async (req, res) => {
     });
   } catch (error) {
     console.error('Error retrieving reviews:', error);
-    return res.status(500).json({ message: 'Internal Server Error' });
+    return res
+      .status(500)
+      .json({ message: 'Internal Server Error', error: error.message });
   }
 });
 

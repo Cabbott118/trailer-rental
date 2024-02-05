@@ -15,7 +15,7 @@ router.post('/create-reservation', async (req, res) => {
         startDate,
         endDate,
       },
-      trailerOwner: {
+      trailer: {
         ownerId,
         trailerId,
       },
