@@ -5,12 +5,14 @@ import ROUTES from 'resources/routes-constants';
 import formatCreatedAt from 'services/helpers/dateFormatter';
 
 // MUI
-import { CardMedia, Grid, Typography } from '@mui/material';
+import { CardMedia, Grid, Typography, useTheme } from '@mui/material';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 // React Router
 import { useNavigate } from 'react-router-dom';
 
 export default function SearchResults({ filteredList }) {
+  const theme = useTheme();
   const navigate = useNavigate();
 
   const handleNavigateToTrailer = (trailer) => {
@@ -27,9 +29,10 @@ export default function SearchResults({ filteredList }) {
             onClick={() => handleNavigateToTrailer(trailer)}
             sx={{
               cursor: 'pointer',
+              position: 'relative', // Ensure relative positioning for absolute text
             }}
           >
-            <Grid item xs={12}>
+            <Grid item xs={12} container>
               <CardMedia
                 component='img'
                 height='300'
@@ -37,6 +40,24 @@ export default function SearchResults({ filteredList }) {
                 alt={trailer.type}
                 sx={{ borderRadius: 3 }}
               />
+              {/* Text overlay */}
+
+              <Typography
+                variant='body1'
+                color='text.primary'
+                sx={{
+                  position: 'absolute',
+                  bottom: 89,
+                  left: 8,
+                  bgcolor: 'rgba(0, 0, 0, 0.7)',
+                  color: '#fff',
+                  padding: '5px 10px',
+                  borderRadius: '0 0 0 8px',
+                }}
+              >
+                <LocationOnIcon color='primary' fontSize='sm' />{' '}
+                {trailer?.location?.city}, {trailer?.location?.state}
+              </Typography>
             </Grid>
             <Grid item container xs={12}>
               <Grid item xs={10}>

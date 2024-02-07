@@ -7,11 +7,13 @@ import WriteReviewDialog from 'features/profile/components/WriteReviewDialog';
 import ROUTES from 'resources/routes-constants';
 
 // Helpers
+import getUserInitials from 'services/helpers/getUserInitials';
 import formatCreatedAt from 'services/helpers/dateFormatter';
 import getIdFromPath from 'services/helpers/getIdFromPath';
 
 // MUI
 import {
+  Avatar,
   Box,
   Container,
   Grid,
@@ -60,13 +62,36 @@ const Profile = () => {
   }
 
   return (
-    <Box sx={{ minHeight: '80vh', py: 12 }}>
-      <Container maxWidth='md'>
-        <Typography variant='h6' component='h1' color='text.primary'>
+    <Box
+      sx={{
+        bgcolor: theme.palette.background.default,
+        minHeight: '80vh',
+        py: 10,
+      }}
+    >
+      <Container maxWidth='md' color='text.primary' sx={{ my: 3 }}>
+        <Typography variant='h1' component='h1' color='text.primary'>
           Profile
         </Typography>
         <Grid container spacing={1} sx={{ my: 3 }}>
           <Grid item xs={12}>
+            <Avatar
+              alt={user?.fullName?.firstName}
+              src={user?.profileImage}
+              sx={{
+                width: 80,
+                height: 80,
+                bgcolor: theme.palette.primary.dark,
+                fontWeight: 500,
+                color: '#fff',
+                fontSize: 30,
+                mb: '-4rem',
+              }}
+            >
+              {getUserInitials(user?.fullName)}
+            </Avatar>
+          </Grid>
+          <Grid item xs={12} sx={{ mt: 10 }}>
             <Typography variant='body1' color='text.primary'>
               {profile?.fullName?.firstName} {profile?.fullName?.lastName}
             </Typography>
