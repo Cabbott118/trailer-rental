@@ -38,15 +38,15 @@ export default function Login() {
   const pageName = 'Login';
   document.title = pageName;
 
-  const theme = useTheme();
-  const auth = getAuth();
-
   const [showPassword, setShowPassword] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
+  const auth = getAuth();
+  const theme = useTheme();
   const dispatch = useDispatch();
-  const { user, loading, error } = useSelector((state) => state.user);
+
+  const { user, loading } = useSelector((state) => state.user);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 

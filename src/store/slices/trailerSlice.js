@@ -82,26 +82,26 @@ const filterTrailers = createAsyncThunk(
   'trailer/filterTrailers',
   async ({ location, type }, { getState }) => {
     try {
-      const { trailerList: completeTrailerList } = getState().trailer;
-      let trailerList;
-      if (completeTrailerList.length > 0) {
-        trailerList = completeTrailerList;
+      const { fullTrailerList: completefullTrailerList } = getState().trailer;
+      let fullTrailerList;
+      if (completefullTrailerList.length > 0) {
+        fullTrailerList = completefullTrailerList;
       } else {
-        trailerList = await get(ENDPOINTS.GET_ALL_TRAILERS);
+        fullTrailerList = await get(ENDPOINTS.GET_ALL_TRAILERS);
       }
 
-      let filteredList = trailerList.filter((trailer) =>
+      let filteredTrailerList = fullTrailerList.filter((trailer) =>
         trailer.location.city.toLowerCase().includes(location.toLowerCase())
       );
 
       // Check if type is provided and filter accordingly
       if (type) {
-        filteredList = filteredList.filter(
+        filteredTrailerList = filteredTrailerList.filter(
           (trailer) => trailer.type.toLowerCase() === type.toLowerCase()
         );
       }
 
-      return { trailerList, filteredList, location, type };
+      return { fullTrailerList, filteredTrailerList, location, type };
     } catch (error) {
       throw new Error('Failed to fetch trailers data.');
     }
@@ -159,10 +159,9 @@ const clearErrors = createAction('trailer/clearErrors');
 const trailerSlice = createSlice({
   name: 'trailer',
   initialState: {
-    trailerList: [],
-    filteredList: [],
+    fullTrailerList: [],
+    filteredTrailerList: [],
     ownedByList: [],
-    reservations: null,
     searchedLocation: null,
     selectedTrailer: null,
     loading: false,
@@ -171,10 +170,9 @@ const trailerSlice = createSlice({
   reducers: {
     clearTrailerData: (state) => {
       return {
-        trailerList: [],
-        filteredList: [],
+        fullTrailerList: [],
+        filteredTrailerList: [],
         ownedByList: [],
-        reservations: null,
         searchedLocation: null,
         searchedType: null,
         selectedTrailer: null,
@@ -201,7 +199,7 @@ const trailerSlice = createSlice({
       .addCase(createTrailer.fulfilled, (state, action) => {
         return {
           ...state,
-          trailerList: [...state.trailerList, action.payload],
+          fullTrailerList: [...state.fullTrailerList, action.payload],
           loading: false,
           error: null,
         };
@@ -224,7 +222,7 @@ const trailerSlice = createSlice({
       .addCase(fetchTrailer.fulfilled, (state, action) => {
         return {
           ...state,
-          selectedTrailer: action.payload,
+          selectedTrailer: action.payload.trailer,
           loading: false,
           error: null,
         };
@@ -247,7 +245,7 @@ const trailerSlice = createSlice({
       .addCase(fetchTrailers.fulfilled, (state, action) => {
         return {
           ...state,
-          trailerList: action.payload,
+          fullTrailerList: action.payload,
           loading: false,
           error: null,
         };
@@ -293,8 +291,8 @@ const trailerSlice = createSlice({
       .addCase(filterTrailers.fulfilled, (state, action) => {
         return {
           ...state,
-          trailerList: action.payload.trailerList,
-          filteredList: action.payload.filteredList,
+          fullTrailerList: action.payload.fullTrailerList,
+          filteredTrailerList: action.payload.filteredTrailerList,
           searchedLocation: action.payload.location,
           searchedType: action.payload.type,
           loading: false,
@@ -319,7 +317,7 @@ const trailerSlice = createSlice({
       .addCase(updateTrailer.fulfilled, (state, action) => {
         return {
           ...state,
-          trailerList: action.payload,
+          fullTrailerList: action.payload,
           loading: false,
         };
       })
@@ -341,7 +339,7 @@ const trailerSlice = createSlice({
       .addCase(deleteTrailer.fulfilled, (state) => {
         return {
           ...state,
-          trailerList: null,
+          fullTrailerList: null,
           loading: false,
           error: null,
         };
@@ -352,36 +350,36 @@ const trailerSlice = createSlice({
           loading: false,
           error: action.payload,
         };
-      })
-
-      .addCase(fetchReservationsAssignedToTrailer.pending, (state, action) => {
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(
-        fetchReservationsAssignedToTrailer.fulfilled,
-        (state, action) => {
-          return {
-            ...state,
-            selectedTrailer: {
-              ...state.selectedTrailer,
-              reservations: action.payload,
-            },
-            loading: false,
-            error: null,
-          };
-        }
-      )
-      .addCase(fetchReservationsAssignedToTrailer.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.payload,
-        };
       });
+
+    // .addCase(fetchReservationsAssignedToTrailer.pending, (state, action) => {
+    //   return {
+    //     ...state,
+    //     loading: true,
+    //     error: null,
+    //   };
+    // })
+    // .addCase(
+    //   fetchReservationsAssignedToTrailer.fulfilled,
+    //   (state, action) => {
+    //     return {
+    //       ...state,
+    //       selectedTrailer: {
+    //         ...state.selectedTrailer,
+    //         reservations: action.payload,
+    //       },
+    //       loading: false,
+    //       error: null,
+    //     };
+    //   }
+    // )
+    // .addCase(fetchReservationsAssignedToTrailer.rejected, (state, action) => {
+    //   return {
+    //     ...state,
+    //     loading: false,
+    //     error: action.payload,
+    //   };
+    // });
   },
 });
 

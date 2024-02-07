@@ -1,12 +1,4 @@
-import { useState } from 'react';
-
 import { Container, Typography } from '@mui/material';
-
-// React Hook Form
-import { useForm } from 'react-hook-form';
-
-// Redux
-import { useDispatch } from 'react-redux';
 
 const AboutUs = () => {
   return (

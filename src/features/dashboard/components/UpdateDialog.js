@@ -35,6 +35,7 @@ const UpdateDialog = ({ userId }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
 
   const dispatch = useDispatch();
+
   const { user, loading, error } = useSelector((state) => state.user);
 
   const handleClickOpenDialog = () => {

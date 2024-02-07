@@ -10,10 +10,10 @@ import { Box, Container, Typography, useTheme } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 export default function ForgotPasswordConfirmation() {
+  const [timer, setTimer] = useState(5);
+
   const theme = useTheme();
   const navigate = useNavigate();
-
-  const [timer, setTimer] = useState(5);
 
   useEffect(() => {
     const countdown = setInterval(() => {

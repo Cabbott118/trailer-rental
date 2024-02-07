@@ -21,37 +21,6 @@ const fetchProfile = createAsyncThunk(
   }
 );
 
-const fetchTrailersOwnedBy = createAsyncThunk(
-  'profile/fetchTrailersOwnedBy',
-  async (userId) => {
-    try {
-      const response = await get(ENDPOINTS.GET_TRAILERS_OWNED_BY, {
-        userId,
-      });
-      const { trailers, length, message } = response;
-      return { trailers, length, message };
-    } catch (error) {
-      throw new Error('Failed to fetch trailer data.');
-    }
-  }
-);
-
-// Move this to reviewSlice?
-const fetchReviewsWrittenFor = createAsyncThunk(
-  'profile/fetchReviewsWrittenFor',
-  async (userId) => {
-    try {
-      const response = await get(ENDPOINTS.GET_REVIEWS_WRITTEN_FOR, {
-        userId,
-      });
-      const { reviews, length, averageRating, message } = response;
-      return { reviews, length, averageRating, message };
-    } catch (error) {
-      throw new Error('Failed to fetch review data.');
-    }
-  }
-);
-
 // Action to clear user data, typically after logout
 const clearProfileData = createAction('profile/clearProfileData');
 const clearErrors = createAction('profile/clearErrors');
@@ -65,7 +34,6 @@ const profileSlice = createSlice({
       length: 0,
       message: '',
     },
-    // Move this to reviewSlice?
     reviews: {
       list: [],
       length: 0,
@@ -84,7 +52,6 @@ const profileSlice = createSlice({
           length: 0,
           message: '',
         },
-        // Move this to reviewSlice?
         reviews: {
           list: [],
           length: 0,
@@ -114,68 +81,23 @@ const profileSlice = createSlice({
       .addCase(fetchProfile.fulfilled, (state, action) => {
         return {
           ...state,
-          profile: action.payload,
+          profile: action.payload.profile,
+          trailers: {
+            list: action.payload.trailers.trailers,
+            length: action.payload.trailers.length,
+            message: action.payload.trailers.message,
+          },
+          reviews: {
+            list: action.payload.reviews.reviews,
+            length: action.payload.reviews.length,
+            rating: action.payload.reviews.averageRating,
+            message: action.payload.reviews.message,
+          },
           loading: false,
           error: null,
         };
       })
       .addCase(fetchProfile.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.error.message,
-        };
-      })
-
-      .addCase(fetchTrailersOwnedBy.pending, (state) => {
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(fetchTrailersOwnedBy.fulfilled, (state, action) => {
-        return {
-          ...state,
-          trailers: {
-            list: action.payload.trailers,
-            length: action.payload.length,
-            message: action.payload.message,
-          },
-          loading: false,
-          error: null,
-        };
-      })
-      .addCase(fetchTrailersOwnedBy.rejected, (state, action) => {
-        return {
-          ...state,
-          loading: false,
-          error: action.error.message,
-        };
-      })
-
-      // Move this to reviewSlice?
-      .addCase(fetchReviewsWrittenFor.pending, (state) => {
-        return {
-          ...state,
-          loading: true,
-          error: null,
-        };
-      })
-      .addCase(fetchReviewsWrittenFor.fulfilled, (state, action) => {
-        return {
-          ...state,
-          reviews: {
-            list: action.payload.reviews,
-            length: action.payload.length,
-            rating: action.payload.averageRating,
-            message: action.payload.message,
-          },
-          loading: false,
-          error: null,
-        };
-      })
-      .addCase(fetchReviewsWrittenFor.rejected, (state, action) => {
         return {
           ...state,
           loading: false,
@@ -187,10 +109,4 @@ const profileSlice = createSlice({
 
 // Export the async thunk and reducer
 export const { reducer: profileReducer } = profileSlice;
-export {
-  fetchProfile,
-  fetchTrailersOwnedBy,
-  fetchReviewsWrittenFor,
-  clearProfileData,
-  clearErrors,
-};
+export { fetchProfile, clearProfileData, clearErrors };

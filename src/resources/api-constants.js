@@ -9,7 +9,6 @@ const ENDPOINTS = {
   CREATE_USER: `${userResource}/create-user`,
   CREATE_FIREBASE_USER: `${userResource}/create-firebase-user`,
   GET_USER_DETAILS: `${userResource}/get-user-details`,
-  GET_USER_PROFILE_DETAILS: `${userResource}/get-user-profile`,
   GET_STRIPE_ACCOUNT_DETAILS: `${userResource}/get-stripe-account-details`,
   UPDATE_USER: `${userResource}/update-user`,
   DELETE_USER: `${userResource}/delete-user`,

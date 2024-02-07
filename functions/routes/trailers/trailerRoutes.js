@@ -104,8 +104,28 @@ router.get('/get-trailer-details', async (req, res) => {
       return res.status(404).json({ message: 'Trailer not found' });
     }
 
+    const reservationsRef = admin.firestore().collection('reservations');
+    const reservationsQuerySnapshot = await reservationsRef
+      .where('trailer.trailerId', '==', trailerId)
+      .get();
+
+    let reservationsData;
+    if (reservationsQuerySnapshot.empty) {
+      reservationsData = {
+        message: 'No reservations found for the specified trailer',
+        length: 0,
+        reservations: [],
+      };
+    } else {
+      reservationsData = reservationsQuerySnapshot.docs.map((doc) =>
+        doc.data()
+      );
+    }
+
     const trailerDetails = trailerDoc.data();
-    return res.status(200).json(trailerDetails);
+    return res.status(200).json({
+      trailer: { ...trailerDetails, reservations: reservationsData },
+    });
   } catch (error) {
     console.error('Error retrieving trailer details:', error);
     return res.status(500).json({ message: 'Internal Server Error' });
@@ -140,32 +160,5 @@ router.get('/get-trailers-owned-by', async (req, res) => {
     return res.status(500).json({ message: 'Internal Server Error' });
   }
 });
-
-// router.get('/search-trailers', async (req, res) => {
-//   try {
-//     const location = req.query.location;
-//     const trailersRef = admin.firestore().collection('trailers');
-
-//     const querySnapshot = await trailersRef
-//       .where('searchableTerms', 'array-contains', location.toLowerCase())
-//       .orderBy('createdAt', 'desc')
-//       .get();
-
-//     if (querySnapshot.empty) {
-//       return res.status(200).json({
-//         message: 'No trailers were found in our search',
-//       });
-//     }
-
-//     const trailersData = querySnapshot.docs.map((doc) => doc.data());
-
-//     return res.status(200).json(trailersData);
-//   } catch (error) {
-//     console.error('Error retrieving trailers:', error);
-//     return res.status(500).json({
-//       message: 'Internal Server Error',
-//     });
-//   }
-// });
 
 module.exports = router;

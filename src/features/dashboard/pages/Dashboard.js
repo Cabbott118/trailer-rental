@@ -27,15 +27,15 @@ import { fetchUser } from 'store/slices/userSlice';
 import { fetchStripeAccount } from 'store/slices/stripeSlice';
 
 export default function Dashboard() {
-  const dispatch = useDispatch();
-  const theme = useTheme();
-
-  const { user, loading } = useSelector((state) => state.user);
-  const { stripe } = useSelector((state) => state.stripe);
-
   document.title = user?.fullName?.firstName
     ? `${user.fullName.firstName}'s Dashboard`
     : 'Dashboard';
+
+  const theme = useTheme();
+  const dispatch = useDispatch();
+
+  const { user, loading } = useSelector((state) => state.user);
+  const { stripe } = useSelector((state) => state.stripe);
 
   useEffect(() => {
     if (user && user.userId) {

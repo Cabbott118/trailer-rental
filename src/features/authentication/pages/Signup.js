@@ -42,7 +42,6 @@ import { signUpUser, createUser, clearUserData } from 'store/slices/userSlice';
 export default function Signup() {
   const pageName = 'Sign up';
   document.title = pageName;
-  const theme = useTheme();
 
   const [showPassword, setShowPassword] = useState(false);
   const [passwordMissmatch, setPasswordMissmatch] = useState(false);
@@ -51,7 +50,9 @@ export default function Signup() {
   const [userType, setUserType] = useState(USER_TYPE.RENTER);
   const [dateOfBirth, setDateOfBirth] = useState(null);
 
+  const theme = useTheme();
   const dispatch = useDispatch();
+
   const { user, loading, error } = useSelector((state) => state.user);
 
   const toggleUserType = (event, newUserType) => {

@@ -11,7 +11,7 @@ import LocationOnIcon from '@mui/icons-material/LocationOn';
 // React Router
 import { useNavigate } from 'react-router-dom';
 
-export default function SearchResults({ filteredList }) {
+export default function SearchResults({ filteredTrailerList }) {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function SearchResults({ filteredList }) {
 
   return (
     <Grid container sx={{ py: 3 }}>
-      {filteredList.map((trailer) => (
+      {filteredTrailerList.map((trailer) => (
         <Grid item key={trailer?.trailerId} xs={12} sx={{ mb: 6 }}>
           <Grid
             container
@@ -47,12 +47,12 @@ export default function SearchResults({ filteredList }) {
                 color='text.primary'
                 sx={{
                   position: 'absolute',
-                  bottom: 89,
+                  top: 20,
                   left: 8,
                   bgcolor: 'rgba(0, 0, 0, 0.7)',
                   color: '#fff',
                   padding: '5px 10px',
-                  borderRadius: '0 0 0 8px',
+                  borderRadius: '0 8px 8px 0',
                 }}
               >
                 <LocationOnIcon color='primary' fontSize='sm' />{' '}

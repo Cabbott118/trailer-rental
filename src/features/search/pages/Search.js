@@ -18,12 +18,11 @@ import { useSelector } from 'react-redux';
 export default function Search() {
   document.title = 'Trailer Rental';
 
-  const { filteredList, searchedLocation, searchedType, loading } = useSelector(
-    (state) => state.trailer
-  );
-
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
+
+  const { filteredTrailerList, searchedLocation, searchedType, loading } =
+    useSelector((state) => state.trailer);
 
   return (
     <Container
@@ -48,14 +47,14 @@ export default function Search() {
       <Grid container spacing={3}>
         <Grid item xs={12} md={5}>
           <FilterTrailers />
-          <MapWithMarkers filteredList={filteredList} />
+          <MapWithMarkers filteredTrailerList={filteredTrailerList} />
         </Grid>
         <Grid item xs={12} md={7}>
           {loading ? (
             <p>Loading...</p>
-          ) : filteredList.length > 0 ? (
+          ) : filteredTrailerList.length > 0 ? (
             <>
-              <SearchResults filteredList={filteredList} />
+              <SearchResults filteredTrailerList={filteredTrailerList} />
             </>
           ) : (
             <Grid container justifyContent='center'>

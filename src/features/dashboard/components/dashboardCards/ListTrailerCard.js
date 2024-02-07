@@ -23,6 +23,7 @@ import { Link } from 'react-router-dom';
 
 const ListTrailerCard = ({ userData }) => {
   const theme = useTheme();
+
   const renderAlert = (condition, severity, text, route) => {
     return condition ? (
       <Alert severity={severity} text={text} route={route} />

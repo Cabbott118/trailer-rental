@@ -1,5 +1,3 @@
-import ROUTES from 'resources/routes-constants';
-
 // Lib
 import { get, post } from 'services/axiosServices';
 
@@ -35,6 +33,7 @@ const createReview = createAsyncThunk(
   }
 );
 
+// This is used for the View Trailer page
 const fetchReviewsWrittenFor = createAsyncThunk(
   'profile/fetchReviewsWrittenFor',
   async (userId) => {

@@ -31,8 +31,10 @@ import { updateUser } from 'store/slices/userSlice';
 
 const AddBankAccount = () => {
   const [value, setValue] = useState(null);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const { user, loading, error } = useSelector((state) => state.user);
   const userId = user?.userId;
 

@@ -49,6 +49,7 @@ const CreateReservationDialog = ({
 
   const theme = useTheme();
   const dispatch = useDispatch();
+
   const { user, loading, error } = useSelector((state) => state.user);
 
   const handleStartDateChange = (newDate) => {
@@ -135,16 +136,11 @@ const CreateReservationDialog = ({
                       disablePast
                       label='Start Date'
                       shouldDisableDate={(date) =>
-                        isDateBlocked(date, reservations?.reservations)
+                        isDateBlocked(date, reservations)
                       } // Pass reservations to isDateBlocked
                       renderInput={(props) => <TextField {...props} />}
                       renderDay={(date, value, dayComponent) =>
-                        renderDay(
-                          date,
-                          value,
-                          dayComponent,
-                          reservations?.reservations
-                        )
+                        renderDay(date, value, dayComponent, reservations)
                       } // Pass reservations to renderDay
                     />
                   </Grid>
@@ -155,16 +151,11 @@ const CreateReservationDialog = ({
                       disablePast
                       label='Return Date'
                       shouldDisableDate={(date) =>
-                        isDateBlocked(date, reservations?.reservations)
+                        isDateBlocked(date, reservations)
                       } // Pass reservations to isDateBlocked
                       renderInput={(props) => <TextField {...props} />}
                       renderDay={(date, value, dayComponent) =>
-                        renderDay(
-                          date,
-                          value,
-                          dayComponent,
-                          reservations?.reservations
-                        )
+                        renderDay(date, value, dayComponent, reservations)
                       } // Pass reservations to renderDay
                     />
                   </Grid>

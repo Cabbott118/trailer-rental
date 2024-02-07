@@ -17,8 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { filterTrailers } from 'store/slices/trailerSlice';
 
 export default function FilterTrailers() {
-  const dispatch = useDispatch();
   const theme = useTheme();
+  const dispatch = useDispatch();
 
   const { searchedLocation, searchedType, loading } = useSelector(
     (state) => state.trailer

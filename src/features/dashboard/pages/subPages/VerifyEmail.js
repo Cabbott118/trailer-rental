@@ -23,6 +23,7 @@ import { updateUser } from 'store/slices/userSlice';
 const VerifyEmail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { user, loading } = useSelector((state) => state.user);
 
   const handleVerifyEmailClick = () => {

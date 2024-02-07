@@ -48,11 +48,11 @@ const AddTrailer = () => {
   const [errorMessage, setErrorMessage] = useState('');
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
-  const { user, loading, error } = useSelector((state) => state.user);
-
   const theme = useTheme();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { user, loading, error } = useSelector((state) => state.user);
 
   const {
     userId,

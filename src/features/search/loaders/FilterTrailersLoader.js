@@ -3,6 +3,7 @@ import { Grid, Skeleton, useTheme } from '@mui/material';
 
 export default function FilterTrailersLoader() {
   const theme = useTheme();
+
   return (
     <Grid container spacing={1} sx={{ py: 3 }}>
       <Grid item xs={12}>

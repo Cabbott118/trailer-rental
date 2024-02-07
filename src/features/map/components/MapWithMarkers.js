@@ -23,11 +23,14 @@ import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 function MapWithMarkers() {
-  const theme = useTheme();
-  const navigate = useNavigate();
   const [accordionExpanded, setAccordionExpanded] = useState(false);
 
-  const { filteredList, loading } = useSelector((state) => state.trailer);
+  const theme = useTheme();
+  const navigate = useNavigate();
+
+  const { filteredTrailerList, loading } = useSelector(
+    (state) => state.trailer
+  );
   const { theme: storeTheme } = useSelector((state) => state.ui);
 
   const handleAccordionChange = (event, isExpanded) => {
@@ -53,12 +56,12 @@ function MapWithMarkers() {
         <AccordionDetails>
           <Container sx={{ height: '300px' }}>
             <Map
-              zoom={filteredList?.length > 0 ? 12 : 2}
+              zoom={filteredTrailerList?.length > 0 ? 12 : 2}
               center={
-                filteredList?.length > 0
+                filteredTrailerList?.length > 0
                   ? {
-                      lat: filteredList[0]?.location?.coordinates?.lat,
-                      lng: filteredList[0]?.location?.coordinates?.lng,
+                      lat: filteredTrailerList[0]?.location?.coordinates?.lat,
+                      lng: filteredTrailerList[0]?.location?.coordinates?.lng,
                     }
                   : { lat: 0, lng: 0 }
               }
@@ -69,7 +72,7 @@ function MapWithMarkers() {
               }
             >
               {!loading &&
-                filteredList?.map((trailer, index) => (
+                filteredTrailerList?.map((trailer, index) => (
                   <div key={index}>
                     {trailer?.location?.coordinates && (
                       <AdvancedMarker

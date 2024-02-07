@@ -29,17 +29,13 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 // Redux
 import { useSelector, useDispatch } from 'react-redux';
-import {
-  fetchProfile,
-  fetchTrailersOwnedBy,
-  fetchReviewsWrittenFor,
-} from 'store/slices/profileSlice';
+import { fetchProfile } from 'store/slices/profileSlice';
 
 const Profile = () => {
-  const dispatch = useDispatch();
-  const location = useLocation();
-  const navigate = useNavigate();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   const { profile, trailers, reviews, loading, error } = useSelector(
     (state) => state.profile
@@ -51,8 +47,6 @@ const Profile = () => {
 
   useEffect(() => {
     dispatch(fetchProfile(getIdFromPath(pathname)));
-    dispatch(fetchTrailersOwnedBy(getIdFromPath(pathname)));
-    dispatch(fetchReviewsWrittenFor(getIdFromPath(pathname)));
   }, []);
 
   if (loading) return <p>Loading...</p>;
@@ -76,8 +70,8 @@ const Profile = () => {
         <Grid container spacing={1} sx={{ my: 3 }}>
           <Grid item xs={12}>
             <Avatar
-              alt={user?.fullName?.firstName}
-              src={user?.profileImage}
+              alt={profile?.fullName?.firstName}
+              src={profile?.profileImage}
               sx={{
                 width: 80,
                 height: 80,
@@ -88,7 +82,7 @@ const Profile = () => {
                 mb: '-4rem',
               }}
             >
-              {getUserInitials(user?.fullName)}
+              {getUserInitials(profile?.fullName)}
             </Avatar>
           </Grid>
           <Grid item xs={12} sx={{ mt: 10 }}>

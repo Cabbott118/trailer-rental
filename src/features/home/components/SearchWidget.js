@@ -29,13 +29,13 @@ export default function SearchWidget() {
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-  const { trailerList, loading } = useSelector((state) => state.trailer);
-
   const theme = useTheme();
   const dispatch = useDispatch();
 
+  const { fullTrailerList, loading } = useSelector((state) => state.trailer);
+
   useEffect(() => {
-    if (!trailerList || trailerList.length === 0) {
+    if (!fullTrailerList || fullTrailerList.length === 0) {
       dispatch(fetchTrailers());
     }
   }, []);
@@ -44,7 +44,7 @@ export default function SearchWidget() {
     setInputValue(newInputValue);
   };
 
-  const options = trailerList
+  const options = fullTrailerList
     .map((trailer) => trailer.location.city)
     .filter((city, index, self) => self.indexOf(city) === index);
 

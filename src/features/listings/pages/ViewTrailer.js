@@ -20,10 +20,7 @@ import {
   Container,
   Divider,
   Grid,
-  Item,
   Link,
-  Rating,
-  Stack,
   Typography,
   useMediaQuery,
   useTheme,
@@ -34,28 +31,18 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 // Redux
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  fetchReservationsAssignedToTrailer,
-  fetchTrailer,
-} from 'store/slices/trailerSlice';
-import { fetchReviewsWrittenFor } from 'store/slices/reviewSlice';
+import { fetchTrailer } from 'store/slices/trailerSlice';
 
 const ViewTrailer = () => {
   const theme = useTheme();
   const dispatch = useDispatch();
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const isMobile = useMediaQuery(theme.breakpoints.down('md'));
 
-  const {
-    selectedTrailer,
-    loading: trailerLoading,
-    error,
-  } = useSelector((state) => state.trailer);
-
-  const { reviews, loading: profileLoading } = useSelector(
-    (state) => state.profile
+  const { selectedTrailer, loading, error } = useSelector(
+    (state) => state.trailer
   );
 
   const { pathname } = location;
@@ -67,16 +54,10 @@ const ViewTrailer = () => {
   ];
 
   useEffect(() => {
-    dispatch(fetchTrailer(getIdFromPath(pathname))).then((trailerAction) => {
-      const trailer = trailerAction.payload;
-      if (trailer) {
-        dispatch(fetchReviewsWrittenFor(trailer?.owner?.ownerId));
-        dispatch(fetchReservationsAssignedToTrailer(trailer?.trailerId));
-      }
-    });
+    dispatch(fetchTrailer(getIdFromPath(pathname)));
   }, [dispatch, pathname]);
 
-  if (trailerLoading || profileLoading) {
+  if (loading) {
     return <ViewTrailerLoader />;
   }
 
@@ -131,34 +112,6 @@ const ViewTrailer = () => {
               {selectedTrailer?.location?.state}
             </Typography>
           </Grid>
-          <Grid
-            item
-            xs={12}
-            container
-            direction='row'
-            justifyContent='flex-start'
-            alignItems='center'
-          >
-            {reviews?.rating === null ? (
-              <Typography variant='body1' color='text.secondary'>
-                No rating yet
-              </Typography>
-            ) : (
-              <>
-                <Rating
-                  readOnly
-                  precision={0.1}
-                  value={reviews?.rating}
-                  size='small'
-                  sx={{ color: theme.palette.primary.main, pr: 0.5 }}
-                />
-                <Typography variant='body1' color='text.secondary'>
-                  {' | '} {reviews?.length}{' '}
-                  {reviews?.length === 1 ? 'Review' : 'Reviews'}
-                </Typography>
-              </>
-            )}
-          </Grid>
         </Grid>
         <Divider sx={{ my: 3 }} />
         <Grid container spacing={3}>
@@ -173,7 +126,7 @@ const ViewTrailer = () => {
               trailerId={selectedTrailer?.trailerId}
               ownerId={selectedTrailer?.owner?.ownerId}
               reservations={selectedTrailer?.reservations}
-              trailerLoading={trailerLoading}
+              trailerLoading={loading}
             />
           </Grid>
         </Grid>

@@ -40,6 +40,7 @@ const WriteReviewDialog = ({ profileId }) => {
 
   const theme = useTheme();
   const dispatch = useDispatch();
+
   const { user, loading, error } = useSelector((state) => state.user);
 
   const handleClickOpenDialog = () => {

@@ -21,12 +21,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser } from 'store/slices/userSlice';
 
 const DeleteDialog = () => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { user, stripe, loading } = useSelector((state) => state.user);
-
-  const [dialogOpen, setDialogOpen] = useState(false);
 
   const handleClickOpenDialog = () => {
     setDialogOpen(true);

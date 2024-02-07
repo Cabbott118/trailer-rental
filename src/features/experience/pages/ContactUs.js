@@ -21,9 +21,9 @@ import { useForm } from 'react-hook-form';
 import { useDispatch } from 'react-redux';
 
 const ContactUs = () => {
-  const theme = useTheme();
   const [isAlertShowing, setIsAlertShowing] = useState(false);
 
+  const theme = useTheme();
   const dispatch = useDispatch();
 
   const {
