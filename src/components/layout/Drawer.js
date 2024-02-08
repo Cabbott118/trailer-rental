@@ -52,8 +52,9 @@ const MenuItem = ({ icon, primaryText, to, onClick }) => {
 };
 
 const Drawer = () => {
-  const theme = useTheme();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
+  const theme = useTheme();
 
   const toggleDrawer = (event) => {
     if (

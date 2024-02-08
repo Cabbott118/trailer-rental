@@ -24,8 +24,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchTrailers, filterTrailers } from 'store/slices/trailerSlice';
 
 export default function SearchWidget() {
-  document.title = 'Trailer Rental';
-
   const [inputValue, setInputValue] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -56,6 +54,7 @@ export default function SearchWidget() {
 
   const onSubmit = (data) => {
     const { location } = data;
+    // Add additional filter options
     dispatch(filterTrailers({ location }));
     setIsSubmitted(true);
   };

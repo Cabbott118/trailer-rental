@@ -5,8 +5,10 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
+    "@mui/base": "^5.0.0-beta.36",
     "@mui/icons-material": "^5.11.16",
     "@mui/material": "^5.13.4",
+    "@mui/system": "^5.15.9",
     "@mui/x-date-pickers": "^6.18.0",
     "@mui/x-date-pickers-pro": "^6.19.3",
     "@reduxjs/toolkit": "^1.9.5",
@@ -63,7 +65,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "typescript": "^5.3.3"
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }

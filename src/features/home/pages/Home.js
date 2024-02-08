@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import HomeBanner from 'features/home/components/HomeBanner';
 import SearchWidget from 'features/home/components/SearchWidget';
 import SearchWidgetLoader from 'features/home/loaders/SearchWidgetLoader';
+import TestSearch from '../components/TestSearch';
 
 // Constants
 import ROUTES from 'resources/routes-constants';
@@ -48,8 +49,9 @@ export default function Home() {
         bgcolor: theme.palette.background.default,
       }}
     >
-      <Container maxWidth='sm' sx={{ minHeight: '100vh' }}>
+      <Container maxWidth='md' sx={{ minHeight: '100vh' }}>
         <HomeBanner />
+        <TestSearch />
         {loading ? <SearchWidgetLoader /> : <SearchWidget />}
       </Container>
       <Button onClick={clearDataClick}>Clear Trailer Data</Button>
